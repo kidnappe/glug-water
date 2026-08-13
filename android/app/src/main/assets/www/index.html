@@ -380,6 +380,11 @@
       <div class="setting-info"><div class="setting-label">提醒周期</div><div class="setting-desc" id="settingIntervalDesc">30 分钟</div></div>
       <span class="setting-arrow">›</span>
     </div>
+    <div class="setting-item" onclick="showReminderWindowDialog()">
+      <span class="setting-icon">🕗</span>
+      <div class="setting-info"><div class="setting-label">提醒时段</div><div class="setting-desc" id="settingWindowDesc">08:00 - 22:00</div></div>
+      <span class="setting-arrow">›</span>
+    </div>
     <div class="setting-item">
       <span class="setting-icon">💊</span>
       <div class="setting-info"><div class="setting-label">吃药</div><div class="setting-desc" id="settingPillDesc">已关闭</div></div>
@@ -900,7 +905,7 @@ function forceSync() {
 /* ── 结束 Supabase 集成 ── */
 
 function getDefaultSettings() {
-  return { dailyGoal: 2000, customAmount: 250, enableReminder: false, reminderInterval: 30, sipAmount: 15, enablePill: false };
+  return { dailyGoal: 2000, customAmount: 250, enableReminder: false, reminderInterval: 30, sipAmount: 15, enablePill: false, startHour: 8, endHour: 22 };
 }
 
 function loadSettings() {
@@ -1828,6 +1833,13 @@ function updateSettingsUI() {
   if (verDesc) verDesc.textContent = '\u559d\u676f\u6c34\u5427 ' + APP_VERSION;
   var intervalDesc = document.getElementById('settingIntervalDesc');
   if (intervalDesc) { intervalDesc.textContent = '每 ' + (s.reminderInterval || 30) + ' \u5206\u949f'; }
+  /* 提醒时段显示 */
+  var winDesc = document.getElementById('settingWindowDesc');
+  if (winDesc) {
+    var sh = typeof s.startHour === 'number' ? s.startHour : 8;
+    var eh = typeof s.endHour === 'number' ? s.endHour : 22;
+    winDesc.textContent = (sh < 10 ? '0' : '') + sh + ':00 - ' + (eh < 10 ? '0' : '') + eh + ':00';
+  }
   /* 断开手表按钮状态 */
   var disconnected = isWatchDisconnected();
   var watchDesc = document.getElementById('watchDisconnectDesc');
@@ -1913,7 +1925,7 @@ function syncAndroidReminder() {
   if (!isAndroidApp()) return;
   try {
     if (gState.settings.enableReminder) {
-      AndroidBridge.scheduleReminder(gState.settings.reminderInterval || 30);
+      AndroidBridge.scheduleReminder(gState.settings.reminderInterval || 30, gState.settings.startHour, gState.settings.endHour);
     } else {
       AndroidBridge.cancelReminder();
     }
@@ -1970,7 +1982,17 @@ function startReminder() {
   if (isAndroidApp()) { return; } /* App 内由 AlarmManager 调度，无需 JS setInterval */
   if (window._reminderInterval) { clearInterval(window._reminderInterval); }
   var intervalMin = gState.settings.reminderInterval || 30;
+  /* 时段内才弹通知（与 App 原生提醒保持一致） */
+  var inWindow = function() {
+    var h = new Date().getHours();
+    var sh = typeof gState.settings.startHour === 'number' ? gState.settings.startHour : 8;
+    var eh = typeof gState.settings.endHour === 'number' ? gState.settings.endHour : 22;
+    if (sh === eh) return true;                       /* 全天 */
+    if (sh < eh) return h >= sh && h < eh;            /* 当天时段 */
+    return h >= sh || h < eh;                         /* 跨天时段 */
+  };
   var notify = function() {
+    if (!inWindow()) return;
     if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
       new Notification('\u559d\u6c34\u63d0\u9192', { body: '\u8be5\u559d\u6c34\u5566\uff01\u4fdd\u6301\u6c34\u5206\u6444\u5165\uff0c\u8ba9\u8eab\u4f53\u66f4\u5065\u5eb7\uff5e' });
     }
@@ -2006,6 +2028,45 @@ function showReminderIntervalDialog() {
     }}]
   );
   setTimeout(function() { var e = document.getElementById('reminderIntervalInput'); if (e) e.focus(); }, 100);
+}
+
+/* 提醒时段选择辅助：生成 0-23 小时下拉选项 */
+function windowHourOptions(sel) {
+  var h = '';
+  for (var i = 0; i < 24; i++) {
+    var label = (i < 10 ? '0' : '') + i + ':00';
+    h += '<option value="' + i + '"' + (i === sel ? ' selected' : '') + '>' + label + '</option>';
+  }
+  return h;
+}
+
+/* 提醒时段设置弹窗（支持跨天，如 22:00-08:00 表示夜间提醒） */
+function showReminderWindowDialog() {
+  var s = gState.settings;
+  var sh = typeof s.startHour === 'number' ? s.startHour : 8;
+  var eh = typeof s.endHour === 'number' ? s.endHour : 22;
+  showModal('提醒时段',
+    '<div style="font-size:0.8125rem;color:#666;margin-bottom:10px;">仅在设定时段内提醒，避免夜间打扰</div>' +
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">' +
+    '<select id="rwStart" style="flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;">' + windowHourOptions(sh) + '</select>' +
+    '<span style="color:#999;">至</span>' +
+    '<select id="rwEnd" style="flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;">' + windowHourOptions(eh) + '</select></div>' +
+    '<div style="font-size:0.75rem;color:#999;margin-top:6px;">支持跨天：如 22:00 - 08:00 表示夜间也提醒</div>',
+    [{ text: '取消', cls: 'btn-cancel', action: hideModal },
+     { text: '保存', cls: 'btn-confirm', action: function() {
+      gState.settings.startHour = parseInt(document.getElementById('rwStart').value);
+      gState.settings.endHour = parseInt(document.getElementById('rwEnd').value);
+      saveSettings(gState.settings);
+      updateSettingsUI();
+      syncAndroidReminder(); /* App 内同步新时段到 AlarmManager */
+      if (!isAndroidApp() && gState.settings.enableReminder) {
+        stopReminder();
+        startReminder();
+      }
+      hideModal();
+      showToast('提醒时段已更新');
+    }}]
+  );
 }
 
 function setDarkMode(mode) {

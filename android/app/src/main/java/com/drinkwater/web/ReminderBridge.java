@@ -33,12 +33,13 @@ public class ReminderBridge {
         this.context = activity.getApplicationContext();
     }
 
-    /** 安排提醒：首次调度对齐到整分钟，触发后由 Receiver 自动重排 */
+    /** 安排提醒：首次调度对齐到整分钟，触发后由 Receiver 自动重排；
+     *  startHour/endHour 为提醒时段（支持跨天，如 22-8 表示夜间提醒） */
     @JavascriptInterface
-    public void scheduleReminder(int intervalMinutes) {
+    public void scheduleReminder(int intervalMinutes, int startHour, int endHour) {
         long intervalMs = intervalMinutes * 60 * 1000L;
         ReminderReceiver.cancel(context);
-        ReminderReceiver.schedule(context, intervalMs, true); /* 首次：对齐整分钟 */
+        ReminderReceiver.schedule(context, intervalMs, true, startHour, endHour); /* 首次：对齐整分钟 */
     }
 
     /** 取消所有待提醒 */

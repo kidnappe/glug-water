@@ -13,12 +13,16 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import java.util.Calendar;
+
 public class ReminderReceiver extends BroadcastReceiver {
     public static final String CHANNEL_ID = "drink_reminder";
     public static final String ACTION_REMINDER = "com.drinkwater.web.REMINDER";
     private static final String TAG = "DrinkWaterReminder";
     private static final String PREFS = "reminder_prefs";
     private static final String KEY_INTERVAL = "interval_ms";
+    private static final String KEY_START = "start_hour";
+    private static final String KEY_END = "end_hour";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -33,10 +37,17 @@ public class ReminderReceiver extends BroadcastReceiver {
             return;
         }
         if (ACTION_REMINDER.equals(intent.getAction())) {
-            Log.d(TAG, "showNotification() called");
-            showNotification(context);
-            Log.d(TAG, "showNotification() finished");
-            /* 一次性精确闹钟：触发后重排下一次，保证间隔精确 */
+            /* 提醒时段判断：时段内才弹通知；时段外静默（重排逻辑会自动跳到下一个时段开始） */
+            SharedPreferences sp = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
+            int startHour = sp.getInt(KEY_START, 8);
+            int endHour = sp.getInt(KEY_END, 22);
+            if (inWindow(Calendar.getInstance().get(Calendar.HOUR_OF_DAY), startHour, endHour)) {
+                Log.d(TAG, "in window, showNotification()");
+                showNotification(context);
+            } else {
+                Log.d(TAG, "outside window, silent skip");
+            }
+            /* 一次性精确闹钟：触发后重排下一次 */
             rescheduleNext(context);
         }
     }
@@ -71,14 +82,42 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
     }
 
+    /* 判断小时是否在提醒时段内（支持跨天：start>end 时表示夜间时段） */
+    public static boolean inWindow(int hour, int startHour, int endHour) {
+        if (startHour == endHour) return true;            /* 全天 */
+        if (startHour < endHour) return hour >= startHour && hour < endHour;
+        return hour >= startHour || hour < endHour;       /* 跨天 */
+    }
+
+    /* 计算 after 之后的第一个「窗口开始」时刻（时段开始的小时，分钟归零） */
+    private static long nextWindowStart(long after, int startHour) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(after);
+        cal.set(Calendar.HOUR_OF_DAY, startHour);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        if (cal.getTimeInMillis() <= after) {
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+            cal.set(Calendar.HOUR_OF_DAY, startHour); /* add 跨月/年后重设，确保落在目标小时 */
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+        }
+        return cal.getTimeInMillis();
+    }
+
     /* 注册提醒：优先精确闹钟（setExactAndAllowWhileIdle，一次性，触发后自行重排）
      * Android 12+ 的 setInexactRepeating 会被系统大幅延迟（省电对齐），喝水提醒需要准时
      * alignToMinute=true  → 首次调度：对齐到下一个整分钟（固定相位）
-     * alignToMinute=false → 触发后重排：保持整分钟相位 + intervalMs（避免相位漂移和间隔错乱） */
-    public static void schedule(Context context, long intervalMs, boolean alignToMinute) {
+     * alignToMinute=false → 触发后重排：保持整分钟相位 + intervalMs（避免相位漂移和间隔错乱）
+     * startHour/endHour   → 提醒时段：候选触发点不在时段内时，跳到下一个时段开始 */
+    public static void schedule(Context context, long intervalMs, boolean alignToMinute, int startHour, int endHour) {
         if (intervalMs <= 0) return;
         SharedPreferences sp = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-        sp.edit().putLong(KEY_INTERVAL, intervalMs).apply();
+        sp.edit().putLong(KEY_INTERVAL, intervalMs)
+                .putInt(KEY_START, startHour)
+                .putInt(KEY_END, endHour).apply();
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (am == null) return;
@@ -91,12 +130,19 @@ public class ReminderReceiver extends BroadcastReceiver {
         long now = System.currentTimeMillis();
         long triggerAt;
         if (alignToMinute) {
-            triggerAt = ((now / 60000) + 1) * 60000;              // 首次：下一个整分钟
+            triggerAt = ((now / 60000) + 1) * 60000;              /* 首次：下一个整分钟 */
         } else {
-            triggerAt = ((now / 60000) * 60000) + intervalMs;     // 重排：当前整分钟 + 间隔
+            triggerAt = ((now / 60000) * 60000) + intervalMs;     /* 重排：当前整分钟 + 间隔 */
+        }
+        /* 候选触发点不在时段内 → 跳到下一个时段开始（如夜间直接排到明早 8:00） */
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(triggerAt);
+        if (!inWindow(cal.get(Calendar.HOUR_OF_DAY), startHour, endHour)) {
+            triggerAt = nextWindowStart(triggerAt, startHour);
+            Log.d(TAG, "candidate outside window, jump to window start");
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && am.canScheduleExactAlarms()) {
-            Log.d(TAG, "schedule exact: " + triggerAt + " (+" + (triggerAt - now) + "ms, interval=" + intervalMs + ")");
+            Log.d(TAG, "schedule exact: " + triggerAt + " (+" + (triggerAt - now) + "ms, interval=" + intervalMs + ", window=" + startHour + "-" + endHour + ")");
             am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pi);
         } else {
             Log.d(TAG, "schedule inexact fallback: " + triggerAt);
@@ -104,13 +150,15 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
     }
 
-    /* 触发后重排下一次（间隔从 SharedPreferences 读取） */
+    /* 触发后重排下一次（间隔与时段从 SharedPreferences 读取） */
     public static void rescheduleNext(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         long intervalMs = sp.getLong(KEY_INTERVAL, 0);
-        Log.d(TAG, "rescheduleNext interval=" + intervalMs + "ms");
+        int startHour = sp.getInt(KEY_START, 8);
+        int endHour = sp.getInt(KEY_END, 22);
+        Log.d(TAG, "rescheduleNext interval=" + intervalMs + "ms window=" + startHour + "-" + endHour);
         if (intervalMs > 0) {
-            schedule(context, intervalMs, false); /* 重排：保持整分钟相位 */
+            schedule(context, intervalMs, false, startHour, endHour); /* 重排：保持整分钟相位 */
         }
     }
 
@@ -119,15 +167,17 @@ public class ReminderReceiver extends BroadcastReceiver {
     public static void restoreAfterReboot(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
         long intervalMs = sp.getLong(KEY_INTERVAL, 0);
+        int startHour = sp.getInt(KEY_START, 8);
+        int endHour = sp.getInt(KEY_END, 22);
         if (intervalMs > 0) {
             Log.d(TAG, "restoreAfterReboot interval=" + intervalMs + "ms");
-            schedule(context, intervalMs, false);
+            schedule(context, intervalMs, false, startHour, endHour);
         }
     }
 
     public static void cancel(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE);
-        sp.edit().remove(KEY_INTERVAL).apply();
+        sp.edit().remove(KEY_INTERVAL).remove(KEY_START).remove(KEY_END).apply();
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (am == null) return;
