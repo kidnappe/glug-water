@@ -59,13 +59,18 @@ sync-www.bat
 |----|------|
 | 设置入口 | 页面内设置 → 保存时调 `AndroidBridge.scheduleReminder(间隔分钟)` / `cancelReminder()` |
 | JS 桥 | `ReminderBridge.java`（`@JavascriptInterface`） |
-| 调度 | `ReminderReceiver.schedule()` → `AlarmManager.setInexactRepeating(RTC_WAKEUP, ...)` |
+| 调度 | `ReminderReceiver.schedule()` → `AlarmManager.setExactAndAllowWhileIdle(RTC_WAKEUP, ...)` 一次性精确闹钟 |
+| 续排 | 触发后 `rescheduleNext()` 读 SharedPreferences 中的间隔自动重排下一次（间隔精确） |
 | 通知 | 通知渠道 `drink_reminder` + `NotificationCompat`（"💧 该喝水了！"） |
-| 权限 | Android 13+（API 33）启动时请求 `POST_NOTIFICATIONS` |
-| 重启恢复 | App 启动时页面 `syncAndroidReminder()` 重新调度（重启后闹钟失效） |
+| 权限 | Android 13+ 启动时请求 `POST_NOTIFICATIONS`；Manifest 声明 `SCHEDULE_EXACT_ALARM`（targetSdk<34 默认授予） |
+| 重启恢复 | `BOOT_COMPLETED` 广播自动重排（设备重启后系统会清空闹钟），无需手动打开 App |
 
-⚠️ 已知限制：`setInexactRepeating` 是省电型非精确闹钟，短间隔会被系统对齐；如需精确到分钟的提醒需改用 `setExactAndAllowWhileIdle`（Android 12+ 需 `SCHEDULE_EXACT_ALARM` 权限，属闹钟类应用）。
+⚠️ 兼容降级：若系统未授予精确闹钟权限（`canScheduleExactAlarms()` 为 false），自动降级为 `setInexactRepeating`（会略有延迟）；MIUI/HyperOS 用户建议在「省电策略」中设为无限制、允许自启动。
+
+> 为什么不用 `setInexactRepeating`？Android 12+ 会对重复的非精确闹钟做省电对齐，实测延迟可达 45 秒～数分钟。改为「一次性精确闹钟 + 触发后自行重排」后，实测触发误差约 10 毫秒。
 
 ## 版本
 
-- v1.0.0 — 初始版（2026-08）：WebView 套壳 + AlarmManager 喝水提醒
+- v2.0.1 — 提醒修复与全面屏适配（2026-08）：精确闹钟、整分钟对齐、开机自动恢复、每周一自动保活、edge-to-edge 无黑条、Web 版图标、导入导出原生化、更新日志继承 Web 版历史
+- v2.0.0 — Android 套壳版（2026-08）：WebView 套壳 + AlarmManager 喝水提醒
+- v1.x — Web 版历史（套壳前，见 `CHANGELOG.md`）

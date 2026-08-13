@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.DrinkWaterWeb" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
+        <!-- 不用 windowFullscreen：它会让状态栏区域露出窗口默认黑色；改用 edge-to-edge 由页面内容覆盖 -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowBackground">#FFF0F4FB</item>
+        <!-- edge-to-edge 下状态栏/导航栏图标用白色（页面顶部是蓝色 appbar） -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
     </style>
 </resources>

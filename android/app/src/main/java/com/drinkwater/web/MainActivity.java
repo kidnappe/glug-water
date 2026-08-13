@@ -3,12 +3,15 @@ package com.drinkwater.web;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -16,20 +19,29 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.ScrollView;
-import android.graphics.Color;
-import android.graphics.Typeface;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+
+import org.json.JSONObject;
+
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
+    private ValueCallback<Uri[]> mFilePathCallback;
     private static final String TAG = "DrinkWater";
+    private static final int REQ_FILE_CHOOSER = 2002;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Edge-to-edge：内容延伸到状态栏/导航栏之后（必须在 setContentView 之前调用才可靠）
+        // 状态栏区域由页面内容（蓝色 appbar / 深色背景）覆盖，保证颜色与页面一致
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         // ========== 崩溃自诊：检查上次是否崩溃 ==========
         String crashLog = CrashHandler.readAndClearCrash(this);
@@ -47,15 +59,6 @@ public class MainActivity extends AppCompatActivity {
             // 去掉启动白闪：WebView 背景设为与页面一致（Web 版浅色背景 #f0f4fb）
             webView.setBackgroundColor(Color.parseColor("#f0f4fb"));
             setContentView(webView);
-
-            // 全屏沉浸
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
             // WebView 配置
             WebSettings settings = webView.getSettings();
@@ -92,7 +95,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            webView.setWebChromeClient(new WebChromeClient());
+            webView.setWebChromeClient(new WebChromeClient() {
+                /* 支持页面 <input type="file">：WebView 默认不处理文件选择，必须在这里接系统选择器 */
+                @Override
+                public boolean onShowFileChooser(WebView view, ValueCallback<Uri[]> filePathCallback,
+                                                 FileChooserParams fileChooserParams) {
+                    if (mFilePathCallback != null) {
+                        mFilePathCallback.onReceiveValue(null);
+                    }
+                    mFilePathCallback = filePathCallback;
+                    Intent intent = fileChooserParams.createIntent();
+                    /* 放宽类型：部分 ROM 对 application/json 过滤后找不到选择器 */
+                    intent.setType("*/*");
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES,
+                            new String[]{"application/json", "text/plain", "application/octet-stream"});
+                    try {
+                        startActivityForResult(intent, REQ_FILE_CHOOSER);
+                        return true;
+                    } catch (Exception e) {
+                        mFilePathCallback = null;
+                        Log.e(TAG, "file chooser failed", e);
+                        return false;
+                    }
+                }
+            });
 
             // 注册 JS 桥接
             webView.addJavascriptInterface(new ReminderBridge(this), "AndroidBridge");
@@ -111,6 +137,11 @@ public class MainActivity extends AppCompatActivity {
                     requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1001);
                 }
             }
+
+            // 启动时恢复提醒闹钟由 BOOT_COMPLETED 广播处理（RestoreAfterRebootReceiver），
+            // 这里不再重排，避免点通知打开 App 时把已排好的闹钟相位推迟
+            // 但确保每周一保活闹钟已调度（幂等，防数据库暂停）
+            KeepAliveReceiver.ensureScheduled(this);
 
             webView.loadUrl("file:///android_asset/www/index.html");
 
@@ -154,14 +185,39 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        try {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        } catch (Exception ignored) {}
+        /* Android 15+ edge-to-edge 已由 WindowCompat.setDecorFitsSystemWindows(false) 处理，无需旧 flag */
+    }
+
+    /* 导入数据：文件选择器返回后读取 JSON，注入页面 handleNativeImport() */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /* ① WebView <input type=file> 标准流程：结果回传给页面 input.files */
+        if (requestCode == REQ_FILE_CHOOSER) {
+            if (mFilePathCallback != null) {
+                Uri result = (data != null && resultCode == RESULT_OK && data.getData() != null)
+                        ? data.getData() : null;
+                mFilePathCallback.onReceiveValue(result != null ? new Uri[]{result} : null);
+                mFilePathCallback = null;
+            }
+            return;
+        }
+
+        /* ② AndroidBridge.importData() 原生选择器流程（兼容保留） */
+        if (requestCode == ReminderBridge.REQ_IMPORT && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri uri = data.getData();
+            try {
+                InputStream is = getContentResolver().openInputStream(uri);
+                String json = ReminderBridge.readStream(is);
+                is.close();
+                /* 转义后作为 JS 字符串字面量注入，避免特殊字符破坏页面 */
+                String js = "handleNativeImport(" + JSONObject.quote(json) + ")";
+                webView.evaluateJavascript(js, null);
+                Log.d(TAG, "import injected, " + json.length() + " chars");
+            } catch (Exception e) {
+                Log.e(TAG, "import read failed", e);
+            }
+        }
     }
 }

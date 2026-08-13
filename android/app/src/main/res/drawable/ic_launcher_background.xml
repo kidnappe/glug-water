@@ -4,8 +4,8 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- 背景：蓝色水滴形状 -->
+    <!-- 背景：纯白（与 Web 版图标一致） -->
     <path
-        android:fillColor="#4A90E2"
-        android:pathData="M54,18 C54,18 26,50 26,68 C26,84.4 38.6,96 54,96 C69.4,96 82,84.4 82,68 C82,50 54,18 54,18 Z"/>
+        android:fillColor="#FFFFFF"
+        android:pathData="M0,0 h108 v108 h-108 z"/>
 </vector>
