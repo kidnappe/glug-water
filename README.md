@@ -1,7 +1,8 @@
-# 💧 喝杯水吧 — Android 套壳 App
+# 💧 咕嘟（Glug-water）— Android 套壳 App
 
-Web 版喝水记录应用（[drink-water-web](https://github.com/kidnappe/drink-water-web)）的安卓 WebView 套壳，页面与 Web 版**完全同源**，喝水提醒使用**原生 AlarmManager**（WebView 内 Notification API 不可靠）。
+喝水记录应用「咕嘟」的安卓 WebView 套壳，页面与 Web 版**完全同源**，喝水提醒使用**原生 AlarmManager**（WebView 内 Notification API 不可靠）。
 
+> 中文名：咕嘟 ｜ 英文名：Glug-water（glug = 咕嘟咕嘟的喝水声）
 > 与手表端（`drink-water-watch`）平行：手表端面向 Oppo Watch 2（Chrome 61），本工程面向**正常安卓手机**（系统 WebView 自动更新，无兼容性负担）。
 
 ---

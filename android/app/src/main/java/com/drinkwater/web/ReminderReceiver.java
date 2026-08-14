@@ -63,8 +63,8 @@ public class ReminderReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle("\uD83D\uDCA7 该喝水了！")
-                .setContentText("记得补充水分哦 \uD83D\uDCA7")
+                .setContentTitle("\u5495\u561F\uFF5E\u8BE5\u559D\u6C34\u4E86\uFF01")
+                .setContentText("\u8BB0\u5F97\u8865\u5145\u6C34\u5206\u54E6 \uD83D\uDCA7")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pi)
                 .setAutoCancel(true)

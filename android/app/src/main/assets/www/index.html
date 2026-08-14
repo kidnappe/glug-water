@@ -6,9 +6,9 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/svg+xml" href="icons/Icon-192.svg">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="喝水记录">
+  <meta name="apple-mobile-web-app-title" content="咕嘟">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>喝杯水吧</title>
+  <title>咕嘟</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -235,7 +235,7 @@
 </head>
 <body>
 <div class="appbar" id="appbar">
-  <div id="appbarTitle">喝杯水吧 💧</div>
+  <div id="appbarTitle">咕嘟 💧</div>
   <div id="motivationMsg" style="font-size:0.75rem;font-weight:400;opacity:.9;margin-top:2px;"></div>
 </div>
 <div class="page active" id="page-home">
@@ -1830,7 +1830,7 @@ function updateSettingsUI() {
   if (sbDesc) { sbDesc.textContent = isSupabaseConfigured() ? '\u2705 \u5df2\u8fde\u63a5' : '\u26a0\ufe0f \u672a\u914d\u7f6e'; }
   /* 更新版本号 */
   var verDesc = document.getElementById('settingVersionDesc');
-  if (verDesc) verDesc.textContent = '\u559d\u676f\u6c34\u5427 ' + APP_VERSION;
+  if (verDesc) verDesc.textContent = '\u5495\u561f ' + APP_VERSION;
   var intervalDesc = document.getElementById('settingIntervalDesc');
   if (intervalDesc) { intervalDesc.textContent = '每 ' + (s.reminderInterval || 30) + ' \u5206\u949f'; }
   /* 提醒时段显示 */
@@ -2157,7 +2157,7 @@ function showNicknameDialog() {
 
 function switchTab(idx) {
   var pages = ['page-home', 'page-garden', 'page-leaderboard', 'page-history', 'page-settings'];
-  var titles = ['喝杯水吧 💧', '我的花园 🌱', '排行榜 🏆', '喝水历史 📊', '设置 ⚙️'];
+  var titles = ['咕嘟 💧', '我的花园 🌱', '排行榜 🏆', '喝水历史 📊', '设置 ⚙️'];
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.getElementById(pages[idx]).classList.add('active');
   document.getElementById('appbarTitle').textContent = titles[idx];
