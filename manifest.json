@@ -1,7 +1,7 @@
 {
-  "name": "喝杯水吧",
-  "short_name": "喝杯水吧",
-  "description": "帮助您养成健康的饮水习惯",
+  "name": "咕嘟",
+  "short_name": "咕嘟",
+  "description": "咕嘟咕嘟，保持水分摄入",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f0f4fb",

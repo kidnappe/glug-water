@@ -2,13 +2,13 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/svg+xml" href="icons/Icon-192.svg">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="喝水记录">
+  <meta name="apple-mobile-web-app-title" content="咕嘟">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>喝杯水吧</title>
+  <title>咕嘟</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -28,8 +28,8 @@
     body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; }
     .page { display: none; padding: 16px 16px 80px; }
     .page.active { display: block; }
-    .appbar { background: var(--primary); color: #fff; padding: 10px 16px 8px; font-size: 1rem; font-weight: 600; text-align: center; position: sticky; top: 0; z-index: 10; }
-    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--nav-bg); display: flex; border-top: 1px solid var(--border); z-index: 100; }
+    .appbar { background: var(--primary); color: #fff; padding: 10px 16px 8px; padding-top: calc(10px + env(safe-area-inset-top)); font-size: 1rem; font-weight: 600; text-align: center; position: sticky; top: 0; z-index: 10; }
+    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--nav-bg); display: flex; border-top: 1px solid var(--border); z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
     .bottom-nav button { flex: 1; border: none; background: none; padding: 10px 0 8px; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; transition: color .2s; }
     .bottom-nav button .icon { font-size: 1.375rem; }
     .bottom-nav button.active { color: var(--primary); }
@@ -235,7 +235,7 @@
 </head>
 <body>
 <div class="appbar" id="appbar">
-  <div id="appbarTitle">喝杯水吧 💧</div>
+  <div id="appbarTitle">咕嘟 💧</div>
   <div id="motivationMsg" style="font-size:0.75rem;font-weight:400;opacity:.9;margin-top:2px;"></div>
 </div>
 <div class="page active" id="page-home">
@@ -378,6 +378,11 @@
     <div class="setting-item" onclick="showReminderIntervalDialog()">
       <span class="setting-icon">⏱</span>
       <div class="setting-info"><div class="setting-label">提醒周期</div><div class="setting-desc" id="settingIntervalDesc">30 分钟</div></div>
+      <span class="setting-arrow">›</span>
+    </div>
+    <div class="setting-item" onclick="showReminderWindowDialog()">
+      <span class="setting-icon">🕗</span>
+      <div class="setting-info"><div class="setting-label">提醒时段</div><div class="setting-desc" id="settingWindowDesc">08:00 - 22:00</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item">
@@ -539,6 +544,10 @@ function loadSupabaseConfig() {
 
 function saveSupabaseConfig(cfg) {
   localStorage.setItem(SUPABASE_CONFIG_KEY, JSON.stringify(cfg));
+  /* App 内：同步到原生，用于每周一自动保活请求（防止免费项目因 7 天无请求被暂停） */
+  if (isAndroidApp()) {
+    try { AndroidBridge.setSupabaseConfig(cfg.url || '', cfg.key || ''); } catch(e) {}
+  }
 }
 
 function isSupabaseConfigured() {
@@ -896,7 +905,7 @@ function forceSync() {
 /* ── 结束 Supabase 集成 ── */
 
 function getDefaultSettings() {
-  return { dailyGoal: 2000, customAmount: 250, enableReminder: false, reminderInterval: 30, sipAmount: 15, enablePill: false };
+  return { dailyGoal: 2000, customAmount: 250, enableReminder: false, reminderInterval: 30, sipAmount: 15, enablePill: false, startHour: 8, endHour: 22 };
 }
 
 function loadSettings() {
@@ -1342,7 +1351,16 @@ function exportData() {
     darkMode: localStorage.getItem('dark_mode') || 'auto',
     supabaseConfig: loadSupabaseConfig()
   };
-  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var jsonText = JSON.stringify(data, null, 2);
+  if (isAndroidApp()) {
+    /* App 内：WebView 不支持 <a download>，走原生写入「下载」目录 */
+    try {
+      AndroidBridge.exportData('drink_water_backup_' + getDateKey(new Date()) + '.json', jsonText);
+      showToast('\u6570\u636e\u5df2\u5bfc\u51fa\u5230\u4e0b\u8f7d\u76ee\u5f55');
+      return;
+    } catch(e) {}
+  }
+  var blob = new Blob([jsonText], { type: 'application/json' });
   var url = URL.createObjectURL(blob);
   try {
     var a = document.createElement('a');
@@ -1353,29 +1371,40 @@ function exportData() {
   showToast('\u6570\u636e\u5df2\u5bfc\u51fa');
 }
 
+/* 应用导入的 JSON（浏览器 FileReader 与 App 原生文件选择器共用） */
+function applyImportData(jsonText) {
+  try {
+    var data = JSON.parse(jsonText);
+    if (data.records && Array.isArray(data.records)) {
+      saveRecords(data.records); gState.records = data.records;
+      if (data.settings) { saveSettings(data.settings); gState.settings = data.settings; }
+      /* 恢复身份信息（version >= 2） */
+      if (data.version >= 2) {
+        if (data.userId) localStorage.setItem('drink_water_user_id', data.userId);
+        if (data.avatarIdx) localStorage.setItem('lb_animal_idx', data.avatarIdx.toString());
+        if (data.nickname) localStorage.setItem('lb_nickname', data.nickname);
+        if (data.darkMode) { localStorage.setItem('dark_mode', data.darkMode); applyDarkMode(data.darkMode); }
+        if (data.supabaseConfig && data.supabaseConfig.url && data.supabaseConfig.key) {
+          saveSupabaseConfig(data.supabaseConfig);
+        }
+      }
+      refreshUI(); showToast('\u6570\u636e\u5bfc\u5165\u6210\u529f');
+    } else { showToast('\u6587\u4ef6\u683c\u5f0f\u65e0\u6548'); }
+  } catch(e) { showToast('\u6587\u4ef6\u89e3\u6790\u5931\u8d25'); }
+}
+
+/* App 原生文件选择器回调入口（MainActivity 读取文件后注入调用） */
+function handleNativeImport(jsonText) {
+  applyImportData(jsonText);
+}
+
 function importData(event) {
+  /* 注：App 内由原生 onShowFileChooser 支持 <input type=file>，与浏览器行为一致 */
   var file = event.target.files[0];
   if (!file) return;
   var reader = new FileReader();
   reader.onload = function(e) {
-    try {
-      var data = JSON.parse(e.target.result);
-      if (data.records && Array.isArray(data.records)) {
-        saveRecords(data.records); gState.records = data.records;
-        if (data.settings) { saveSettings(data.settings); gState.settings = data.settings; }
-        /* 恢复身份信息（version >= 2） */
-        if (data.version >= 2) {
-          if (data.userId) localStorage.setItem('drink_water_user_id', data.userId);
-          if (data.avatarIdx) localStorage.setItem('lb_animal_idx', data.avatarIdx.toString());
-          if (data.nickname) localStorage.setItem('lb_nickname', data.nickname);
-          if (data.darkMode) { localStorage.setItem('dark_mode', data.darkMode); applyDarkMode(data.darkMode); }
-          if (data.supabaseConfig && data.supabaseConfig.url && data.supabaseConfig.key) {
-            saveSupabaseConfig(data.supabaseConfig);
-          }
-        }
-        refreshUI(); showToast('\u6570\u636e\u5bfc\u5165\u6210\u529f');
-      } else { showToast('\u6587\u4ef6\u683c\u5f0f\u65e0\u6548'); }
-    } catch(e) { showToast('\u6587\u4ef6\u89e3\u6790\u5931\u8d25'); }
+    applyImportData(e.target.result);
   };
   reader.readAsText(file);
   event.target.value = '';
@@ -1392,6 +1421,55 @@ function showEffectsGuide() {
   showModal('\u7279\u6548\u8bf4\u660e', '<div style="font-size:0.8125rem;line-height:1.8;"><b>\u8fbe\u6807\u70df\u82b1</b><br>\u4eca\u65e5\u559d\u6c34\u91cf\u8fbe\u5230\u76ee\u6807\u65f6\u89e6\u53d1<br><br><b>\u8d85\u989d\u6c34\u82b1</b><br>\u8fbe\u6807\u540e\u7ee7\u7eed\u559d\u6c34\u89e6\u53d1</div>', [{ text: '\u77e5\u9053\u4e86', cls: 'btn-confirm', action: hideModal }]);
 }
 
+/* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
+ * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
+var APP_CHANGELOG = [
+  '## v2.0.1 — 提醒修复与全面屏适配（2026-08-14）',
+  '### 🐛 修复',
+  '- **提醒被系统大幅延迟** — setInexactRepeating 在 Android 12+ 会被系统省电对齐（延迟 45 秒~2 分钟）；改为 setExactAndAllowWhileIdle 一次性精确闹钟 + 触发后自行重排，实测误差约 10 毫秒',
+  '- **提醒相位漂移** — 首次触发时间对齐到整分钟，不再固定在设置时刻的秒数上',
+  '- **间隔错乱（每分钟循环）** — 触发后重排曾无视间隔值、只排下一个整分钟；修复为保持整分钟相位 + 间隔',
+  '- **点通知打开 App 导致提醒重置** — 页面启动不再重置闹钟，改由 BOOT_COMPLETED 系统广播恢复',
+  '- **顶部黑色空白条** — edge-to-edge 适配，状态栏区域与页面颜色一致',
+  '- **导入/导出数据 App 内不可用** — 原生桥接：导出写系统下载目录、导入走系统文件选择器',
+  '- **关于页更新日志不显示** — 内嵌完整日志，App 内无需网络',
+  '### ✨ 新增',
+  '- **开机自动恢复提醒** — 设备重启后自动重新注册提醒闹钟，无需手动打开 App',
+  '- **每周一自动保活** — 自动向 Supabase 发请求，防止免费项目因 7 天无请求被暂停',
+  '- **App 图标改为 Web 版风格** — 白底 + 蓝色渐变水杯',
+  '## v2.0.0 — Android 套壳版（2026-08-13）',
+  '- Android WebView 套壳（内嵌 Web 版全部功能：喝水记录、花园、排行榜、历史图表、设置、Supabase 同步）',
+  '- 喝水提醒：AlarmManager 定时通知 + JS 桥接（scheduleReminder / cancelReminder）',
+  '- Android 13+ 通知权限请求、崩溃自诊、全屏沉浸',
+  '## v1.5.2 — Safari 稳定版（Web 版）',
+  '- **sw.js 完整版还原** — 修复 Safari 白屏',
+  '- **吃药记录触发云端同步**、**周/月统计过滤 pill 记录**',
+  '- **schema 补齐 pill_today 字段**',
+  '## v1.5.1 — 问题修复（Web 版）',
+  '- 排行榜他人不显示修复、吃药记录 0ml 修复、日历日期颜色',
+  '## v1.5.0 — 吃药提醒（Web 版）',
+  '- 💊 吃药记录 + 排行榜药丸标记 + 记录混排',
+  '## v1.4.2 — 问题修复（Web 版）',
+  '- 主页记录删除叉、心情按钮、月份柱状图等修复；sipAmount 可调',
+  '## v1.4.1 — 自动同步+离线支持（Web 版）',
+  '- 网络监听自动推送、Service Worker 离线支持',
+  '## v1.4.0 — 日历交互+深色模式（Web 版）',
+  '- 日历可点/翻月、15ml 小口按钮、排行榜本周/本月、深色模式、提醒周期可调、断开手表',
+  '## v1.3.0 — 零外部依赖（Web 版）',
+  '- 移除 CDN、修复 Safari 打不开、Upsert 409 修复',
+  '## v1.2.3 — 体验优化（Web 版）',
+  '- 心情帮助、记录折叠、排行榜整行可点',
+  '## v1.2.2 — 补选心情（Web 版）',
+  '- 记录可补选/更换心情',
+  '## v1.2.0 — 情绪记录（Web 版）',
+  '- 喝水选表情记录心情、查看他人记录',
+  '## v1.1.1 — 排行榜刷新按钮（Web 版）',
+  '## v1.1.0 — Supabase 在线排行榜（Web 版）',
+  '- 接入 Supabase 云数据库、PWA 安装修复',
+  '## v1.0.0 — 初始版本（Web 版）',
+  '- 喝水记录、养成花园、排行榜、统计图表、设置、动画特效'
+].join('\n');
+
 function showAboutDialog() {
   var uid = localStorage.getItem('drink_water_user_id') || '\u672a\u751f\u6210';
   showModal('\u5173\u4e8e\u5e94\u7528',
@@ -1401,18 +1479,18 @@ function showAboutDialog() {
     '\u5e2e\u52a9\u60a8\u517b\u6210\u5065\u5eb7\u7684\u996e\u6c34\u4e60\u60ef' +
     '<br><br>' +
     '<span style="font-size:0.625rem;color:#999;word-break:break-all;">ID: ' + uid + '</span>' +
-    '<div id="aboutChangelog" style="max-height:320px;overflow-y:auto;border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:0.75rem;line-height:1.7;text-align:left;"><div style="text-align:center;color:#999;padding:10px;">加载中...</div></div>' +
+    '<div id="aboutChangelog" style="max-height:320px;overflow-y:auto;-webkit-overflow-scrolling:touch;border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:0.75rem;line-height:1.7;text-align:left;"><div style="text-align:center;color:#999;padding:10px;">加载中...</div></div>' +
     '</div>',
     [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]
   );
+  /* 先渲染内嵌日志（App 内 file:// 环境 fetch 不到 CHANGELOG.md），浏览器在线时再用在线文件覆盖 */
+  renderChangelog(APP_CHANGELOG);
   fetch('CHANGELOG.md').then(function(resp) {
     if (!resp.ok) throw new Error();
     return resp.text();
   }).then(function(md) {
     renderChangelog(md);
-  }).catch(function() {
-    renderChangelog(null);
-  });
+  }).catch(function() {});
 }
 
 function renderChangelog(md) {
@@ -1505,11 +1583,13 @@ function loadAll() {
     } else if (Notification.permission === 'default') {
       Notification.requestPermission().then(function(p) {
         if (p === 'granted' && typeof startReminder === 'function') { startReminder(); }
-      });
+      }).catch(function() {});
     }
   }
   var todayKey = getDateKey(new Date());
   if (gState.lastExcessDateKey !== todayKey) { gState.todayExcessCount = 0; gState.lastExcessDateKey = todayKey; }
+  /* 注意：App 内不再在启动时调用 syncAndroidReminder()——避免把已排好的闹钟反复重置；
+     App 启动恢复由原生 ReminderReceiver.restoreAfterReboot() 负责（保持相位） */
   refreshUI();
   /* 启动后尝试从云端合并今日记录（每个会话仅一次） */
   if (!window._cloudMergedToday) {
@@ -1750,9 +1830,16 @@ function updateSettingsUI() {
   if (sbDesc) { sbDesc.textContent = isSupabaseConfigured() ? '\u2705 \u5df2\u8fde\u63a5' : '\u26a0\ufe0f \u672a\u914d\u7f6e'; }
   /* 更新版本号 */
   var verDesc = document.getElementById('settingVersionDesc');
-  if (verDesc) verDesc.textContent = '\u559d\u676f\u6c34\u5427 ' + APP_VERSION;
+  if (verDesc) verDesc.textContent = '\u5495\u561f ' + APP_VERSION;
   var intervalDesc = document.getElementById('settingIntervalDesc');
   if (intervalDesc) { intervalDesc.textContent = '每 ' + (s.reminderInterval || 30) + ' \u5206\u949f'; }
+  /* 提醒时段显示 */
+  var winDesc = document.getElementById('settingWindowDesc');
+  if (winDesc) {
+    var sh = typeof s.startHour === 'number' ? s.startHour : 8;
+    var eh = typeof s.endHour === 'number' ? s.endHour : 22;
+    winDesc.textContent = (sh < 10 ? '0' : '') + sh + ':00 - ' + (eh < 10 ? '0' : '') + eh + ':00';
+  }
   /* 断开手表按钮状态 */
   var disconnected = isWatchDisconnected();
   var watchDesc = document.getElementById('watchDisconnectDesc');
@@ -1830,8 +1917,32 @@ function showCustomAmountDialog() {
   setTimeout(function() { var e = document.getElementById('customSettingInput'); if (e) e.focus(); }, 100);
 }
 
+/* ── Android 原生桥接（喝水提醒 → AlarmManager，WebView App 内生效） ── */
+function isAndroidApp() {
+  return typeof AndroidBridge !== 'undefined';
+}
+function syncAndroidReminder() {
+  if (!isAndroidApp()) return;
+  try {
+    if (gState.settings.enableReminder) {
+      AndroidBridge.scheduleReminder(gState.settings.reminderInterval || 30, gState.settings.startHour, gState.settings.endHour);
+    } else {
+      AndroidBridge.cancelReminder();
+    }
+  } catch (e) {}
+}
+
 function toggleReminder() {
   var newVal = !gState.settings.enableReminder;
+  if (isAndroidApp()) {
+    /* App 内：走原生 AlarmManager 定时通知，绕过 WebView 不可靠的 Notification API */
+    gState.settings.enableReminder = newVal;
+    saveSettings(gState.settings);
+    updateSettingsUI();
+    syncAndroidReminder();
+    showToast(newVal ? '\u559d\u6c34\u63d0\u9192\u5df2\u5f00\u542f\uff08\u539f\u751f\u5b9a\u65f6\u901a\u77e5\uff09' : '\u559d\u6c34\u63d0\u9192\u5df2\u5173\u95ed');
+    return;
+  }
   if (newVal) {
     if (typeof Notification !== 'undefined') {
       if (Notification.permission === 'granted') { gState.settings.enableReminder = true; saveSettings(gState.settings); updateSettingsUI(); startReminder(); showToast('\u559d\u6c34\u63d0\u9192\u5df2\u5f00\u542f'); }
@@ -1868,9 +1979,20 @@ function addPill() {
 }
 
 function startReminder() {
+  if (isAndroidApp()) { return; } /* App 内由 AlarmManager 调度，无需 JS setInterval */
   if (window._reminderInterval) { clearInterval(window._reminderInterval); }
   var intervalMin = gState.settings.reminderInterval || 30;
+  /* 时段内才弹通知（与 App 原生提醒保持一致） */
+  var inWindow = function() {
+    var h = new Date().getHours();
+    var sh = typeof gState.settings.startHour === 'number' ? gState.settings.startHour : 8;
+    var eh = typeof gState.settings.endHour === 'number' ? gState.settings.endHour : 22;
+    if (sh === eh) return true;                       /* 全天 */
+    if (sh < eh) return h >= sh && h < eh;            /* 当天时段 */
+    return h >= sh || h < eh;                         /* 跨天时段 */
+  };
   var notify = function() {
+    if (!inWindow()) return;
     if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
       new Notification('\u559d\u6c34\u63d0\u9192', { body: '\u8be5\u559d\u6c34\u5566\uff01\u4fdd\u6301\u6c34\u5206\u6444\u5165\uff0c\u8ba9\u8eab\u4f53\u66f4\u5065\u5eb7\uff5e' });
     }
@@ -1900,11 +2022,51 @@ function showReminderIntervalDialog() {
         stopReminder();
         startReminder();
       }
+      syncAndroidReminder(); /* App 内同步新周期到 AlarmManager */
       hideModal();
       showToast('提醒周期已更新');
     }}]
   );
   setTimeout(function() { var e = document.getElementById('reminderIntervalInput'); if (e) e.focus(); }, 100);
+}
+
+/* 提醒时段选择辅助：生成 0-23 小时下拉选项 */
+function windowHourOptions(sel) {
+  var h = '';
+  for (var i = 0; i < 24; i++) {
+    var label = (i < 10 ? '0' : '') + i + ':00';
+    h += '<option value="' + i + '"' + (i === sel ? ' selected' : '') + '>' + label + '</option>';
+  }
+  return h;
+}
+
+/* 提醒时段设置弹窗（支持跨天，如 22:00-08:00 表示夜间提醒） */
+function showReminderWindowDialog() {
+  var s = gState.settings;
+  var sh = typeof s.startHour === 'number' ? s.startHour : 8;
+  var eh = typeof s.endHour === 'number' ? s.endHour : 22;
+  showModal('提醒时段',
+    '<div style="font-size:0.8125rem;color:#666;margin-bottom:10px;">仅在设定时段内提醒，避免夜间打扰</div>' +
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">' +
+    '<select id="rwStart" style="flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;">' + windowHourOptions(sh) + '</select>' +
+    '<span style="color:#999;">至</span>' +
+    '<select id="rwEnd" style="flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;">' + windowHourOptions(eh) + '</select></div>' +
+    '<div style="font-size:0.75rem;color:#999;margin-top:6px;">支持跨天：如 22:00 - 08:00 表示夜间也提醒</div>',
+    [{ text: '取消', cls: 'btn-cancel', action: hideModal },
+     { text: '保存', cls: 'btn-confirm', action: function() {
+      gState.settings.startHour = parseInt(document.getElementById('rwStart').value);
+      gState.settings.endHour = parseInt(document.getElementById('rwEnd').value);
+      saveSettings(gState.settings);
+      updateSettingsUI();
+      syncAndroidReminder(); /* App 内同步新时段到 AlarmManager */
+      if (!isAndroidApp() && gState.settings.enableReminder) {
+        stopReminder();
+        startReminder();
+      }
+      hideModal();
+      showToast('提醒时段已更新');
+    }}]
+  );
 }
 
 function setDarkMode(mode) {
@@ -1995,7 +2157,7 @@ function showNicknameDialog() {
 
 function switchTab(idx) {
   var pages = ['page-home', 'page-garden', 'page-leaderboard', 'page-history', 'page-settings'];
-  var titles = ['喝杯水吧 💧', '我的花园 🌱', '排行榜 🏆', '喝水历史 📊', '设置 ⚙️'];
+  var titles = ['咕嘟 💧', '我的花园 🌱', '排行榜 🏆', '喝水历史 📊', '设置 ⚙️'];
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.getElementById(pages[idx]).classList.add('active');
   document.getElementById('appbarTitle').textContent = titles[idx];
