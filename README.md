@@ -1,6 +1,6 @@
-# 喝杯水吧 — Oppo Watch 2 移植版
+# 💧 咕嘟（Glug-water）— Oppo Watch 2 移植版
 
-将 Web 版喝水记录应用（[原项目](https://github.com/kidnappe/drink-water-web)）移植为 Oppo Watch 2 可安装的 APK。
+将 Web 版喝水记录应用（[原项目](https://github.com/kidnappe/glug-water)）移植为 Oppo Watch 2 可安装的 APK。
 
 > 本仓库是 `watch` 分支，与 Web 版主分支共享同一个 GitHub 仓库。
 > Web 版请切到 `master`（或 `main`）分支查看。

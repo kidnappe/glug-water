@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<title>喝水 · 手表版</title>
+<title>咕嘟 · 手表版</title>
 <!-- 去掉 CDN 依赖；图表用极简自绘 -->
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -237,7 +237,7 @@ body.light .reminder-opt .ro-desc{color:#8a9aaa;}
 <body>
 
 <div class="appbar">
-  <span id="appbarTitle">💧 喝水</span>
+  <span id="appbarTitle">💧 咕嘟</span>
   <span class="sub" id="motivationMsg"></span>
 </div>
 
@@ -1452,7 +1452,7 @@ function selectMood(el){
 /* === Tab 切换 === */
 function switchTab(idx){
   var pages=['page-home','page-garden','page-history','page-leaderboard','page-settings'];
-  var titles=['💧 喝水','🌱 花园','📊 历史','🏆 排行','⚙️ 设置'];
+  var titles=['💧 咕嘟','🌱 花园','📊 历史','🏆 排行','⚙️ 设置'];
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.getElementById(pages[idx]).classList.add('active');
   document.getElementById('appbarTitle').textContent=titles[idx];
