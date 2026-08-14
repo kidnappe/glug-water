@@ -69,7 +69,7 @@
 
     直接打开
 
-在线版：[https://kidnappe.github.io/drink-water-web/](https://kidnappe.github.io/drink-water-web/)
+在线版：[https://kidnappe.github.io/glug-water/](https://kidnappe.github.io/glug-water/)
 
 或把 `index.html` 下载到本地扔到浏览器即可使用。所有数据保存在浏览器本地。
 

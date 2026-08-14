@@ -12,7 +12,7 @@
 | 组件 | 路径 | 说明 |
 |------|------|------|
 | Web 版 | `index.html` | **全部代码都在这个单文件里**（HTML + CSS + JS） |
-| 手表版 | `D:\project\drink-water-watch\index.html` | Android WebView（Chrome 61） |
+| 手表版 | `E:\code\drink-water-watch\index.html` | Android WebView（Chrome 61） |
 | 后端 | Supabase | 排行榜 + 设备配对 + 数据同步（可选配置） |
 | 部署 | GitHub Pages | 推送 main 分支自动部署 |
 

@@ -1,9 +1,9 @@
 # 🚰 喝杯水吧 — 会话存档
 
 > 生成时间：2026-06-16
-> 项目路径：`D:\project\drink-water-web\`
-> 部署地址：`https://kidnappe.github.io/drink-water-web/`
-> 仓库：`kidnappe/drink-water-web`（GitHub Pages）
+> 项目路径：`E:\code\glug-water\`
+> 部署地址：`https://kidnappe.github.io/glug-water/`
+> 仓库：`kidnappe/glug-water`（GitHub Pages）
 
 ---
 
@@ -12,7 +12,7 @@
 ### 文件结构
 
 ```
-D:\project\drink-water-web\
+E:\code\glug-water\
 ├── index.html              ← 全部功能（单页 HTML，~810KB JS+CSS）
 ├── manifest.json           ← PWA 配置
 ├── sw.js                   ← Service Worker（网络优先，离线回退）
