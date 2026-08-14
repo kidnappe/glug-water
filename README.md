@@ -10,8 +10,8 @@
 ## 功能
 
 - ✅ 与 Web 版功能完全一致（喝水记录、花园、排行榜、历史图表、设置、Supabase 同步）
-- ✅ **喝水提醒走原生 AlarmManager**：`setInexactRepeating` 定时通知 + 通知渠道，App 被杀也生效
-- ✅ 提醒间隔 1-60 分钟可调（设置 → 喝水提醒 / 提醒周期）
+- ✅ **喝水提醒走原生 AlarmManager**：精确闹钟（`setExactAndAllowWhileIdle`）+ 通知渠道，App 被杀也生效
+- ✅ 提醒间隔 1-60 分钟可调 + **提醒时段**（默认 08:00-22:00，支持跨天）
 - ✅ Android 13+ 自动请求通知权限
 - ✅ 启动崩溃自诊（上次闪退下次启动直接显示原因）
 - ✅ 全屏沉浸式界面
@@ -19,10 +19,10 @@
 ## 项目结构
 
 ```
-drink-water-app/
+glug-water-app/
 ├── android/                          ← Android WebView 壳工程（Gradle）
 │   ├── app/src/main/
-│   │   ├── assets/www/index.html     ← Web 版页面（⚠️ 从 drink-water-web 同步，勿直接改）
+│   │   ├── assets/www/index.html     ← Web 版页面（⚠️ 从 glug-water 同步，勿直接改）
 │   │   ├── java/com/drinkwater/web/
 │   │   │   ├── MainActivity.java     # WebView 入口 + 全屏 + 通知权限请求
 │   │   │   ├── ReminderBridge.java   # JS ↔ Java 桥（scheduleReminder / cancelReminder / vibrate）
