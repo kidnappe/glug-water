@@ -511,7 +511,7 @@
 </nav>
 
 <script>
-var APP_VERSION = 'v1.5.2';
+var APP_VERSION = 'v2.1.1';
 var STORAGE_KEY = 'drink_water_data';
 var SETTINGS_KEY = 'drink_water_settings';
 var SUPABASE_CONFIG_KEY = 'drink_water_supabase';
@@ -1424,6 +1424,16 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.1.1 — 体验修复（2026-08-15）',
+  '### 🐛 修复',
+  '- **深色模式跟随系统机制检查** — auto 逻辑核对（跟随系统 prefers-color-scheme）；系统深浅切换监听兼容老 WebView',
+  '- **全面屏左滑返回失效** — 修复手势返回：页面可回退则回退、否则退出到桌面',
+  '### ✨ 新增',
+  '- **提醒语句多样化** — 新增 10 条喝水提醒语句，每次随机一条',
+  '## v2.1.0 — 提醒时段 + 更名咕嘟（2026-08-14）',
+  '### ✨ 新增',
+  '- **提醒时段** — 默认 08:00-22:00，支持跨天（22:00-08:00 夜间模式），时段外静默',
+  '- **应用更名咕嘟（Glug-water）**',
   '## v2.0.1 — 提醒修复与全面屏适配（2026-08-14）',
   '### 🐛 修复',
   '- **提醒被系统大幅延迟** — setInexactRepeating 在 Android 12+ 会被系统省电对齐（延迟 45 秒~2 分钟）；改为 setExactAndAllowWhileIdle 一次性精确闹钟 + 触发后自行重排，实测误差约 10 毫秒',
@@ -1994,7 +2004,7 @@ function startReminder() {
   var notify = function() {
     if (!inWindow()) return;
     if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-      new Notification('\u559d\u6c34\u63d0\u9192', { body: '\u8be5\u559d\u6c34\u5566\uff01\u4fdd\u6301\u6c34\u5206\u6444\u5165\uff0c\u8ba9\u8eab\u4f53\u66f4\u5065\u5eb7\uff5e' });
+      new Notification('\u559d\u6c34\u63d0\u9192', { body: randomReminderMessage() });
     }
   };
   notify();
@@ -2003,6 +2013,23 @@ function startReminder() {
 
 function stopReminder() {
   if (window._reminderInterval) { clearInterval(window._reminderInterval); window._reminderInterval = null; }
+}
+
+/* 喝水提醒语句库（每次随机取一条，替换固定文案） */
+var REMINDER_MESSAGES = [
+  '\u8bb0\u5f97\u8865\u5145\u6c34\u5206\u54e6 \uD83D\uDCA7',
+  '\u559d\u4e00\u53e3\u6c34\u5427\uff0c\u8eab\u4f53\u66f4\u5065\u5eb7\uff5e',
+  '\u7ed9\u81ea\u5df1\u559d\u70b9\u6c34\u5427 \uD83D\uDCA7',
+  '\u6c34\u5206\u4e0d\u8db3\u4e86\uff0c\u5feb\u8865\u6c34\uff01',
+  '\u559d\u6c34\u65f6\u95f4\u5230\u5566\uff0c\u52a0\u6cb9\u54e6\uff01',
+  '\u8eab\u4f53\u5728\u547c\u5524\u6c34\u6e90\uff0c\u6765\u4e00\u53e3\u5427',
+  '\u5c0f\u53e3\u559d\u4e00\u53e3\uff0c\u7f13\u6162\u8865\u6c34\u66f4\u8212\u670d',
+  '\u8bb0\u5f97\u968f\u65f6\u8865\u5145\u6c34\u5206\u54e6\uff01',
+  '\u559d\u70b9\u6c34\u518d\u7ee7\u7eed\u5427\uff0c\u8eab\u4f53\u4f1a\u611f\u8c22\u4f60\u7684',
+  '\u4e00\u53e3\u6c34\uff0c\u4e00\u4efd\u5065\u5eb7\uff0c\u52a0\u6cb9\uff01'
+];
+function randomReminderMessage() {
+  return REMINDER_MESSAGES[Math.floor(Math.random() * REMINDER_MESSAGES.length)];
 }
 
 /* 提醒周期设置弹窗 */
@@ -2084,6 +2111,7 @@ function toggleDarkMode() {
 }
 
 function applyDarkMode(mode) {
+  /* 机制：on=强制深色；off=强制浅色；auto=跟随系统（prefers-color-scheme） */
   var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   document.body.classList.toggle('dark-mode', mode === 'on' || (mode === 'auto' && prefersDark));
 }
@@ -2616,7 +2644,13 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 <script>
-if (window.matchMedia) { window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() { applyDarkMode(localStorage.getItem('dark_mode') || 'auto'); }); }
+if (window.matchMedia) {
+  var _darkMq = window.matchMedia('(prefers-color-scheme: dark)');
+  var _onDarkChange = function() { applyDarkMode(localStorage.getItem('dark_mode') || 'auto'); };
+  /* 兼容老 WebView：优先 addEventListener，不支持则回退 addListener */
+  if (_darkMq.addEventListener) { _darkMq.addEventListener('change', _onDarkChange); }
+  else if (_darkMq.addListener) { _darkMq.addListener(_onDarkChange); }
+}
 </script>
 </body>
 </html>
