@@ -10,6 +10,21 @@
 
 ---
 
+## v2.1.2 — 深色模式跟随系统加固（2026-08-15）
+
+### 🐛 修复
+
+- **深色模式「跟随系统」不可靠** — 不再依赖 WebView 的 `prefers-color-scheme`（部分设备/WebView 兼容问题），改为原生读取系统 `uiMode` 注入页面：auto 模式优先使用原生判断，回退 matchMedia
+- **系统深浅切换不实时跟随** — Manifest 注册 `uiMode` 配置变更监听，系统切深浅（含定时深色模式到点）时页面立即重新应用，无需重启 App
+- **双重暗化** — 禁用 WebView `setForceDark`，页面深浅完全由 CSS 控制
+
+### 🔧 技术改动
+
+- `MainActivity`：新增 `injectSystemDark()`（onPageFinished 注入 + onConfigurationChanged 实时更新）、`setForceDark(FORCE_DARK_OFF)`
+- `index.html`：新增 `window.__setSystemDark()` 入口，`applyDarkMode('auto')` 优先原生注入值
+
+---
+
 ## v2.1.1 — 体验修复（2026-08-15）
 
 ### 🐛 修复

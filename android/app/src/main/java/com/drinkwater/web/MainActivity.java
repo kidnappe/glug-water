@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -77,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
             settings.setDisplayZoomControls(false);
             settings.setMinimumFontSize(8);
             settings.setTextZoom(100);
+            /* 禁用 WebView 强制暗化：页面深浅完全由 CSS 控制，避免系统深色时双重暗化 */
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                settings.setForceDark(WebSettings.FORCE_DARK_OFF);
+            }
 
             String ua = settings.getUserAgentString();
             settings.setUserAgentString(ua + " DrinkWaterWeb/1.0");
@@ -87,6 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                     return false;
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    /* 页面加载完成后注入系统深浅状态（供 auto 模式可靠跟随） */
+                    injectSystemDark();
                 }
 
                 @Override
@@ -192,6 +203,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         /* Android 15+ edge-to-edge 已由 WindowCompat.setDecorFitsSystemWindows(false) 处理，无需旧 flag */
+    }
+
+    /* 系统深浅切换（定时深色模式/手动切换时触发）：重新注入并让页面 auto 模式跟随 */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        injectSystemDark();
+    }
+
+    /* 读取系统当前是否为深色，注入页面 window.__setSystemDark() */
+    private void injectSystemDark() {
+        if (webView == null) return;
+        try {
+            boolean dark = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                    == Configuration.UI_MODE_NIGHT_YES;
+            final String js = "window.__setSystemDark(" + dark + ");";
+            webView.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.evaluateJavascript(js, null);
+                }
+            });
+        } catch (Exception e) {
+            Log.e(TAG, "injectSystemDark failed", e);
+        }
     }
 
     /* 导入数据：文件选择器返回后读取 JSON，注入页面 handleNativeImport() */
