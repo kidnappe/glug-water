@@ -511,7 +511,7 @@
 </nav>
 
 <script>
-var APP_VERSION = 'v2.1.1';
+var APP_VERSION = 'v2.1.2';
 var STORAGE_KEY = 'drink_water_data';
 var SETTINGS_KEY = 'drink_water_settings';
 var SUPABASE_CONFIG_KEY = 'drink_water_supabase';
@@ -1424,6 +1424,10 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.1.2 — 深色模式跟随系统加固（2026-08-15）',
+  '### 🐛 修复',
+  '- **深色模式跟随系统不可靠** — 原生读取系统 uiMode 注入页面，auto 模式不再依赖 WebView prefers-color-scheme',
+  '- **系统切换实时跟随** — 定时深色模式到点/手动切换时页面立即跟随，无需重启',
   '## v2.1.1 — 体验修复（2026-08-15）',
   '### 🐛 修复',
   '- **深色模式跟随系统机制检查** — auto 逻辑核对（跟随系统 prefers-color-scheme）；系统深浅切换监听兼容老 WebView',
@@ -2110,10 +2114,19 @@ function toggleDarkMode() {
   setDarkMode(next);
 }
 
+/* 原生注入的系统深浅状态（App 内 MainActivity 提供，比 WebView prefers-color-scheme 更可靠） */
+var __systemDark = null;
+window.__setSystemDark = function(v) {
+  __systemDark = !!v;
+  /* auto 模式下系统深浅变化时立即重新应用 */
+  if ((localStorage.getItem('dark_mode') || 'auto') === 'auto') { applyDarkMode('auto'); }
+};
+
 function applyDarkMode(mode) {
-  /* 机制：on=强制深色；off=强制浅色；auto=跟随系统（prefers-color-scheme） */
+  /* 机制：on=强制深色；off=强制浅色；auto=跟随系统（优先原生注入值，回退 prefers-color-scheme） */
   var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  document.body.classList.toggle('dark-mode', mode === 'on' || (mode === 'auto' && prefersDark));
+  var systemDark = (__systemDark !== null) ? __systemDark : prefersDark;
+  document.body.classList.toggle('dark-mode', mode === 'on' || (mode === 'auto' && systemDark));
 }
 
 function showModal(title, body, actions) {
