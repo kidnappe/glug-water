@@ -180,6 +180,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        /* 修复全面屏手势返回失效：页面可回退则回退，否则正常退出（回桌面） */
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack();
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override

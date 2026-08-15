@@ -52,6 +52,21 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
     }
 
+    /* 喝水提醒语句库（每次随机取一条） */
+    private static final String[] MESSAGES = {
+            "\u8BB0\u5F97\u8865\u5145\u6C34\u5206\u54E6 \uD83D\uDCA7",
+            "\u559D\u4E00\u53E3\u6C34\u5427\uFF0C\u8EAB\u4F53\u66F4\u5065\u5EB7\uFF5E",
+            "\u7ED9\u81EA\u5DF1\u559D\u70B9\u6C34\u5427 \uD83D\uDCA7",
+            "\u6C34\u5206\u4E0D\u8DB3\u4E86\uFF0C\u5FEB\u8865\u6C34\uFF01",
+            "\u559D\u6C34\u65F6\u95F4\u5230\u5566\uFF0C\u52A0\u6CB9\u54E6\uFF01",
+            "\u8EAB\u4F53\u5728\u547C\u5524\u6C34\u6E90\uFF0C\u6765\u4E00\u53E3\u5427",
+            "\u5C0F\u53E3\u559D\u4E00\u53E3\uFF0C\u7F13\u6162\u8865\u6C34\u66F4\u8212\u670D",
+            "\u8BB0\u5F97\u968F\u65F6\u8865\u5145\u6C34\u5206\u54E6\uFF01",
+            "\u559D\u70B9\u6C34\u518D\u7EE7\u7EED\u5427\uFF0C\u8EAB\u4F53\u4F1A\u611F\u8C22\u4F60\u7684",
+            "\u4E00\u53E3\u6C34\uFF0C\u4E00\u4EFD\u5065\u5EB7\uFF0C\u52A0\u6CB9\uFF01"
+    };
+    private static final java.util.Random RANDOM = new java.util.Random();
+
     private void showNotification(Context context) {
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         ensureChannel(nm);
@@ -61,10 +76,12 @@ public class ReminderReceiver extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getActivity(context, 0, launchIntent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
+        String message = MESSAGES[RANDOM.nextInt(MESSAGES.length)];
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
                 .setContentTitle("\u5495\u561F\uFF5E\u8BE5\u559D\u6C34\u4E86\uFF01")
-                .setContentText("\u8BB0\u5F97\u8865\u5145\u6C34\u5206\u54E6 \uD83D\uDCA7")
+                .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pi)
                 .setAutoCancel(true)
