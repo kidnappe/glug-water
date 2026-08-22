@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -26,7 +27,19 @@ import androidx.core.view.WindowCompat;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
     private ValueCallback<Uri[]> mFilePathCallback;
     private static final String TAG = "DrinkWater";
     private static final int REQ_FILE_CHOOSER = 2002;
+
+    /* ========== 热更新配置 ==========
+     * 机制：启动先加载本地版本（已下载新版 > 内置兜底版），后台比对远程 version.txt，
+     *       有新版则下载 www.zip 解压到私有目录，下次加载即生效；任何失败静默回退，不影响启动。
+     * 远程文件由 Web 仓库根目录 build-www.py 生成，推送后 GitHub Pages 自动部署。 */
+    private static final String UPDATE_BASE = "https://kidnappe.github.io/glug-water/";
+    private static final String UPDATE_VERSION_URL = UPDATE_BASE + "version.txt";
+    private static final String UPDATE_ZIP_URL = UPDATE_BASE + "www.zip";
+    private static final String PREFS_NAME = "drink_water_update";
+    private static final String PREFS_APPLIED_VERSION = "applied_version";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -154,7 +177,9 @@ public class MainActivity extends AppCompatActivity {
             // 但确保每周一保活闹钟已调度（幂等，防数据库暂停）
             KeepAliveReceiver.ensureScheduled(this);
 
-            webView.loadUrl("file:///android_asset/www/index.html");
+            // 先加载本地可用版本（秒开），再后台检查更新
+            loadLocalPage();
+            checkForUpdateAsync();
 
         } catch (Exception e) {
             Log.e(TAG, "onCreate crashed", e);
@@ -169,6 +194,192 @@ public class MainActivity extends AppCompatActivity {
                         "text/html", "UTF-8", null);
             }
         }
+    }
+
+    /* ========== 页面加载 ========== */
+
+    /** 加载本地可用版本：优先私有目录已下载的新版，否则回退内置 assets 版（断网兜底） */
+    private void loadLocalPage() {
+        File localIndex = new File(getFilesDir(), "www/index.html");
+        if (localIndex.exists()) {
+            webView.loadUrl(Uri.fromFile(localIndex).toString());
+            Log.d(TAG, "load local updated page: " + localIndex.getAbsolutePath());
+        } else {
+            webView.loadUrl("file:///android_asset/www/index.html");
+        }
+    }
+
+    /* ========== 热更新 ========== */
+
+    /** 后台检查远程版本，有新版则下载解压并重载页面（失败静默，绝不影响启动） */
+    private void checkForUpdateAsync() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String remote = fetchVersion();
+                    if (remote == null) return; // 网络失败/文件不存在 → 保持现状
+
+                    SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+                    String applied = prefs.getString(PREFS_APPLIED_VERSION, null);
+                    if (applied != null && compareVersion(remote, applied) <= 0) return; // 已是最新
+
+                    File zip = new File(getCacheDir(), "www.zip");
+                    if (!downloadFile(UPDATE_ZIP_URL, zip)) return;
+                    boolean ok = unzipToPrivateDir(zip);
+                    zip.delete();
+                    if (!ok) return;
+
+                    prefs.edit().putString(PREFS_APPLIED_VERSION, remote).apply();
+                    Log.d(TAG, "update applied: " + remote);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (webView != null) {
+                                /* 若当前正显示内置兜底页，重载到新版；若已是最新则无需动作 */
+                                webView.reload();
+                            }
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.e(TAG, "update check failed", e);
+                }
+            }
+        }).start();
+    }
+
+    /** 拉取远程版本号（version.txt 首行），失败返回 null */
+    private String fetchVersion() {
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL(UPDATE_VERSION_URL);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(8000);
+            conn.setReadTimeout(15000);
+            conn.setRequestMethod("GET");
+            conn.setInstanceFollowRedirects(true);
+            if (conn.getResponseCode() != 200) return null;
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+            String line = br.readLine();
+            br.close();
+            return line == null ? null : line.trim();
+        } catch (Exception e) {
+            Log.e(TAG, "fetch version failed", e);
+            return null;
+        } finally {
+            if (conn != null) conn.disconnect();
+        }
+    }
+
+    /** 下载远程文件到本地，成功返回 true */
+    private boolean downloadFile(String urlStr, File target) {
+        HttpURLConnection conn = null;
+        try {
+            URL url = new URL(urlStr);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(8000);
+            conn.setReadTimeout(30000);
+            conn.setRequestMethod("GET");
+            conn.setInstanceFollowRedirects(true);
+            if (conn.getResponseCode() != 200) return false;
+            InputStream is = new BufferedInputStream(conn.getInputStream());
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(target));
+            byte[] buf = new byte[8192];
+            int n;
+            while ((n = is.read(buf)) > 0) os.write(buf, 0, n);
+            os.close();
+            is.close();
+            return target.length() > 0;
+        } catch (Exception e) {
+            Log.e(TAG, "download failed: " + urlStr, e);
+            if (target.exists()) target.delete();
+            return false;
+        } finally {
+            if (conn != null) conn.disconnect();
+        }
+    }
+
+    /** 解压 www.zip 到私有目录：先写临时目录，成功后原子替换 www/，防止半成品 */
+    private boolean unzipToPrivateDir(File zip) {
+        File base = getFilesDir();
+        File tmp = new File(base, "www_tmp");
+        File target = new File(base, "www");
+        try {
+            deleteRecursive(tmp);
+            ZipInputStream zis = new ZipInputStream(new BufferedInputStream(new FileInputStream(zip)));
+            ZipEntry entry;
+            while ((entry = zis.getNextEntry()) != null) {
+                String name = entry.getName();
+                /* zip slip 防护：拒绝跳出目标目录的路径 */
+                if (name.contains("..")) {
+                    zis.closeEntry();
+                    continue;
+                }
+                File out = new File(tmp, name);
+                if (entry.isDirectory()) {
+                    out.mkdirs();
+                    continue;
+                }
+                File parent = out.getParentFile();
+                if (parent != null) parent.mkdirs();
+                OutputStream os = new BufferedOutputStream(new FileOutputStream(out));
+                byte[] buf = new byte[8192];
+                int n;
+                while ((n = zis.read(buf)) > 0) os.write(buf, 0, n);
+                os.close();
+                zis.closeEntry();
+            }
+            zis.close();
+            if (!new File(tmp, "index.html").exists()) {
+                deleteRecursive(tmp);
+                return false;
+            }
+            deleteRecursive(target);
+            return tmp.renameTo(target);
+        } catch (Exception e) {
+            Log.e(TAG, "unzip failed", e);
+            deleteRecursive(tmp);
+            return false;
+        }
+    }
+
+    /** 递归删除文件/目录（只用于私有目录内） */
+    private void deleteRecursive(File f) {
+        if (f == null || !f.exists()) return;
+        if (f.isDirectory()) {
+            File[] children = f.listFiles();
+            if (children != null) {
+                for (File c : children) deleteRecursive(c);
+            }
+        }
+        f.delete();
+    }
+
+    /** 版本号比较（v1.2.3 三段数字），a>b 返回正数，a<b 返回负数，相等返回 0 */
+    private int compareVersion(String a, String b) {
+        int[] va = parseVersion(a);
+        int[] vb = parseVersion(b);
+        for (int i = 0; i < 3; i++) {
+            if (va[i] != vb[i]) return va[i] < vb[i] ? -1 : 1;
+        }
+        return 0;
+    }
+
+    /** 解析 "v2.3.0" → [2,3,0]，容错任意格式 */
+    private int[] parseVersion(String v) {
+        int[] out = new int[]{0, 0, 0};
+        if (v == null) return out;
+        String s = v.trim();
+        if (s.startsWith("v") || s.startsWith("V")) s = s.substring(1);
+        String[] parts = s.split("\\.");
+        for (int i = 0; i < parts.length && i < 3; i++) {
+            try {
+                out[i] = Integer.parseInt(parts[i].replaceAll("\\D", ""));
+            } catch (Exception e) {
+                out[i] = 0;
+            }
+        }
+        return out;
     }
 
     /** 显示上次崩溃的详细信息 */

@@ -10,6 +10,27 @@
 
 ---
 
+## v2.2.0 — 网页版热更新（2026-08-23）
+
+### 🚀 新功能
+
+- **网页更新不再需要重新构建 App** — App 启动时后台检查 GitHub Pages 上的版本号（`version.txt`），有新版则下载 `www.zip` 解压到私有目录并加载，实现「网页推送即更新」
+- **断网自动回退** — 热更新下载失败/无网络时，静默加载内置 assets 兜底版，不影响启动和日常使用
+- **数据无缝保留** — 热更新前后均走 `file://` 协议，本地数据与设置不受影响
+- **内置兜底版同步升级** — assets/www 从单文件 index.html 升级为完整资源树（含 icons/emoji 48 个图标），与 Web 版 v2.3.0 一致
+
+### 🔧 变更
+
+- `MainActivity.java` 新增热更新逻辑：版本比对（v x.y.z 三段数字）、`www.zip` 下载、临时目录解压后原子替换、失败静默回退
+- `sync-www.bat` 改为同步整个 www 目录（index.html + sw.js + manifest.json + icons/）
+- Web 仓库根目录新增 `build-www.py`：一键生成 `version.txt` + `www.zip`
+
+### 📦 配套（Web 仓库）
+
+- Web 版 v2.3.0 起，每次改版后运行 `python build-www.py` 并推送，App 即可自动跟进
+
+---
+
 ## v2.1.2 — 深色模式跟随系统加固（2026-08-15）
 
 ### 🐛 修复
