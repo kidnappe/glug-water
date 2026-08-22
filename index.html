@@ -12,28 +12,45 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --primary: #4A90E2;
-      --primary-dark: #3D7BD5;
-      --danger: #e74c3c;
-      --success: #4CAF50;
-      --warning: #FF9800;
-      --bg: #f0f4fb;
-      --text: #333;
-      --text-secondary: #999;
-      --border: #e0e0e0;
-      --border-light: #f0f0f0;
-      --card-bg: #fff;
-      --nav-bg: #fff;
+      /* ── 水感治愈 · 设计 Token ── */
+      --primary: #0FA896;              /* 主水青 */
+      --primary-dark: #0B7285;         /* 深水 */
+      --primary-light: #4FD1C5;        /* 水面浅色 */
+      --danger: #E5484D;
+      --success: #2F9E6E;              /* 花园绿（达标语义） */
+      --warning: #F59E0B;              /* 暖橙（大剂量/吃药语义） */
+      --bg: #EEFBF8;                   /* 浅水底 */
+      --text: #17212B;                 /* 墨色 */
+      --text-secondary: #5B6B78;
+      --text-tertiary: #8A9AA5;
+      --border: #D7EBE4;
+      --border-light: #E9F4EF;
+      --card-bg: rgba(255,255,255,.72);/* 玻璃卡 */
+      --nav-bg: rgba(255,255,255,.92);
+      --glass: rgba(255,255,255,.55);  /* 玻璃杯壁 */
+      /* 动效 Token */
+      --ease-spring: cubic-bezier(0.34,1.56,0.64,1);
+      --ease-out: cubic-bezier(0.23,1,0.32,1);
+      --dur-press: 120ms;
+      --dur-pop: 200ms;
+      --dur-water: 600ms;
+      /* 分层水感阴影 */
+      --shadow-card: 0 1px 2px rgba(15,168,150,.06), 0 4px 12px rgba(15,168,150,.08);
+      --shadow-pop: 0 2px 4px rgba(15,168,150,.08), 0 12px 32px rgba(15,168,150,.14);
     }
-    body { font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; }
+    html { background: #F7FDFB; color-scheme: light; }
+    body { font-family: -apple-system, 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(180deg, #F7FDFB 0%, #EEFBF8 100%); color: var(--text); max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     .page { display: none; padding: 16px 16px 80px; }
     .page.active { display: block; }
-    .appbar { background: var(--primary); color: #fff; padding: 10px 16px 8px; padding-top: calc(10px + env(safe-area-inset-top)); font-size: 1rem; font-weight: 600; text-align: center; position: sticky; top: 0; z-index: 10; }
-    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--nav-bg); display: flex; border-top: 1px solid var(--border); z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
-    .bottom-nav button { flex: 1; border: none; background: none; padding: 10px 0 8px; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; transition: color .2s; }
+    .appbar { background: linear-gradient(135deg, #0FA896 0%, #0B7285 100%); color: #fff; padding: 12px 16px 12px; padding-top: calc(12px + env(safe-area-inset-top)); font-size: 1rem; font-weight: 600; text-align: center; position: sticky; top: 0; z-index: 10; border-radius: 0 0 18px 18px; box-shadow: var(--shadow-pop); }
+    .appbar #appbarTitle { font-size: 1.0625rem; font-weight: 600; letter-spacing: .02em; }
+    .appbar #motivationMsg { font-size: .75rem; font-weight: 400; opacity: .85; margin-top: 2px; }
+    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--nav-bg); display: flex; border-top: 1px solid var(--border); z-index: 100; padding-bottom: env(safe-area-inset-bottom); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .bottom-nav button { flex: 1; border: none; background: none; padding: 10px 0 8px; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; transition: color var(--dur-pop) var(--ease-out); position: relative; }
     .bottom-nav button .icon { font-size: 1.375rem; }
-    .bottom-nav button.active { color: var(--primary); }
-    .lb-card { background: var(--card-bg); border-radius: 14px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,.06); margin-bottom: 12px; }
+    .bottom-nav button.active { color: var(--primary); font-weight: 600; }
+    .bottom-nav button.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+    .lb-card { background: var(--card-bg); border-radius: 16px; padding: 14px 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); margin-bottom: 12px; }
     .lb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .lb-header h3 { font-size: 0.9375rem; font-weight: 600; margin: 0; }
     .lb-refresh { font-size: 0.875rem; cursor: pointer; padding: 4px 8px; border-radius: 6px; border: none; background: var(--bg); color: var(--primary); transition: all .2s; flex-shrink: 0; margin-left: 6px; }
@@ -42,112 +59,115 @@
     .lb-refresh.spinning { animation: lbSpin .6s linear infinite; }
     @keyframes lbSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .lb-tabs { display: flex; gap: 4px; }
-    .lb-tabs button { padding: 4px 12px; border: 1px solid #ddd; border-radius: 6px; background: #fff; cursor: pointer; font-size: 0.75rem; transition: all .2s; color: #666; }
-    .lb-tabs button.active { background: #4A90E2; color: #fff; border-color: #4A90E2; }
-    .mood-help { font-size: 0.8125rem; cursor: pointer; margin-left: 6px; color: #4A90E2; opacity: .85; transition: opacity .2s; vertical-align: middle; background: #e8f0fe; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
-    .mood-help:hover { opacity: 1; background: #d0e2f8; }
-    .dark-mode .mood-help { color: #7bb3e8; background: rgba(74,144,226,.2); }
-    /* ── 深色模式完整样式 ── */
-    .dark-mode { background: #1a1a2e; color: #e0e0e0; --bg: #1a1a2e; --card-bg: #1e1e38; --nav-bg: #16213e; --border: #2a2a4a; --border-light: #2a2a4a; --text-secondary: #888; }
-    .dark-mode .appbar { background: #16213e; }
-    .dark-mode .bottom-nav { background: #16213e; border-color: #2a2a4a; }
-    .dark-mode .bottom-nav button { color: #666; }
-    .dark-mode .bottom-nav button.active { color: #7bb3e8; }
-    .dark-mode .card { background: #1e1e38; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
-    .dark-mode .card-title { color: #ccc; }
-    .dark-mode .lb-card { background: #1e1e38; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
-    .dark-mode .lb-item { background: #252545; border-color: #2a2a4a; }
-    .dark-mode .lb-item:nth-child(even) { background: #222240; }
-    .dark-mode .lb-item:hover { background: #2a2a50; }
-    .dark-mode .lb-me { background: #1a2a4a !important; border-color: #3a6aaa; }
-    .dark-mode .setting-item { border-color: #2a2a4a; }
-    .dark-mode .setting-item[style*="border-top"] { border-top-color: #2a2a4a !important; }
-    .dark-mode .setting-item[style*="border-bottom"] { border-bottom-color: #2a2a4a !important; }
-    .dark-mode .setting-label { color: #ddd; }
-    .dark-mode .setting-desc { color: #888; }
-    .dark-mode .setting-arrow { color: #555; }
-    .dark-mode .setting-switch { background: #444; }
+    .lb-tabs button { padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--card-bg); cursor: pointer; font-size: 0.75rem; transition: color var(--dur-pop) var(--ease-out), background var(--dur-pop) var(--ease-out), border-color var(--dur-pop) var(--ease-out); color: var(--text-secondary); }
+    .lb-tabs button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .mood-help { font-size: 0.8125rem; cursor: pointer; margin-left: 6px; color: var(--primary); opacity: .85; transition: opacity .2s; vertical-align: middle; background: rgba(15,168,150,.1); border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+    .mood-help:hover { opacity: 1; background: rgba(15,168,150,.18); }
+    .dark-mode .mood-help { color: #4FD1C5; background: rgba(15,168,150,.2); }
+    /* ── 深色模式（水青暗调 · 同一色相只调明度） ── */
+    .dark-mode { background: #0F1715; color: #E6F2EF; --bg: #0F1715; --card-bg: rgba(23,33,31,.92); --nav-bg: rgba(16,24,22,.94); --border: rgba(255,255,255,.08); --border-light: rgba(255,255,255,.05); --text: #E6F2EF; --text-secondary: #9FB5AD; --text-tertiary: #6E8A80; color-scheme: dark; }
+    .dark-mode .appbar { background: linear-gradient(135deg, #0B6B5E 0%, #0A5A66 100%); }
+    .dark-mode .bottom-nav { background: rgba(16,24,22,.94); border-color: rgba(255,255,255,.08); }
+    .dark-mode .bottom-nav button { color: #6E8A80; }
+    .dark-mode .bottom-nav button.active { color: #4FD1C5; }
+    .dark-mode .card { background: rgba(23,33,31,.92); box-shadow: none; border-color: rgba(255,255,255,.08); }
+    .dark-mode .card-title { color: #E6F2EF; }
+    .dark-mode .lb-card { background: rgba(23,33,31,.92); box-shadow: none; border-color: rgba(255,255,255,.08); }
+    .dark-mode .lb-item { background: #16211F; border-color: rgba(255,255,255,.06); }
+    .dark-mode .lb-item:nth-child(even) { background: #141E1C; }
+    .dark-mode .lb-item:hover { background: #1A2724; }
+    .dark-mode .lb-me { background: rgba(15,168,150,.14) !important; border-color: #0FA896; }
+    .dark-mode .setting-item { border-color: rgba(255,255,255,.07); }
+    .dark-mode .setting-item[style*="border-top"] { border-top-color: rgba(255,255,255,.07) !important; }
+    .dark-mode .setting-item[style*="border-bottom"] { border-bottom-color: rgba(255,255,255,.07) !important; }
+    .dark-mode .setting-label { color: #E6F2EF; }
+    .dark-mode .setting-desc { color: #9FB5AD; }
+    .dark-mode .setting-arrow { color: #5B6B78; }
+    .dark-mode .setting-switch { background: #26332F; }
     .dark-mode .setting-switch.on { background: var(--primary); }
-    .dark-mode .modal { background: #1e1e38; }
-    .dark-mode .modal h3 { color: #ddd; }
-    .dark-mode .modal input { background: #2a2a4a; border-color: #3a3a5a; color: #ddd; }
-    .dark-mode .modal-actions .btn-cancel { background: #333; color: #ccc; }
-    .dark-mode .btn-water { background: #3a6aaa; }
-    .dark-mode .btn-water.custom { background: #cc7a00; }
-    .dark-mode .btn-water.sip { background: #1a2a4a; color: #7bb3e8; border-color: #3a6aaa; }
-    .dark-mode .mood-btn { background: #2a2a4a; }
-    .dark-mode .record-item { border-color: #2a2a4a; }
-    .dark-mode .record-icon { background: rgba(74,144,226,.2); }
-    .dark-mode .record-time { color: #888; }
-    .dark-mode .record-del { color: #ef5350; }
-    .dark-mode .chart-box { background: #1e1e38; }
-    .dark-mode .toast { background: #444; }
-    .dark-mode #syncDebugSummary { background: #2a2a4a !important; color: #aaa !important; }
-    .dark-mode #syncDebugFull { background: #222240 !important; color: #888 !important; border-top-color: #3a3a5a !important; }
-    .dark-mode .heatmap-day { color: #888; }
-    .dark-mode .heatmap-day.has-data { color: #fff; }
-    .dark-mode .track-bg { background: #2a2a4a; }
-    .dark-mode .lb-tabs button { background: #2a2a4a; border-color: #3a3a5a; color: #999; }
+    .dark-mode .modal { background: #16211F; border: 1px solid rgba(255,255,255,.08); }
+    .dark-mode .modal h3 { color: #E6F2EF; }
+    .dark-mode .modal input { background: #0F1715; border-color: rgba(255,255,255,.1); color: #E6F2EF; }
+    .dark-mode .modal-actions .btn-cancel { background: #26332F; color: #C9D8D2; }
+    .dark-mode .btn-water { background: linear-gradient(180deg, #0B8C7D 0%, #0A7669 100%); box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+    .dark-mode .btn-water.custom { background: linear-gradient(180deg, #C97F00 0%, #B06E00 100%); }
+    .dark-mode .btn-water.sip { background: rgba(15,168,150,.12); color: #4FD1C5; border-color: #0FA896; }
+    .dark-mode .mood-btn { background: #16211F; }
+    .dark-mode .mood-btn:hover { background: #1E2C28; }
+    .dark-mode .mood-btn.active { border-color: #4FD1C5; background: rgba(15,168,150,.18); box-shadow: 0 0 0 2px rgba(79,209,197,.18); }
+    .dark-mode .record-item { border-color: rgba(255,255,255,.06); }
+    .dark-mode .record-icon { background: rgba(15,168,150,.2); }
+    .dark-mode .record-time { color: #9FB5AD; }
+    .dark-mode .record-del { color: #F09095; }
+    .dark-mode .chart-box { background: #16211F; }
+    .dark-mode .toast { background: #26332F; color: #E6F2EF; }
+    .dark-mode #syncDebugSummary { background: #16211F !important; color: #9FB5AD !important; }
+    .dark-mode #syncDebugFull { background: #141E1C !important; color: #8AA89E !important; border-top-color: rgba(255,255,255,.08) !important; }
+    .dark-mode .heatmap-day { color: #6E8A80; }
+    .dark-mode .heatmap-day.has-data { color: #E6F2EF; }
+    .dark-mode .track-bg { background: #1E2C28; }
+    .dark-mode .lb-tabs button { background: #16211F; border-color: rgba(255,255,255,.1); color: #9FB5AD; }
     .dark-mode .lb-tabs button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .dark-mode .chart-toggle button { background: #2a2a4a; border-color: #3a3a5a; color: #999; }
+    .dark-mode .chart-toggle button { background: #16211F; border-color: rgba(255,255,255,.1); color: #9FB5AD; }
     .dark-mode .chart-toggle button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .dark-mode #darkAutoBtn { border-color: #7bb3e8 !important; color: #7bb3e8 !important; }
+    .dark-mode #darkAutoBtn { border-color: #4FD1C5 !important; color: #4FD1C5 !important; }
     .setting-item.disabled { opacity: 0.45; pointer-events: none; }
-    .dark-mode .heatmap-wrap + div button { background: #2a2a4a !important; color: #7bb3e8 !important; }
+    .dark-mode .heatmap-wrap + div button { background: #16211F !important; color: #4FD1C5 !important; }
     .lb-list { display: flex; flex-direction: column; gap: 6px; }
-    .lb-item { display: flex; align-items: center; padding: 10px 12px; background: #f8faff; border-radius: 10px; border: 1px solid #eef3fb; cursor: pointer; transition: background .15s; }
-    .lb-item:hover { background: #f0f5ff; }
-    .lb-item:nth-child(even) { background: #f5f9ff; }
-    .lb-rank { width: 28px; font-size: 0.875rem; font-weight: 700; color: #999; text-align: center; flex-shrink: 0; }
+    .lb-item { display: flex; align-items: center; padding: 10px 12px; background: rgba(255,255,255,.6); border-radius: 10px; border: 1px solid var(--border-light); cursor: pointer; transition: background .15s; }
+    .lb-item:hover { background: rgba(15,168,150,.06); }
+    .lb-item:nth-child(even) { background: rgba(238,251,248,.7); }
+    .lb-rank { width: 28px; font-size: 0.875rem; font-weight: 700; color: var(--text-tertiary); text-align: center; flex-shrink: 0; }
     .lb-rank.gold { color: #FFB300; font-size: 1.125rem; }
     .lb-rank.silver { color: #B0BEC5; font-size: 1rem; }
     .lb-rank.bronze { color: #CD7F32; font-size: 1rem; }
     .lb-avatar { font-size: 1.5rem; margin: 0 10px; flex-shrink: 0; }
     .lb-info { flex: 1; min-width: 0; }
-    .lb-name { font-size: 0.8125rem; font-weight: 500; color: #333; }
-    .lb-streak { font-size: 0.6875rem; color: #999; margin-top: 2px; }
-    .lb-amount { font-size: 1rem; font-weight: 700; color: #4A90E2; flex-shrink: 0; text-align: right; }
-    .lb-unit { font-size: 0.6875rem; color: #aaa; font-weight: 400; }
-    .lb-me { background: #e8f0fe !important; border-color: #4A90E2; box-shadow: 0 0 0 2px rgba(74,144,226,.15); position: relative; }
-    .lb-me-tag { position: absolute; top: -6px; right: 8px; background: #4A90E2; color: #fff; font-size: 0.625rem; padding: 1px 8px; border-radius: 8px; font-weight: 600; }
-.lb-admin-del { display:inline-block;color:#e74c3c;cursor:pointer;font-size:0.75rem;font-weight:700;padding:0 3px;vertical-align:middle; }
-    .lb-empty { text-align: center; padding: 30px 0; color: #999; font-size: 0.8125rem; }
-    .lb-footer { font-size: 0.75rem; color: #aaa; text-align: center; padding: 10px; line-height: 1.6; }
-    .card { background: #fff; border-radius: 14px; padding: 12px 14px; box-shadow: 0 2px 8px rgba(0,0,0,.06); margin-bottom: 10px; }
+    .lb-name { font-size: 0.8125rem; font-weight: 500; color: var(--text); }
+    .lb-streak { font-size: 0.6875rem; color: var(--text-tertiary); margin-top: 2px; }
+    .lb-amount { font-size: 1rem; font-weight: 700; color: var(--primary); flex-shrink: 0; text-align: right; font-variant-numeric: tabular-nums; }
+    .lb-unit { font-size: 0.6875rem; color: var(--text-tertiary); font-weight: 400; }
+    .lb-me { background: rgba(15,168,150,.08) !important; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(15,168,150,.15); position: relative; }
+    .lb-me-tag { position: absolute; top: -6px; right: 8px; background: var(--primary); color: #fff; font-size: 0.625rem; padding: 1px 8px; border-radius: 8px; font-weight: 600; }
+.lb-admin-del { display:inline-block;color:var(--danger);cursor:pointer;font-size:0.75rem;font-weight:700;padding:0 3px;vertical-align:middle; }
+    .lb-empty { text-align: center; padding: 30px 0; color: var(--text-tertiary); font-size: 0.8125rem; }
+    .lb-footer { font-size: 0.75rem; color: var(--text-tertiary); text-align: center; padding: 10px; line-height: 1.6; }
+    .card { background: var(--card-bg); border-radius: 16px; padding: 12px 14px; border: 1px solid var(--border); box-shadow: var(--shadow-card); margin-bottom: 10px; }
     .card-title { font-size: 0.9375rem; font-weight: 600; margin-bottom: 8px; }
     .garden { text-align: center; padding: 20px 16px 14px; }
     .plant-emoji { font-size: 4rem; transition: transform .5s; }
     .plant-name { font-size: 0.875rem; color: #666; margin-top: 4px; }
     .progress-wrap { display: flex; flex-direction: column; align-items: center; padding: 8px 0; }
     .cup-container { width: 95px; height: 115px; position: relative; }
-    .cup-body { width: 100%; height: 100%; border: 3px solid #4A90E2; border-top: none; border-radius: 0 0 14px 14px; position: relative; overflow: hidden; background: rgba(74,144,226,.04); }
-    .cup-body::before { content: ''; position: absolute; top: -3px; left: -4px; right: -4px; height: 7px; background: #4A90E2; border-radius: 4px; }
-    .water-area { position: absolute; bottom: 0; left: 0; right: 0; height: 0%; transition: height 0.8s cubic-bezier(0.34,1.56,0.64,1); overflow: hidden; }
-    .water-fill-bg { position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(180deg, rgba(74,144,226,0.35) 0%, rgba(74,144,226,0.65) 100%); }
+    .cup-body { width: 100%; height: 100%; border: 2px solid #BFE8E0; border-top: none; border-radius: 0 0 16px 16px; position: relative; overflow: hidden; background: var(--glass); }
+    .cup-body::before { content: ''; position: absolute; top: -3px; left: -5px; right: -5px; height: 7px; background: #BFE8E0; border-radius: 4px; }
+    .cup-body::after { content: ''; position: absolute; top: 7px; left: 6px; width: 5px; height: 34px; border-radius: 3px; background: rgba(255,255,255,.85); }
+    .water-area { position: absolute; bottom: 0; left: 0; right: 0; height: 0%; transition: height var(--dur-water) var(--ease-spring); overflow: hidden; }
+    .water-fill-bg { position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(180deg, #4FD1C5 0%, #0FA896 100%); }
     .cup-wave { position: absolute; top: -4px; left: 0; width: 100%; height: 8px; }
     .cup-wave svg { position: absolute; width: 100%; height: 100%; }
     .cup-wave .w1 { animation: hmWaveSway 1.6s ease-in-out infinite alternate; }
     .cup-wave .w2 { animation: hmWaveSway 2s ease-in-out infinite alternate-reverse; }
-    .water-highlight { position: absolute; top: 0; left: 10%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); opacity: 0.4; }
+    .water-highlight { position: absolute; top: 0; left: 10%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); opacity: 0.4; }
     @keyframes hmWaveSway { 0% { transform: translateX(-2px); } 100% { transform: translateX(2px); } }
-    .cup-handle { position: absolute; right: -12px; top: 24px; width: 14px; height: 28px; border: 3px solid #4A90E2; border-left: none; border-radius: 0 10px 10px 0; }
-    .bubble { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.35); animation: bubbleRise 2.4s ease-in infinite; }
+    .cup-handle { position: absolute; right: -11px; top: 24px; width: 13px; height: 27px; border: 2px solid #BFE8E0; border-left: none; border-radius: 0 10px 10px 0; }
+    .bubble { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.4); animation: bubbleRise 2.4s ease-in infinite; }
     .bubble:nth-child(1) { width: 6px; height: 6px; left: 20%; bottom: 10%; animation-delay: 0s; animation-duration: 2.8s; }
     .bubble:nth-child(2) { width: 4px; height: 4px; left: 50%; bottom: 5%; animation-delay: 0.6s; animation-duration: 3.2s; }
     .bubble:nth-child(3) { width: 5px; height: 5px; left: 70%; bottom: 15%; animation-delay: 1.2s; animation-duration: 2.6s; }
     .bubble:nth-child(4) { width: 3px; height: 3px; left: 35%; bottom: 20%; animation-delay: 0.3s; animation-duration: 3.6s; }
     @keyframes bubbleRise { 0% { transform: translateY(0) scale(1); opacity: 0.6; } 100% { transform: translateY(-80px) scale(0.6); opacity: 0; } }
     .cup-stats { text-align: center; margin-top: 8px; }
-    .cup-amount { font-size: 1.375rem; font-weight: 700; color: #333; }
-    .cup-unit { font-size: 0.75rem; color: #999; }
-    .cup-label { font-size: 0.75rem; color: #999; margin-top: 1px; }
-    .cup-remain { font-size: 0.75rem; margin-top: 1px; }
+    .cup-amount { font-size: 1.625rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+    .cup-unit { font-size: 0.75rem; color: var(--text-tertiary); }
+    .cup-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: 1px; }
+    .cup-remain { font-size: 0.8125rem; font-weight: 500; color: var(--primary-dark); margin-top: 2px; }
     .track-wrap { width: 100%; max-width: 300px; margin: 14px auto 0; position: relative; }
-    .track-bg { width: 100%; height: 10px; background: #e8edf3; border-radius: 5px; position: relative; overflow: hidden; }
-    .track-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #4A90E2, #5BA3F5); transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1); width: 0%; }
-    .track-runner { position: absolute; top: -8px; font-size: 1.375rem; transition: left 0.6s cubic-bezier(0.34,1.56,0.64,1); left: 0%; z-index: 2; animation: runnerBob 0.3s ease-in-out infinite alternate; transform: scaleX(-1); }
+    .track-bg { width: 100%; height: 10px; background: #E2F0EB; border-radius: 5px; position: relative; overflow: hidden; }
+    .track-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #4FD1C5, #0FA896); transition: width 0.6s var(--ease-spring); width: 0%; }
+    .track-runner { position: absolute; top: -8px; font-size: 1.375rem; transition: left 0.6s var(--ease-spring); left: 0%; z-index: 2; animation: runnerBob 0.3s ease-in-out infinite alternate; transform: scaleX(-1); }
     @keyframes runnerBob { 0% { transform: translateY(0); } 100% { transform: translateY(-3px); } }
-    .track-label { display: flex; justify-content: space-between; font-size: 0.6875rem; color: #999; margin-top: 2px; }
+    .track-label { display: flex; justify-content: space-between; font-size: 0.6875rem; color: var(--text-tertiary); margin-top: 2px; font-variant-numeric: tabular-nums; }
     .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
     .confetti-piece { position: absolute; width: 8px; height: 8px; top: -10px; animation: confettiFall var(--duration) linear forwards; opacity: 0; }
     @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
@@ -160,69 +180,76 @@
     @keyframes accessoryFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
     .accessory.butterfly { animation: butterflyFlutter 1.6s ease-in-out infinite alternate; }
     @keyframes butterflyFlutter { 0% { transform: translate(0, 0) rotate(-5deg); } 100% { transform: translate(8px, -8px) rotate(5deg); } }
+    /* 固化 emoji 图标基础样式（保留 Windows Segoe UI Emoji 风格） */
+    .emoji { width: 1em; height: 1em; vertical-align: -0.15em; display: inline-block; pointer-events: none; user-select: none; }
     .btn-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-    .btn-water { flex: 1; min-width: 72px; padding: 9px 0; background: #4A90E2; color: #fff; border: none; border-radius: 10px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: opacity .2s; }
-    .btn-water:active { opacity: .7; }
-    .btn-water.custom { background: #FF9800; }
+    .btn-water { flex: 1; min-width: 72px; padding: 10px 0; background: linear-gradient(180deg, #0FA896 0%, #0B8C7D 100%); color: #fff; border: none; border-radius: 12px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), box-shadow var(--dur-press) var(--ease-out); box-shadow: 0 2px 6px rgba(15,168,150,.28); font-variant-numeric: tabular-nums; }
+    .btn-water:active { transform: scale(0.96); box-shadow: 0 1px 2px rgba(15,168,150,.2); }
+    .btn-water.custom { background: linear-gradient(180deg, #F59E0B 0%, #D97A00 100%); box-shadow: 0 2px 6px rgba(245,158,11,.3); }
     .btn-water.small { flex: 1; min-width: 52px; padding: 10px 4px; font-size: 0.8125rem; }
-    .btn-water.sip { width: 100%; background: #e8f0fe; color: var(--primary); font-size: 0.8125rem; padding: 8px 0; font-weight: 500; border: 1px dashed var(--primary); }
+    .btn-water.sip { width: 100%; background: var(--bg); color: var(--primary); font-size: 0.8125rem; padding: 8px 0; font-weight: 500; border: 1px dashed var(--primary); box-shadow: none; }
+    .btn-water.sip:active { transform: scale(0.97); }
     .mood-row { display: flex; flex-wrap: wrap; gap: 4px; }
-    .mood-btn { font-size: 1.25rem; padding: 4px 8px; border: 2px solid transparent; border-radius: 8px; background: #f5f7fa; cursor: pointer; transition: all .2s; line-height: 1; }
-    .mood-btn:hover { background: #e8f0fe; transform: scale(1.1); }
-    .mood-btn.active { border-color: #4A90E2; background: #e8f0fe; box-shadow: 0 0 0 2px rgba(74,144,226,.2); transform: scale(1.15); }
-    .record-item { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+    .mood-btn { font-size: 1.25rem; padding: 4px 8px; border: 2px solid transparent; border-radius: 8px; background: #E9F4EF; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), background var(--dur-press) var(--ease-out), border-color var(--dur-press) var(--ease-out); line-height: 1; }
+    .mood-btn:hover { background: #D7EBE4; transform: scale(1.1); }
+    .mood-btn:active { transform: scale(0.94); }
+    .mood-btn.active { border-color: var(--primary); background: #D7EBE4; box-shadow: 0 0 0 2px rgba(15,168,150,.2); transform: scale(1.15); }
+    .record-item { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
     .record-item:last-child { border-bottom: none; }
-    .record-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(74,144,226,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.125rem; margin-right: 12px; flex-shrink: 0; }
-    .record-mood-add { font-size: 0.875rem; font-weight: 700; color: #4A90E2; cursor: pointer; margin-left: 4px; }
+    .record-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(15,168,150,.12); display: flex; align-items: center; justify-content: center; font-size: 1.125rem; margin-right: 12px; flex-shrink: 0; }
+    .record-mood-add { font-size: 0.875rem; font-weight: 700; color: var(--primary); cursor: pointer; margin-left: 4px; }
     .record-mood-set { font-size: 1rem; margin-right: 4px; cursor: pointer; padding: 2px 4px; border-radius: 4px; transition: background .2s; }
-    .record-mood-set:hover { background: #e8f0fe; }
+    .record-mood-set:hover { background: #D7EBE4; }
     .record-mood-set.editing { background: #fff3cd; box-shadow: 0 0 0 2px #ffc107; border-radius: 4px; padding: 2px 4px; }
-    .record-mood-add { font-size: 0.875rem; font-weight: 700; color: #4A90E2; }
+    .record-mood-add { font-size: 0.875rem; font-weight: 700; color: var(--primary); }
     .record-info { flex: 1; }
-    .record-amount { font-weight: 600; font-size: 0.9375rem; }
-    .record-time { font-size: 0.75rem; color: #999; margin-top: 2px; }
-    .record-del { border: none; background: none; color: #e74c3c; font-size: 1.125rem; cursor: pointer; padding: 4px; }
-    .empty-state { text-align: center; padding: 20px; color: #999; font-size: 0.875rem; }
+    .record-amount { font-weight: 600; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+    .record-time { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px; font-variant-numeric: tabular-nums; }
+    .record-del { border: none; background: none; color: var(--danger); font-size: 1.125rem; cursor: pointer; padding: 4px; transition: transform var(--dur-press) var(--ease-out); }
+    .record-del:active { transform: scale(0.9); }
+    .empty-state { text-align: center; padding: 20px; color: var(--text-tertiary); font-size: 0.875rem; }
     .chart-toggle { display: flex; gap: 8px; margin-bottom: 12px; }
-    .chart-toggle button { flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; font-size: 0.8125rem; transition: all .2s; }
-    .chart-toggle button.active { background: #4A90E2; color: #fff; border-color: #4A90E2; }
+    .chart-toggle button { flex: 1; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); cursor: pointer; font-size: 0.8125rem; transition: color var(--dur-pop) var(--ease-out), background var(--dur-pop) var(--ease-out), border-color var(--dur-pop) var(--ease-out); color: var(--text-secondary); }
+    .chart-toggle button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     .chart-box { width: 100%; height: 200px; display: block; }
     .stat-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.875rem; }
-    .stat-row .label { color: #666; }
-    .stat-row .value { font-weight: 600; }
-    .setting-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+    .stat-row .label { color: var(--text-secondary); }
+    .stat-row .value { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .setting-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; }
     .setting-item:last-child { border-bottom: none; }
     .setting-icon { font-size: 1.25rem; margin-right: 14px; width: 24px; text-align: center; }
     .setting-info { flex: 1; }
     .setting-label { font-size: 0.875rem; }
-    .setting-desc { font-size: 0.75rem; color: #999; margin-top: 2px; }
-    .setting-arrow { color: #ccc; font-size: 1rem; }
-    .setting-switch { position: relative; width: 44px; height: 24px; background: #ddd; border-radius: 12px; cursor: pointer; transition: .3s; flex-shrink: 0; }
-    .setting-switch.on { background: #4A90E2; }
-    .setting-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .3s; }
+    .setting-desc { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px; }
+    .setting-arrow { color: var(--text-tertiary); font-size: 1rem; }
+    .setting-switch { position: relative; width: 44px; height: 24px; background: #D7E3DE; border-radius: 12px; cursor: pointer; transition: background .3s; flex-shrink: 0; }
+    .setting-switch.on { background: var(--primary); }
+    .setting-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .3s var(--ease-spring); box-shadow: 0 1px 3px rgba(0,0,0,.15); }
     .setting-switch.on::after { transform: translateX(20px); }
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; align-items: center; justify-content: center; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(11,26,23,.45); z-index: 200; align-items: center; justify-content: center; }
     .modal-overlay.show { display: flex; }
-    .modal { background: #fff; border-radius: 16px; padding: 24px; width: 300px; max-width: 90%; }
+    .modal { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 24px; width: 300px; max-width: 90%; box-shadow: var(--shadow-pop); }
     .modal h3 { font-size: 1rem; margin-bottom: 14px; }
-    .modal input { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.9375rem; margin-bottom: 14px; }
+    .modal input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px; font-size: 0.9375rem; margin-bottom: 14px; background: var(--bg); color: var(--text); }
+    .modal input:focus { outline: 2px solid rgba(15,168,150,.4); outline-offset: 1px; border-color: var(--primary); }
     .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
-    .modal-actions button { padding: 8px 20px; border-radius: 8px; border: none; font-size: 0.875rem; cursor: pointer; }
-    .modal-actions .btn-cancel { background: #e8edf3; color: #333; }
-    .modal-actions .btn-confirm { background: #4A90E2; color: #fff; }
-    .modal-actions .btn-danger { background: #e74c3c; color: #fff; }
-    .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 0.8125rem; z-index: 300; opacity: 0; transition: opacity .3s; pointer-events: none; }
-    .toast.show { opacity: 1; }
+    .modal-actions button { padding: 8px 20px; border-radius: 10px; border: none; font-size: 0.875rem; cursor: pointer; transition: transform var(--dur-press) var(--ease-out); }
+    .modal-actions button:active { transform: scale(0.96); }
+    .modal-actions .btn-cancel { background: #E9F1EE; color: var(--text); }
+    .modal-actions .btn-confirm { background: var(--primary); color: #fff; }
+    .modal-actions .btn-danger { background: var(--danger); color: #fff; }
+    .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(8px); background: #26332F; color: #F2FAF7; padding: 10px 20px; border-radius: 10px; font-size: 0.8125rem; z-index: 300; opacity: 0; transition: opacity var(--dur-pop) var(--ease-out), transform var(--dur-pop) var(--ease-out); pointer-events: none; box-shadow: var(--shadow-pop); }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .heatmap-wrap { margin: 4px 0; }
-    .heatmap-month { font-size: 0.8125rem; color: #666; margin-bottom: 8px; font-weight: 600; }
+    .heatmap-month { font-size: 0.8125rem; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600; }
     .heatmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
-    .heatmap-day { aspect-ratio: 1; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; color: #999; position: relative; overflow: hidden; }
-    .heatmap-day.has-data { color: #1565C0; font-weight: 600; }
-    .heatmap-day.today { outline: 2px solid #4A90E2; outline-offset: 1px; }
-    .heatmap-day .hm-tip { display: none; position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background: #333; color: #fff; font-size: 0.625rem; padding: 2px 6px; border-radius: 4px; white-space: nowrap; z-index: 5; }
+    .heatmap-day { aspect-ratio: 1; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.625rem; color: var(--text-tertiary); position: relative; overflow: hidden; }
+    .heatmap-day.has-data { color: #0B7285; font-weight: 600; }
+    .heatmap-day.today { outline: 2px solid var(--primary); outline-offset: 1px; }
+    .heatmap-day .hm-tip { display: none; position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background: #26332F; color: #F2FAF7; font-size: 0.625rem; padding: 2px 6px; border-radius: 4px; white-space: nowrap; z-index: 5; }
     .heatmap-day:hover .hm-tip { display: block; }
     .heatmap-day .hm-water-wrap { position: absolute; inset: 0; overflow: hidden; border-radius: 3px; }
-    .heatmap-day .hm-water-fill { position: absolute; bottom: 0; left: 0; right: 0; transition: height .6s ease-out; background: linear-gradient(180deg, rgba(74,144,226,0.35) 0%, rgba(74,144,226,0.7) 100%); }
+    .heatmap-day .hm-water-fill { position: absolute; bottom: 0; left: 0; right: 0; transition: height .6s ease-out; background: linear-gradient(180deg, rgba(79,209,197,.35) 0%, rgba(15,168,150,.7) 100%); }
     .heatmap-day .hm-wave { position: absolute; top: -4px; left: 0; width: 100%; height: 6px; }
     .heatmap-day .hm-wave svg { position: absolute; width: 100%; height: 100%; }
     .heatmap-day .hm-wave .w1 { animation: hmWaveSway 1.6s ease-in-out infinite alternate; }
@@ -231,11 +258,15 @@
     .plant-pop { animation: plantPop .4s ease-out; }
     @keyframes plantPop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
     @media (max-width: 374px) { .btn-water.small { min-width: 44px; padding: 8px 2px; font-size: 0.75rem; } .cup-container { transform: scale(0.85); } .plant-emoji { font-size: 3rem; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .cup-wave .w1, .cup-wave .w2, .bubble, .track-runner, .hm-wave .w1, .hm-wave .w2 { animation: none !important; }
+    }
   </style>
 </head>
 <body>
 <div class="appbar" id="appbar">
-  <div id="appbarTitle">咕嘟 💧</div>
+  <div id="appbarTitle">咕嘟 <img src="icons/emoji/core-1F4A7.png" alt="" class="emoji" style="width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;"></div>
   <div id="motivationMsg" style="font-size:0.75rem;font-weight:400;opacity:.9;margin-top:2px;"></div>
 </div>
 <div class="page active" id="page-home">
@@ -245,8 +276,8 @@
         <div class="cup-body" id="cupBody">
             <div class="water-area" id="waterArea">
               <div class="cup-wave"><svg viewBox="0 0 110 8" preserveAspectRatio="none">
-                <path class="w1" d="M0,4 Q14,0 28,4 T56,4 T84,4 T110,4 V8 H0 Z" fill="rgba(74,144,226,.5)"/>
-                <path class="w2" d="M0,5 Q14,8 28,5 T56,5 T84,5 T110,5 V8 H0 Z" fill="rgba(74,144,226,.3)"/>
+                <path class="w1" d="M0,4 Q14,0 28,4 T56,4 T84,4 T110,4 V8 H0 Z" fill="rgba(79,209,197,.6)"/>
+                <path class="w2" d="M0,5 Q14,8 28,5 T56,5 T84,5 T110,5 V8 H0 Z" fill="rgba(15,168,150,.4)"/>
               </svg></div>
               <div class="water-fill-bg"></div>
               <div class="water-highlight"></div>
@@ -271,38 +302,38 @@
   <div class="card">
     <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleMood()">
       <span>😊 当下心情 <span class="mood-help" onclick="event.stopPropagation();showMoodHelp()" title="&#x5982;&#x4F55;&#x6DFB;&#x52A0;&#x5FC3;&#x60C5;">&#x2754;</span></span>
-      <span id="moodToggleBtn" style="font-size:0.75rem;color:#4A90E2;">&#x6536;&#x8D77; &#x25B2;</span>
+      <span id="moodToggleBtn" style="font-size:0.75rem;color:var(--primary);">&#x6536;&#x8D77; &#x25B2;</span>
     </div>
     <div id="moodBody">
       <div class="mood-row" id="moodRow">
-        <button class="mood-btn" data-mood="&#x1F60A;" onclick="selectMood(this)">&#x1F60A;</button>
-      <button class="mood-btn" data-mood="&#x1F604;" onclick="selectMood(this)">&#x1F604;</button>
-      <button class="mood-btn" data-mood="&#x1F970;" onclick="selectMood(this)">&#x1F970;</button>
-      <button class="mood-btn" data-mood="&#x1F60C;" onclick="selectMood(this)">&#x1F60C;</button>
-      <button class="mood-btn" data-mood="&#x1F624;" onclick="selectMood(this)">&#x1F624;</button>
-      <button class="mood-btn" data-mood="&#x1F622;" onclick="selectMood(this)">&#x1F622;</button>
-      <button class="mood-btn" data-mood="&#x1F92F;" onclick="selectMood(this)">&#x1F92F;</button>
-      <button class="mood-btn" data-mood="&#x1F4AA;" onclick="selectMood(this)">&#x1F4AA;</button>
-      <button class="mood-btn" data-mood="&#x1F9E0;" onclick="selectMood(this)">&#x1F9E0;</button>
-      <button class="mood-btn" data-mood="&#x1F917;" onclick="selectMood(this)">&#x1F917;</button>
-      <button class="mood-btn" data-mood="&#x1F60E;" onclick="selectMood(this)">&#x1F60E;</button>
-      <button class="mood-btn" data-mood="&#x1F973;" onclick="selectMood(this)">&#x1F973;</button>
-      <button class="mood-btn" data-mood="&#x1F929;" onclick="selectMood(this)">&#x1F929;</button>
-      <button class="mood-btn" data-mood="&#x1F607;" onclick="selectMood(this)">&#x1F607;</button>
-      <button class="mood-btn" data-mood="&#x1F60F;" onclick="selectMood(this)">&#x1F60F;</button>
-      <button class="mood-btn" data-mood="&#x1F914;" onclick="selectMood(this)">&#x1F914;</button>
-      <button class="mood-btn" data-mood="&#x1F976;" onclick="selectMood(this)">&#x1F976;</button>
-      <button class="mood-btn" data-mood="&#x1F97A;" onclick="selectMood(this)">&#x1F97A;</button>
-      <button class="mood-btn" data-mood="&#x1F634;" onclick="selectMood(this)">&#x1F634;</button>
-      <button class="mood-btn" data-mood="&#x1F92A;" onclick="selectMood(this)">&#x1F92A;</button>
-      <button class="mood-btn" data-mood="&#x1F630;" onclick="selectMood(this)">&#x1F630;</button>
+        <button class="mood-btn" data-mood="&#x1F60A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F604;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F604.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F970;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F970.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F60C;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60C.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F624;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F624.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F622;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F622.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F92F;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92F.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F4AA;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F4AA.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F9E0;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F9E0.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F917;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F917.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F60E;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60E.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F973;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F973.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F929;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F929.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F607;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F607.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F60F;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60F.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F914;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F914.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F976;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F976.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F97A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F97A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F634;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F634.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F92A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F630;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F630.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
     </div>
     </div>
   </div>
   <div class="card">
     <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;">
       选择水量
-      <span id="pillHomeBtn" onclick="addPill()" style="display:none;cursor:pointer;font-size:1.25rem;padding:4px 10px;border-radius:8px;background:#fff3e0;border:1px solid #FF9800;" title="记录吃药">💊</span>
+      <span id="pillHomeBtn" onclick="addPill()" style="display:none;cursor:pointer;padding:4px 10px;border-radius:8px;background:rgba(245,158,11,.12);border:1px solid var(--warning);" title="记录吃药"><img src="icons/emoji/core-1F48A.png" alt="吃药" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
     </div>
     <div class="btn-row">
       <button class="btn-water small" onclick="addWater(250)">250ml</button>
@@ -318,7 +349,7 @@
   <div class="card">
     <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
       <span class="card-title" style="margin-bottom:0;">今日记录</span>
-      <span style="font-size:0.8125rem;color:#999;" id="recordCount">共 0 条</span>
+      <span style="font-size:0.8125rem;color:var(--text-tertiary);" id="recordCount">共 0 条</span>
     </div>
     <div id="recordList"><div class="empty-state">今天还没有喝水记录哦～</div></div>
   </div>
@@ -326,9 +357,9 @@
 <div class="page" id="page-garden">
   <div class="card garden" style="text-align:center;padding:40px 16px;">
     <div class="plant-emoji" id="plantEmoji" style="font-size:5rem;">🌰</div>
-    <div class="plant-name" id="plantName" style="font-size:1rem;color:#666;margin-top:8px;">种子休眠中</div>
-    <div style="font-size:0.875rem;color:#999;margin-top:20px;">连续达标</div>
-    <div style="font-size:2.5rem;font-weight:700;color:#4A90E2;margin-top:4px;"><span id="streakCount">0</span> 天</div>
+    <div class="plant-name" id="plantName" style="font-size:1rem;color:var(--text-secondary);margin-top:8px;">种子休眠中</div>
+    <div style="font-size:0.875rem;color:var(--text-tertiary);margin-top:20px;">连续达标</div>
+    <div style="font-size:2.5rem;font-weight:700;color:var(--primary);margin-top:4px;"><span id="streakCount">0</span> 天</div>
   </div>
 </div>
 
@@ -348,7 +379,7 @@
     <div class="stat-row"><span class="label">达标天数</span><span class="value" id="statGoal">0 天</span></div>
   </div>
   <div class="card">
-    <div class="card-title">📅 喝水日历</div>
+    <div class="card-title"><img src="icons/emoji/core-1F4D6.png" alt="" class="emoji" style="width:1.05em;height:1.05em;"> 喝水日历</div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
       <button onclick="prevMonth()" style="border:none;background:var(--bg);border-radius:6px;padding:2px 10px;font-size:1rem;cursor:pointer;color:var(--primary);">◀</button>
       <span id="heatmapMonthLabel" style="font-size:0.8125rem;font-weight:600;color:var(--text);flex:1;text-align:center;"></span>
@@ -361,119 +392,119 @@
 <div class="page" id="page-settings">
   <div class="card">
     <div class="setting-item" onclick="showGoalDialog()">
-      <span class="setting-icon">🎯</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F3AF.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">每日目标</div><div class="setting-desc" id="settingGoal">2000 ml</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item" onclick="showCustomAmountDialog()">
-      <span class="setting-icon">💧</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F4A7.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">自定义水量</div><div class="setting-desc" id="settingCustom">250 ml</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item">
-      <span class="setting-icon">🔔</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F514.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">喝水提醒</div><div class="setting-desc" id="settingRemindDesc">已关闭</div></div>
       <div class="setting-switch" id="remindSwitch" onclick="toggleReminder()"></div>
     </div>
     <div class="setting-item" onclick="showReminderIntervalDialog()">
-      <span class="setting-icon">⏱</span>
+      <span class="setting-icon"><img src="icons/emoji/core-23F1-FE0F.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">提醒周期</div><div class="setting-desc" id="settingIntervalDesc">30 分钟</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item" onclick="showReminderWindowDialog()">
-      <span class="setting-icon">🕗</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F557.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">提醒时段</div><div class="setting-desc" id="settingWindowDesc">08:00 - 22:00</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item">
-      <span class="setting-icon">💊</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F48A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">吃药</div><div class="setting-desc" id="settingPillDesc">已关闭</div></div>
       <div class="setting-switch" id="pillSwitch" onclick="togglePill()"></div>
     </div>
     <div class="setting-item">
-      <span class="setting-icon">🌙</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F319.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">深色模式
         <span id="darkAutoBtn" onclick="setDarkMode('auto')" style="display:inline-block;font-size:0.625rem;color:var(--primary);border:1px solid var(--primary);border-radius:6px;padding:0 6px;margin-left:6px;cursor:pointer;vertical-align:middle;line-height:1.6;">auto</span>
       </div><div class="setting-desc" id="settingDarkDesc">跟随系统</div></div>
       <div class="setting-switch" id="darkSwitch" onclick="toggleDarkMode()" style="flex-shrink:0;"></div>
     </div>
     <div class="setting-item" onclick="showAvatarDialog()">
-      <span class="setting-icon" id="settingAvatarPreview">🐼</span>
+      <span class="setting-icon" id="settingAvatarPreview"><img src="icons/emoji/core-1F4CB.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">我的头像</div><div class="setting-desc" id="settingAvatarName">点击更换</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item" onclick="showNicknameDialog()">
-      <span class="setting-icon">✏️</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F504.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">我的昵称</div><div class="setting-desc" id="settingNickname">未设置</div></div>
       <span class="setting-arrow">›</span>
     </div>
   </div>
   <div class="card">
     <div class="setting-item" onclick="showEffectsGuide()">
-      <span class="setting-icon">✨</span>
+      <span class="setting-icon"><img src="icons/emoji/core-2728.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">特效说明</div><div class="setting-desc">查看所有动画效果的触发条件</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item" onclick="showAboutDialog()">
-      <span class="setting-icon">ℹ️</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F4CB.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">关于应用</div><div class="setting-desc" id="settingVersionDesc">喝杯水吧 v1.5.2</div></div>
       <span class="setting-arrow">›</span>
     </div>
   </div>
   <div class="card">
     <div class="setting-item" onclick="showSupabaseDialog()">
-      <span class="setting-icon">🌐</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F310.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">在线排行榜</div><div class="setting-desc" id="settingSupabaseDesc">未配置</div></div>
       <span class="setting-arrow">›</span>
     </div>
   </div>
   <div class="card">
     <div class="setting-item" onclick="generatePairingCode()">
-      <span class="setting-icon">🔗</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F517.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">连接手表</div><div class="setting-desc">生成配对码，手表输入后同步数据</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item" id="syncSettingItem" onclick="forceSync()">
-      <span class="setting-icon">🔄</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F504.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label" id="syncSettingLabel">立即同步</div><div class="setting-desc" id="syncSettingDesc">手动触发一次双向数据同步</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item" onclick="disconnectWatch()">
-      <span class="setting-icon">⌚</span>
+      <span class="setting-icon"><img src="icons/emoji/core-231A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label" style="color:var(--danger);">断开手表</div><div class="setting-desc" id="watchDisconnectDesc">停止与手表的数据互通</div></div>
       <span class="setting-arrow" style="color:var(--danger);">›</span>
     </div>
     <div id="syncDebugWrap" style="display:none;margin:6px 0;">
-      <div id="syncDebugSummary" style="font-size:0.75rem;color:#666;background:#f8f9fa;border-radius:8px;padding:8px 10px;line-height:1.6;cursor:pointer;" onclick="toggleSyncDebug()"></div>
-      <div id="syncDebugFull" style="display:none;font-size:0.6875rem;color:#555;background:#f0f2f5;border-radius:0 0 8px 8px;padding:8px 10px;line-height:1.5;max-height:300px;overflow-y:auto;word-break:break-all;border-top:1px solid #e0e0e0;"></div>
+      <div id="syncDebugSummary" style="font-size:0.75rem;color:var(--text-secondary);background:var(--border-light);border-radius:8px;padding:8px 10px;line-height:1.6;cursor:pointer;" onclick="toggleSyncDebug()"></div>
+      <div id="syncDebugFull" style="display:none;font-size:0.6875rem;color:var(--text-secondary);background:var(--border-light);border-radius:0 0 8px 8px;padding:8px 10px;line-height:1.5;max-height:300px;overflow-y:auto;word-break:break-all;border-top:1px solid var(--border);"></div>
     </div>
     <div class="setting-item" onclick="disconnectLeaderboard()" style="border-top:1px solid #f0f0f0;margin-top:4px;padding-top:12px;">
-      <span class="setting-icon">🔌</span>
-      <div class="setting-info"><div class="setting-label" style="color:#e74c3c;">断开排行榜</div><div class="setting-desc">清除云端连接，恢复为本地模式</div></div>
-      <span class="setting-arrow" style="color:#e74c3c;">›</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F310.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
+      <div class="setting-info"><div class="setting-label" style="color:var(--danger);">断开排行榜</div><div class="setting-desc">清除云端连接，恢复为本地模式</div></div>
+      <span class="setting-arrow" style="color:var(--danger);">›</span>
     </div>
   </div>
   <div class="card">
     <div class="setting-item" onclick="exportData()">
-      <span class="setting-icon">📤</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F4E4.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">导出数据</div><div class="setting-desc">备份喝水记录到 JSON 文件</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <div class="setting-item" onclick="document.getElementById('importInput').click()">
-      <span class="setting-icon">📥</span>
+      <span class="setting-icon"><img src="icons/emoji/core-1F4E5.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">导入数据</div><div class="setting-desc">从 JSON 文件恢复数据（将覆盖当前数据）</div></div>
       <span class="setting-arrow">›</span>
     </div>
     <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
   </div>
-  <button style="width:100%;padding:12px;background:#e74c3c;color:#fff;border:none;border-radius:10px;font-size:0.9375rem;font-weight:600;cursor:pointer;" onclick="showResetDialog()">重置所有数据</button>
+  <button style="width:100%;padding:12px;background:var(--danger);color:#fff;border:none;border-radius:12px;font-size:0.9375rem;font-weight:600;cursor:pointer;transition:transform var(--dur-press) var(--ease-out);" onclick="showResetDialog()">重置所有数据</button>
 </div>
 
 <div class="page" id="page-leaderboard">
   <div class="lb-card">
-    <div class="lb-header"><h3 id="lbTitle" onclick="onLbTitleTap()" style="cursor:pointer;">🏆 喝水排行榜</h3>
-      <span id="lbAdminBadge" style="display:none;font-size:0.625rem;color:#e74c3c;font-weight:600;margin-right:4px;">管理员</span>
-      <span id="lbExitAdmin" style="display:none;cursor:pointer;font-size:1rem;color:#e74c3c;font-weight:700;padding:0 4px;" onclick="exitAdminMode()" title="退出管理员模式">✕</span>
+    <div class="lb-header"><h3 id="lbTitle" onclick="onLbTitleTap()" style="cursor:pointer;"><img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.1em;height:1.1em;"> 喝水排行榜</h3>
+      <span id="lbAdminBadge" style="display:none;font-size:0.625rem;color:var(--danger);font-weight:600;margin-right:4px;">管理员</span>
+      <span id="lbExitAdmin" style="display:none;cursor:pointer;font-size:1rem;color:var(--danger);font-weight:700;padding:0 4px;" onclick="exitAdminMode()" title="退出管理员模式">✕</span>
       <div style="display:flex;align-items:center;">
         <div class="lb-tabs" id="lbTabs">
           <button class="active" onclick="switchLB('today')">今日</button>
@@ -486,8 +517,8 @@
     <div class="lb-list" id="lbList"><div class="lb-empty">加载中...</div></div>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:8px 16px 4px;">
-    <span onclick="showLBHelp()" style="cursor:pointer;font-size:0.75rem;color:var(--primary);border:1px solid var(--primary);border-radius:12px;padding:4px 14px;">📖 排行榜说明</span>
-    <span onclick="toggleLBDebug()" style="cursor:pointer;font-size:0.75rem;color:#999;border:1px solid #ddd;border-radius:12px;padding:4px 14px;">📋 网络日志</span>
+    <span onclick="showLBHelp()" style="cursor:pointer;font-size:0.75rem;color:var(--primary);border:1px solid var(--primary);border-radius:12px;padding:4px 14px;"><img src="icons/emoji/core-1F4D6.png" alt="" class="emoji" style="width:1em;height:1em;"> 排行榜说明</span>
+    <span onclick="toggleLBDebug()" style="cursor:pointer;font-size:0.75rem;color:var(--text-tertiary);border:1px solid var(--border);border-radius:12px;padding:4px 14px;"><img src="icons/emoji/core-1F4CB.png" alt="" class="emoji" style="width:1em;height:1em;"> 网络日志</span>
   </div>
   <div onclick="showLBRules()" style="cursor:pointer;text-align:center;padding:8px 16px 16px;font-size:0.75rem;color:#aaa;">⭐ 喝水越多排名越高<br>连续达标天数相同时按总水量排序</div>
 </div>
@@ -503,15 +534,46 @@
 <div class="toast" id="toast"></div>
 
 <nav class="bottom-nav">
-  <button class="active" onclick="switchTab(0)"><span class="icon">🏠</span> 首页</button>
-  <button onclick="switchTab(1)"><span class="icon">🌱</span> 花园</button>
-  <button onclick="switchTab(2)"><span class="icon">🏆</span> 排行</button>
-  <button onclick="switchTab(3)"><span class="icon">📊</span> 历史</button>
-  <button onclick="switchTab(4)"><span class="icon">⚙️</span> 设置</button>
+  <button class="active" onclick="switchTab(0)"><span class="icon"><img src="icons/emoji/nav-1F3E0.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 首页</button>
+  <button onclick="switchTab(1)"><span class="icon"><img src="icons/emoji/nav-1F331.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 花园</button>
+  <button onclick="switchTab(2)"><span class="icon"><img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 排行</button>
+  <button onclick="switchTab(3)"><span class="icon"><img src="icons/emoji/nav-1F4CA.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 历史</button>
+  <button onclick="switchTab(4)"><span class="icon"><img src="icons/emoji/nav-2699-FE0F.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 设置</button>
 </nav>
 
 <script>
-var APP_VERSION = 'v2.1.2';
+/* ── 固化 emoji 映射（保留 Windows Segoe UI Emoji 风格） ── */
+var EMOJI_FILE = {
+  /* 21 心情 */
+  '\u{1F60A}':'mood-1F60A', '\u{1F604}':'mood-1F604', '\u{1F970}':'mood-1F970',
+  '\u{1F60C}':'mood-1F60C', '\u{1F624}':'mood-1F624', '\u{1F622}':'mood-1F622',
+  '\u{1F92F}':'mood-1F92F', '\u{1F4AA}':'mood-1F4AA', '\u{1F9E0}':'mood-1F9E0',
+  '\u{1F917}':'mood-1F917', '\u{1F60E}':'mood-1F60E', '\u{1F973}':'mood-1F973',
+  '\u{1F929}':'mood-1F929', '\u{1F607}':'mood-1F607', '\u{1F60F}':'mood-1F60F',
+  '\u{1F914}':'mood-1F914', '\u{1F976}':'mood-1F976', '\u{1F97A}':'mood-1F97A',
+  '\u{1F634}':'mood-1F634', '\u{1F92A}':'mood-1F92A', '\u{1F630}':'mood-1F630',
+  /* 5 导航 */
+  '\u{1F3E0}':'nav-1F3E0', '\u{1F331}':'nav-1F331', '\u{1F3C6}':'nav-1F3C6',
+  '\u{1F4CA}':'nav-1F4CA', '\u{2699}\u{FE0F}':'nav-2699-FE0F',
+  /* 核心静态 */
+  '\u{1F4A7}':'core-1F4A7', '\u{1F48A}':'core-1F48A', '\u{1F445}':'core-1F445',
+  '\u{1F3AF}':'core-1F3AF', '\u{1F514}':'core-1F514', '\u{1F319}':'core-1F319',
+  '\u{2728}':'core-2728', '\u{23F1}\u{FE0F}':'core-23F1-FE0F', '\u{1F557}':'core-1F557',
+  '\u{1F504}':'core-1F504', '\u{1F4E4}':'core-1F4E4', '\u{1F4E5}':'core-1F4E5',
+  '\u{1F5D1}\u{FE0F}':'core-1F5D1-FE0F', '\u{231A}':'core-231A', '\u{1F517}':'core-1F517',
+  '\u{1F310}':'core-1F310', '\u{1F4D6}':'core-1F4D6', '\u{1F4CB}':'core-1F4CB',
+  '\u{1F947}':'core-1F947', '\u{1F948}':'core-1F948', '\u{1F949}':'core-1F949',
+  '\u{1F525}':'core-1F525'
+};
+/* 把单个 emoji 字符渲染为 <img>，找不到则原样返回字符（兜底） */
+function emojiImg(c, extraStyle) {
+  var file = EMOJI_FILE[c];
+  if (!file) return c;
+  var style = extraStyle ? ' style="' + extraStyle + '"' : '';
+  return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
+}
+
+var APP_VERSION = 'v2.3.0';
 var STORAGE_KEY = 'drink_water_data';
 var SETTINGS_KEY = 'drink_water_settings';
 var SUPABASE_CONFIG_KEY = 'drink_water_supabase';
@@ -782,9 +844,9 @@ function generatePairingCode() {
     updateSettingsUI();
     showModal('📱 连接手表',
       '<div style="text-align:center;padding:16px 0;">' +
-      '<div style="font-size:0.75rem;color:#666;margin-bottom:10px;">在手表版输入以下配对码</div>' +
-      '<div style="font-size:2.5rem;font-weight:700;letter-spacing:8px;color:#4A90E2;">' + code + '</div>' +
-      '<div style="font-size:0.75rem;color:#999;margin-top:10px;">配对码 5 分钟内有效</div></div>',
+      '<div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:10px;">在手表版输入以下配对码</div>' +
+      '<div style="font-size:2.5rem;font-weight:700;letter-spacing:8px;color:var(--primary);">' + code + '</div>' +
+      '<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:10px;">配对码 5 分钟内有效</div></div>',
       [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]
     );
   });
@@ -820,7 +882,7 @@ function renderSyncDebug() {
     for (var i = 0; i < _syncLogs.length; i++) {
       fullHtml += '<div>' + _syncLogs[i] + '</div>';
     }
-    fullHtml += '<div style="color:#999;margin-top:4px;cursor:pointer;text-align:center;" onclick="toggleSyncDebug()">▲ 收起</div>';
+    fullHtml += '<div style="color:var(--text-tertiary);margin-top:4px;cursor:pointer;text-align:center;" onclick="toggleSyncDebug()">▲ 收起</div>';
     full.innerHTML = fullHtml;
     full.scrollTop = full.scrollHeight;
     full.style.display = 'block';
@@ -834,7 +896,7 @@ function renderSyncDebug() {
       summaryHtml += '<div>' + _syncLogs[i] + '</div>';
     }
     if (_syncLogs.length > _syncLogMaxSummary) {
-      summaryHtml += '<div style="color:#4A90E2;font-weight:600;margin-top:2px;">▼ 展开全部 (' + _syncLogs.length + ' 条)</div>';
+      summaryHtml += '<div style="color:var(--primary);font-weight:600;margin-top:2px;">▼ 展开全部 (' + _syncLogs.length + ' 条)</div>';
     }
     summary.innerHTML = summaryHtml;
   }
@@ -1064,7 +1126,7 @@ function renderCupAndTrack(total, goal) {
   var remain = Math.max(goal - total, 0);
   var remainEl = document.getElementById('todayRemainText');
   remainEl.textContent = isMet ? '\u{1F389} \u4eca\u65e5\u76ee\u6807\u5df2\u8fbe\u6210\uff01' : '\u8fd8\u5dee ' + remain + ' ml';
-  remainEl.style.color = isMet ? '#e74c3c' : '#666';
+  remainEl.style.color = isMet ? '#2F9E6E' : '#5B6B78';
   document.getElementById('trackGoalLabel').textContent = goal + ' ml';
   if (isMet && !lastGoalMet) { setTimeout(function() { fireConfetti(); }, 200); }
   lastGoalMet = isMet;
@@ -1080,7 +1142,7 @@ function fireConfetti() {
   var container = document.createElement('div');
   container.className = 'confetti-container';
   document.body.appendChild(container);
-  var colors = ['#e74c3c','#f39c12','#2ecc71','#3498db','#9b59b6','#e91e63','#ff6b6b','#ffd93d'];
+  var colors = ['#E5484D','#F59E0B','#2F9E6E','#4FD1C5','#9B7BDD','#E2487E','#FF6B6B','#FFD93D'];
   var shapes = ['\u25A0','\u25CF','\u25B2','\u2605','\u2666','\u2665'];
   for (var i = 0; i < 40; i++) {
     var piece = document.createElement('div');
@@ -1106,15 +1168,15 @@ function formatRecordLine(r) {
   var ts = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
   var mood = r.mood || '';
   var isPill = r.type === 'pill' || (!r.type && r.amount === 0);
-  var icon = isPill ? '\u{1F48A}' : '\u{1F4A7}';
+  var icon = isPill ? emojiImg('\u{1F48A}', 'width:1.25rem;height:1.25rem;margin-right:10px;') : emojiImg('\u{1F4A7}', 'width:1.25rem;height:1.25rem;margin-right:10px;');
   var label = isPill ? '\u5403\u836f' : r.amount + ' ml';
   return '<div style="display:flex;align-items:center;flex:1;min-width:0;">' +
-    '<span style="font-size:1.25rem;margin-right:10px;">' + icon + '</span>' +
-    '<div style="flex:1;min-width:0;"><span style="font-weight:600;">' + (mood ? mood + ' ' : '') + label + '</span>' +
-    '<div style="font-size:0.75rem;color:#999;margin-top:2px;">' + ds + ' ' + ts + '</div></div></div>';
+    '<span>' + icon + '</span>' +
+    '<div style="flex:1;min-width:0;"><span style="font-weight:600;">' + (mood ? emojiImg(mood, 'width:1.375rem;height:1.375rem;vertical-align:-0.15em;') + ' ' : '') + label + '</span>' +
+    '<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:2px;">' + ds + ' ' + ts + '</div></div></div>';
 }
 function formatRecordTotal(total) {
-  return '<div style="text-align:right;font-size:0.8125rem;color:#666;padding-top:8px;border-top:1px solid var(--border);margin-top:4px;">\u5408\u8ba1\uff1a<span style="font-weight:700;color:var(--primary);">' + total + ' ml</span></div>';
+  return '<div style="text-align:right;font-size:0.8125rem;color:var(--text-secondary);padding-top:8px;border-top:1px solid var(--border);margin-top:4px;">\u5408\u8ba1\uff1a<span style="font-weight:700;color:var(--primary);">' + total + ' ml</span></div>';
 }
 
 function renderRecords(todayRecords) {
@@ -1137,18 +1199,18 @@ function renderRecords(todayRecords) {
     div.className = 'record-item';
     var isEditing = (_editingRecordId === r.id);
     var moodHtml = r.mood
-      ? '<span class="record-mood-set' + (isEditing ? ' editing' : '') + '" onclick="startEditMood(\'' + r.id + '\')" title="点击更换心情">' + r.mood + '</span>'
+      ? '<span class="record-mood-set' + (isEditing ? ' editing' : '') + '" onclick="startEditMood(\'' + r.id + '\')" title="点击更换心情">' + emojiImg(r.mood, 'width:1.375rem;height:1.375rem;vertical-align:-0.15em;') + '</span>'
       : '';
     var addBtn = !r.mood
       ? '<span class="record-mood-add" onclick="applyMoodToRecord(\'' + r.id + '\')" title="标注心情">➕</span>'
       : '';
     var isPill = r.type === 'pill' || (!r.type && r.amount === 0);
-    var icon = isPill ? '\u{1F48A}' : '\u{1F4A7}';
+    var icon = isPill ? emojiImg('\u{1F48A}', 'width:1.25rem;height:1.25rem;margin-right:10px;') : emojiImg('\u{1F4A7}', 'width:1.25rem;height:1.25rem;margin-right:10px;');
     var label = isPill ? '\u5403\u836f' : r.amount + ' ml';
-    div.innerHTML = '<span style="font-size:1.25rem;margin-right:10px;">' + icon + '</span>' +
+    div.innerHTML = '<span>' + icon + '</span>' +
       '<div style="flex:1;min-width:0;"><span style="font-weight:600;">' + moodHtml + label + addBtn + '</span>' +
-      '<div style="font-size:0.75rem;color:#999;margin-top:2px;">' + dateStr + ' ' + timeStr + '</div></div>' +
-      '<button class="record-del" onclick="deleteRecord(\'' + r.id + '\')" style="flex-shrink:0;margin-left:8px;border:none;background:none;color:#e74c3c;font-size:1.125rem;cursor:pointer;padding:4px;">\u2715</button>';
+      '<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:2px;">' + dateStr + ' ' + timeStr + '</div></div>' +
+      '<button class="record-del" onclick="deleteRecord(\'' + r.id + '\')" style="flex-shrink:0;margin-left:8px;border:none;background:none;color:var(--danger);font-size:1.125rem;cursor:pointer;padding:4px;">\u2715</button>';
     list.appendChild(div);
   });
   /* 展开/收起按钮 */
@@ -1156,7 +1218,7 @@ function renderRecords(todayRecords) {
     var toggleBtn = document.createElement('div');
     toggleBtn.style.cssText = 'text-align:center;padding:8px 0 2px;';
     var toggleLink = document.createElement('span');
-    toggleLink.style.cssText = 'color:#4A90E2;font-size:0.8125rem;cursor:pointer;';
+    toggleLink.style.cssText = 'color:var(--primary);font-size:0.8125rem;cursor:pointer;';
     toggleLink.textContent = isCollapsed ? '\u5c55\u5f00\u5168\u90e8 ' + reversed.length + ' \u6761 \u25BC' : '\u6536\u8d77 \u25B2';
     toggleLink.onclick = function() { _recordsExpanded = !_recordsExpanded; renderRecords(todayRecords); };
     toggleBtn.appendChild(toggleLink);
@@ -1208,7 +1270,7 @@ function triggerSplash(count) {
     var dist = 50 + Math.random() * 100;
     var dx = Math.cos(angle) * dist;
     var dy = Math.sin(angle) * dist;
-    drop.style.cssText = 'position:fixed; left:' + cx + 'px; top:' + cy + 'px; width:' + size + 'px; height:' + size + 'px; border-radius:50%; background:rgba(74,144,226,' + (0.5+Math.random()*0.4) + '); pointer-events:none; z-index:999;';
+    drop.style.cssText = 'position:fixed; left:' + cx + 'px; top:' + cy + 'px; width:' + size + 'px; height:' + size + 'px; border-radius:50%; background:rgba(79,209,197,' + (0.5+Math.random()*0.4) + '); pointer-events:none; z-index:999;';
     document.body.appendChild(drop);
     drop.animate([{ transform: 'translate(0,0) scale(1)', opacity: 1 },{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(0.2)', opacity: 0 }], { duration: 600 + Math.random() * 400, fill: 'forwards', easing: 'ease-out' });
     setTimeout(function() { if (drop.parentNode) { drop.remove(); } }, 1200);
@@ -1314,7 +1376,7 @@ function startEditMood(id) {
 
 /* 心情使用说明 */
 function showMoodHelp() {
-  showModal('\u{1F3AD} \u5fc3\u60c5\u4f7f\u7528\u8bf4\u660e',
+  showModal('<img src="icons/emoji/core-1F3AF.png" alt="" class="emoji" style="width:1em;height:1em;vertical-align:-0.1em;"> \u5fc3\u60c5\u4f7f\u7528\u8bf4\u660e',
     '<div style="font-size:0.8125rem;line-height:1.8;">' +
     '<b>\u2764\ufe0f \u559d\u6c34\u65f6\u8bb0\u5f55\u5fc3\u60c5</b><br>' +
     '\u2460 \u5148\u70b9\u4e00\u4e2a\u5fc3\u60c5\u8868\u60c5<Br>' +
@@ -1322,7 +1384,7 @@ function showMoodHelp() {
     '<b>\u2795 \u7ed9\u5df2\u6709\u7684\u8bb0\u5f55\u8865\u5fc3\u60c5</b><br>' +
     '\u2460 \u5148\u70b9\u4e00\u4e2a\u5fc3\u60c5\u8868\u60c5<br>' +
     '\u2461 \u518d\u70b9\u8bb0\u5f55\u4e0a\u7684 \u2795 \u56fe\u6807<br><br>' +
-    '<b>\u{1F504} \u66f4\u6362\u5fc3\u60c5</b><br>' +
+    '<b><img src="icons/emoji/core-1F504.png" alt="" class="emoji" style="width:1em;height:1em;vertical-align:-0.1em;"> \u66f4\u6362\u5fc3\u60c5</b><br>' +
     '\u2460 \u70b9\u4e00\u4e0b\u8bb0\u5f55\u4e0a\u7684\u65e7\u5fc3\u60c5\uff08\u53d8\u9ec4\u9ad8\u4eae\uff09<br>' +
     '\u2461 \u518d\u70b9\u4e00\u4e2a\u65b0\u7684\u5fc3\u60c5\u8868\u60c5 \u2192 \u81ea\u52a8\u66f4\u6362</div>',
     [{ text: '\u77e5\u9053\u4e86', cls: 'btn-confirm', action: hideModal }]
@@ -1781,12 +1843,12 @@ function showAboutDialog() {
   var uid = localStorage.getItem('drink_water_user_id') || '\u672a\u751f\u6210';
   showModal('\u5173\u4e8e\u5e94\u7528',
     '<div style="font-size:0.8125rem;line-height:1.8;text-align:center;">' +
-    '<div style="font-size:3rem;margin-bottom:10px;">\u{1F4A7}</div>' +
+    '<div style="font-size:3rem;margin-bottom:10px;"><img src="icons/emoji/core-1F4A7.png" alt="" class="emoji" style="width:3rem;height:3rem;"></div>' +
     '<b>\u559d\u6c34\u8bb0\u5f55</b><br>' +
     '\u5e2e\u52a9\u60a8\u517b\u6210\u5065\u5eb7\u7684\u996e\u6c34\u4e60\u60ef' +
     '<br><br>' +
-    '<span style="font-size:0.625rem;color:#999;word-break:break-all;">ID: ' + uid + '</span>' +
-    '<div id="aboutChangelog" style="max-height:320px;overflow-y:auto;overflow-x:hidden;word-break:break-all;-webkit-overflow-scrolling:touch;border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:0.75rem;line-height:1.7;text-align:left;"><div style="text-align:center;color:#999;padding:10px;">加载中...</div></div>' +
+    '<span style="font-size:0.625rem;color:var(--text-tertiary);word-break:break-all;">ID: ' + uid + '</span>' +
+    '<div id="aboutChangelog" style="max-height:320px;overflow-y:auto;overflow-x:hidden;word-break:break-all;-webkit-overflow-scrolling:touch;border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:0.75rem;line-height:1.7;text-align:left;"><div style="text-align:center;color:var(--text-tertiary);padding:10px;">加载中...</div></div>' +
     '</div>',
     [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]
   );
@@ -1838,15 +1900,15 @@ function showSupabaseDialog() {
   var cfg = loadSupabaseConfig();
   var isConnected = isSupabaseConfigured();
   var statusHtml = isConnected
-    ? '<div style="color:#4CAF50;margin-bottom:12px;font-weight:600;">✅ 已配置</div>'
-    : '<div style="color:#999;margin-bottom:12px;">⚠️ 未配置 — 排行榜将使用本地模拟数据</div>';
+    ? '<div style="color:var(--success);margin-bottom:12px;font-weight:600;">✅ 已配置</div>'
+    : '<div style="color:var(--text-tertiary);margin-bottom:12px;">⚠️ 未配置 — 排行榜将使用本地模拟数据</div>';
   var bodyHtml = statusHtml +
-    '<div style="margin-bottom:8px;"><label style="font-size:0.8125rem;color:#666;">Supabase URL</label>' +
-    '<input type="text" id="sbUrlInput" value="' + (cfg.url || '') + '" placeholder="https://xxxxx.supabase.co" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.8125rem;margin-top:4px;"></div>' +
-    '<div style="margin-bottom:8px;"><label style="font-size:0.8125rem;color:#666;">Anon Key</label>' +
-    '<input type="text" id="sbKeyInput" value="' + (cfg.key || '') + '" placeholder="eyJhbGciOiJIUzI1NiIs..." style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.8125rem;margin-top:4px;"></div>' +
-    '<div style="margin-top:8px;font-size:0.75rem;color:#999;line-height:1.5;">' +
-    '📖 在 <a href="https://supabase.com" target="_blank" style="color:#4A90E2;">supabase.com</a> 免费注册，创建一个项目后，在 Settings → API 中找到 Project URL 和 anon/public key。</div>';
+    '<div style="margin-bottom:8px;"><label style="font-size:0.8125rem;color:var(--text-secondary);">Supabase URL</label>' +
+    '<input type="text" id="sbUrlInput" value="' + (cfg.url || '') + '" placeholder="https://xxxxx.supabase.co" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.8125rem;margin-top:4px;"></div>' +
+    '<div style="margin-bottom:8px;"><label style="font-size:0.8125rem;color:var(--text-secondary);">Anon Key</label>' +
+    '<input type="text" id="sbKeyInput" value="' + (cfg.key || '') + '" placeholder="eyJhbGciOiJIUzI1NiIs..." style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.8125rem;margin-top:4px;"></div>' +
+    '<div style="margin-top:8px;font-size:0.75rem;color:var(--text-tertiary);line-height:1.5;">' +
+    '📖 在 <a href="https://supabase.com" target="_blank" style="color:var(--primary);">supabase.com</a> 免费注册，创建一个项目后，在 Settings → API 中找到 Project URL 和 anon/public key。</div>';
   showModal('在线排行榜设置', bodyHtml, [
     { text: '\u53d6\u6d88', cls: 'btn-cancel', action: hideModal },
     { text: '\u6d4b\u8bd5\u8fde\u63a5', cls: 'btn-confirm', action: function() { testSupabaseConnection(); } }
@@ -1967,7 +2029,7 @@ function deleteRecord(id) {
 function showCustomDialog() {
   var curr = gState.settings.customAmount || 250;
   showModal('\u81ea\u5b9a\u4e49\u6c34\u91cf',
-    '<input type="number" id="customAmountInput" value="' + curr + '" placeholder="\u8f93\u5165\u6c34\u91cf" min="1" max="2000" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:#999;margin-top:-8px;margin-bottom:6px;">\u8303\u56f4\uff1a1-2000ml</div>',
+    '<input type="number" id="customAmountInput" value="' + curr + '" placeholder="\u8f93\u5165\u6c34\u91cf" min="1" max="2000" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:-8px;margin-bottom:6px;">\u8303\u56f4\uff1a1-2000ml</div>',
     [{ text: '\u53d6\u6d88', cls: 'btn-cancel', action: hideModal },
      { text: '\u8bb0\u5f55', cls: 'btn-confirm', action: function() {
        var val = parseInt(document.getElementById('customAmountInput').value);
@@ -2023,7 +2085,7 @@ function createChart() {
   /* Y 轴网格线 + 刻度 */
   var ySteps = 4;
   ctx.strokeStyle = 'rgba(0,0,0,0.06)';
-  ctx.fillStyle = '#999';
+  ctx.fillStyle = '#8A9AA5';
   ctx.font = '10px sans-serif';
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
@@ -2043,8 +2105,8 @@ function createChart() {
     var barH = (values[j] / maxVal) * chartH;
     var barY = pad.top + chartH - barH;
     var isGoal = values[j] >= goal;
-    ctx.fillStyle = isGoal ? 'rgba(76,175,80,0.7)' : 'rgba(74,144,226,0.7)';
-    ctx.strokeStyle = isGoal ? '#4CAF50' : '#4A90E2';
+    ctx.fillStyle = isGoal ? 'rgba(47,158,110,0.7)' : 'rgba(15,168,150,0.7)';
+    ctx.strokeStyle = isGoal ? '#2F9E6E' : '#0FA896';
     ctx.lineWidth = 1;
     var r = Math.min(4, barW / 2);
     ctx.beginPath();
@@ -2062,7 +2124,7 @@ function createChart() {
 
   /* X 轴标签 — 按周间隔显示 */
   var labelStep = barCount > 20 ? Math.max(1, Math.floor(barCount / 7)) : barCount > 14 ? 2 : 1;
-  ctx.fillStyle = '#999';
+  ctx.fillStyle = '#8A9AA5';
   ctx.font = '9px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
@@ -2074,7 +2136,7 @@ function createChart() {
   /* 目标线 */
   if (goal > 0) {
     var goalY = pad.top + chartH - (goal / maxVal * chartH);
-    ctx.strokeStyle = '#e74c3c';
+    ctx.strokeStyle = '#E5484D';
     ctx.lineWidth = 2;
     ctx.setLineDash([5, 5]);
     ctx.beginPath();
@@ -2190,7 +2252,7 @@ function disconnectLeaderboard() {
 
 function showGoalDialog() {
   showModal('\u8bbe\u7f6e\u6bcf\u65e5\u76ee\u6807',
-    '<input type="number" id="goalInput" value="' + gState.settings.dailyGoal + '" placeholder="\u76ee\u6807\uff08\u6beb\u5347\uff09" min="1" max="10000" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:#999;margin-top:-8px;margin-bottom:6px;">\u8303\u56f4\uff1a1-10000ml</div>',
+    '<input type="number" id="goalInput" value="' + gState.settings.dailyGoal + '" placeholder="\u76ee\u6807\uff08\u6beb\u5347\uff09" min="1" max="10000" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:-8px;margin-bottom:6px;">\u8303\u56f4\uff1a1-10000ml</div>',
     [{ text: '\u53d6\u6d88', cls: 'btn-cancel', action: hideModal },
      { text: '\u4fdd\u5b58', cls: 'btn-confirm', action: function() {
        var val = parseInt(document.getElementById('goalInput').value);
@@ -2202,10 +2264,10 @@ function showGoalDialog() {
 
 function showCustomAmountDialog() {
   showModal('\u8bbe\u7f6e\u81ea\u5b9a\u4e49\u6c34\u91cf',
-    '<div style="font-size:0.875rem;font-weight:600;color:#666;margin-bottom:6px;">\u6b63\u5e38\u6c34\u91cf</div>' +
-    '<input type="number" id="customSettingInput" value="' + gState.settings.customAmount + '" placeholder="\u6beb\u5347" min="1" max="2000" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:#999;margin-top:-8px;margin-bottom:12px;">\u8303\u56f4\uff1a1-2000ml</div>' +
-    '<div style="font-size:0.875rem;font-weight:600;color:#666;margin-bottom:6px;">\u559d\u4e00\u5c0f\u53e3</div>' +
-    '<input type="number" id="sipSettingInput" value="' + (gState.settings.sipAmount || 15) + '" placeholder="\u6beb\u5347" min="1" max="50" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:#999;margin-top:-8px;margin-bottom:6px;">\u8303\u56f4\uff1a1-50ml</div>',
+    '<div style="font-size:0.875rem;font-weight:600;color:var(--text-secondary);margin-bottom:6px;">\u6b63\u5e38\u6c34\u91cf</div>' +
+    '<input type="number" id="customSettingInput" value="' + gState.settings.customAmount + '" placeholder="\u6beb\u5347" min="1" max="2000" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:-8px;margin-bottom:12px;">\u8303\u56f4\uff1a1-2000ml</div>' +
+    '<div style="font-size:0.875rem;font-weight:600;color:var(--text-secondary);margin-bottom:6px;">\u559d\u4e00\u5c0f\u53e3</div>' +
+    '<input type="number" id="sipSettingInput" value="' + (gState.settings.sipAmount || 15) + '" placeholder="\u6beb\u5347" min="1" max="50" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:-8px;margin-bottom:6px;">\u8303\u56f4\uff1a1-50ml</div>',
     [{ text: '\u53d6\u6d88', cls: 'btn-cancel', action: hideModal },
      { text: '\u4fdd\u5b58', cls: 'btn-confirm', action: function() {
        var val = parseInt(document.getElementById('customSettingInput').value);
@@ -2333,7 +2395,7 @@ function randomReminderMessage() {
 function showReminderIntervalDialog() {
   var curr = gState.settings.reminderInterval || 30;
   showModal('提醒周期',
-    '<input type="number" id="reminderIntervalInput" value="' + curr + '" placeholder="分钟" min="1" max="60" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:#999;margin-top:6px;">范围：1-60 分钟</div>',
+    '<input type="number" id="reminderIntervalInput" value="' + curr + '" placeholder="分钟" min="1" max="60" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:6px;">范围：1-60 分钟</div>',
     [{ text: '取消', cls: 'btn-cancel', action: hideModal },
      { text: '保存', cls: 'btn-confirm', action: function() {
       var val = parseInt(document.getElementById('reminderIntervalInput').value);
@@ -2370,12 +2432,12 @@ function showReminderWindowDialog() {
   var sh = typeof s.startHour === 'number' ? s.startHour : 8;
   var eh = typeof s.endHour === 'number' ? s.endHour : 22;
   showModal('提醒时段',
-    '<div style="font-size:0.8125rem;color:#666;margin-bottom:10px;">仅在设定时段内提醒，避免夜间打扰</div>' +
+    '<div style="font-size:0.8125rem;color:var(--text-secondary);margin-bottom:10px;">仅在设定时段内提醒，避免夜间打扰</div>' +
     '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">' +
-    '<select id="rwStart" style="flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;">' + windowHourOptions(sh) + '</select>' +
-    '<span style="color:#999;">至</span>' +
-    '<select id="rwEnd" style="flex:1;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;">' + windowHourOptions(eh) + '</select></div>' +
-    '<div style="font-size:0.75rem;color:#999;margin-top:6px;">支持跨天：如 22:00 - 08:00 表示夜间也提醒</div>',
+    '<select id="rwStart" style="flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9375rem;">' + windowHourOptions(sh) + '</select>' +
+    '<span style="color:var(--text-tertiary);">至</span>' +
+    '<select id="rwEnd" style="flex:1;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9375rem;">' + windowHourOptions(eh) + '</select></div>' +
+    '<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:6px;">支持跨天：如 22:00 - 08:00 表示夜间也提醒</div>',
     [{ text: '取消', cls: 'btn-cancel', action: hideModal },
      { text: '保存', cls: 'btn-confirm', action: function() {
       gState.settings.startHour = parseInt(document.getElementById('rwStart').value);
@@ -2461,12 +2523,12 @@ function showAvatarDialog() {
   var me = getMyAnimal();
   var grid = '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;">';
   for (var i = 0; i < LB_ANIMALS.length; i++) {
-    var sel = (i === me.idx) ? ' style="border:2px solid #4A90E2;background:#e8f0fe;transform:scale(1.05);"' : '';
-    grid += '<div onclick="selectAvatar(' + i + ')"' + sel + ' class="avatar-opt"><div style="font-size:1.75rem;">' + LB_ANIMALS[i] + '</div><div style="font-size:0.625rem;color:#999;margin-top:2px;">' + LB_NAMES[i] + '</div></div>';
+    var sel = (i === me.idx) ? ' style="border:2px solid var(--primary);background:rgba(15,168,150,.08);transform:scale(1.05);"' : '';
+    grid += '<div onclick="selectAvatar(' + i + ')"' + sel + ' class="avatar-opt"><div style="font-size:1.75rem;">' + LB_ANIMALS[i] + '</div><div style="font-size:0.625rem;color:var(--text-tertiary);margin-top:2px;">' + LB_NAMES[i] + '</div></div>';
   }
   grid += '</div>';
   showModal('\u9009\u62e9\u5934\u50cf',
-    '<style>.avatar-opt{font-size:1.75rem;text-align:center;padding:6px;cursor:pointer;border-radius:10px;border:2px solid transparent;transition:all .2s;}.avatar-opt:hover{background:#f0f4fb;transform:scale(1.1);}</style><div style="max-height:55vh;overflow-y:auto;padding:4px 0;">' + grid + '</div>',
+    '<style>.avatar-opt{font-size:1.75rem;text-align:center;padding:6px;cursor:pointer;border-radius:10px;border:2px solid transparent;transition:transform var(--dur-press) var(--ease-out),background var(--dur-press) var(--ease-out);}.avatar-opt:hover{background:var(--bg);transform:scale(1.1);}</style><div style="max-height:55vh;overflow-y:auto;padding:4px 0;">' + grid + '</div>',
     [{ text: '\u5173\u95ed', cls: 'btn-cancel', action: hideModal }]);
 }
 
@@ -2479,7 +2541,7 @@ function selectAvatar(idx) {
 function showNicknameDialog() {
   var current = localStorage.getItem('lb_nickname') || '';
   showModal('\u4fee\u6539\u6635\u79f0',
-    '<input type="text" id="nicknameInput" value="' + current + '" placeholder="\u8f93\u5165\u4f60\u7684\u6635\u79f0" maxlength="10" style="width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:#999;margin-top:6px;">\u6700\u591a 10 \u4e2a\u5b57\u7b26</div>',
+    '<input type="text" id="nicknameInput" value="' + current + '" placeholder="\u8f93\u5165\u4f60\u7684\u6635\u79f0" maxlength="10" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.9375rem;"><div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:6px;">\u6700\u591a 10 \u4e2a\u5b57\u7b26</div>',
     [{ text: '\u53d6\u6d88', cls: 'btn-cancel', action: hideModal },
      { text: '\u4fdd\u5b58', cls: 'btn-confirm', action: function() {
        var val = document.getElementById('nicknameInput').value.trim();
@@ -2491,7 +2553,7 @@ function showNicknameDialog() {
 
 function switchTab(idx) {
   var pages = ['page-home', 'page-garden', 'page-leaderboard', 'page-history', 'page-settings'];
-  var titles = ['咕嘟 💧', '我的花园 🌱', '排行榜 🏆', '喝水历史 📊', '设置 ⚙️'];
+  var titles = ['咕嘟 <img src="icons/emoji/core-1F4A7.png" alt="" class="emoji" style="width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;">', '我的花园 🌱', '排行榜 🏆', '喝水历史 📊', '设置 ⚙️'];
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.getElementById(pages[idx]).classList.add('active');
   document.getElementById('appbarTitle').textContent = titles[idx];
@@ -2526,9 +2588,9 @@ function lbDebug(msg) {
   _lbLogs.push(msg);
 }
 function toggleLBDebug() {
-  var logs = _lbLogs.join('<br>') || '<div style="text-align:center;color:#999;padding:12px;">暂无日志</div>';
+  var logs = _lbLogs.join('<br>') || '<div style="text-align:center;color:var(--text-tertiary);padding:12px;">暂无日志</div>';
   showModal('📋 网络日志',
-    '<div style="max-height:60vh;overflow-y:auto;font-size:0.75rem;line-height:1.8;color:#666;word-break:break-all;">' + logs + '</div>',
+    '<div style="max-height:60vh;overflow-y:auto;font-size:0.75rem;line-height:1.8;color:var(--text-secondary);word-break:break-all;">' + logs + '</div>',
     [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]
   );
 }
@@ -2570,7 +2632,7 @@ function renderLeaderboard() {
   checkBanStatus().then(function(banned) {
     _isBanned = banned;
     if (_isBanned) {
-      document.getElementById('lbList').innerHTML = '<div class="lb-empty" style="padding:30px 0;"><div style="font-size:2rem;margin-bottom:8px;">🔌</div>\u5df2\u65ad\u5f00\u6392\u884c\u699c\u8fde\u63a5<br><span style="font-size:0.75rem;color:#999;">\u8bf7\u5230\u8bbe\u7f6e\u4e2d\u70b9\u51fb\u201c\u6d4b\u8bd5\u8fde\u63a5\u201d\u91cd\u65b0\u8fde\u63a5</span></div>';
+      document.getElementById('lbList').innerHTML = '<div class="lb-empty" style="padding:30px 0;"><div style="font-size:2rem;margin-bottom:8px;">🔌</div>\u5df2\u65ad\u5f00\u6392\u884c\u699c\u8fde\u63a5<br><span style="font-size:0.75rem;color:var(--text-tertiary);">\u8bf7\u5230\u8bbe\u7f6e\u4e2d\u70b9\u51fb\u201c\u6d4b\u8bd5\u8fde\u63a5\u201d\u91cd\u65b0\u8fde\u63a5</span></div>';
       document.getElementById('settingSupabaseDesc').textContent = '\u26a0\ufe0f \u5df2\u65ad\u5f00';
       if (lbInterval) { clearInterval(lbInterval); lbInterval = null; }
       return;
@@ -2610,8 +2672,8 @@ function renderLeaderboardContent() {
       var uid = u.isMe ? '' : (u.user_id || '');
       var adminDel = _lbAdminMode && uid ? '<span class="lb-admin-del" data-deluid="' + uid + '" data-delnick="' + u.name.replace(/"/g, '&quot;') + '" onclick="event.stopPropagation();deleteUserRanking(this.getAttribute(\'data-deluid\'),this.getAttribute(\'data-delnick\'))" title="删除此用户排名">✕</span>' : '';
       var periodMl = getPeriodMl(u);
-      var pillBadge = u.pillToday ? ' <span style="font-size:0.75rem;" title="已吃药">💊</span>' : '';
-      html += '<div class="lb-item ' + (u.isMe ? 'lb-me' : '') + '" data-userid="' + uid + '" data-myname="' + u.name + '" data-myoji="' + u.emoji + '" onclick="showUserRecords(this)" style="cursor:pointer;">' + meTag + '<div class="lb-rank ' + (rank <= 3 ? ['gold','silver','bronze'][rank-1] : '') + '">' + rankText + '</div><div class="lb-avatar">' + u.emoji + '</div><div class="lb-info"><div class="lb-name">' + u.name + (u.isMe ? ' (\u4f60)' : '') + '</div><div class="lb-streak">' + (u.streak > 0 ? '\u{1F525}'.repeat(Math.min(u.streak, 5)) : '') + u.streak + '\u5929\u8fde\u51fb' + pillBadge + '</div></div><div class="lb-amount">' + adminDel + ' ' + periodMl + ' <span class="lb-unit">ml</span></div></div>';
+      var pillBadge = u.pillToday ? ' <span title="已吃药">' + emojiImg('\u{1F48A}', 'width:0.85rem;height:0.85rem;vertical-align:-0.05em;') + '</span>' : '';
+      html += '<div class="lb-item ' + (u.isMe ? 'lb-me' : '') + '" data-userid="' + uid + '" data-myname="' + u.name + '" data-myoji="' + u.emoji + '" onclick="showUserRecords(this)" style="cursor:pointer;">' + meTag + '<div class="lb-rank ' + (rank <= 3 ? ['gold','silver','bronze'][rank-1] : '') + '">' + rankText + '</div><div class="lb-avatar">' + u.emoji + '</div><div class="lb-info"><div class="lb-name">' + u.name + (u.isMe ? ' (\u4f60)' : '') + '</div><div class="lb-streak">' + (u.streak > 0 ? emojiImg('\u{1F525}', 'width:.8em;height:.8em;vertical-align:-.05em;margin-right:1px;').repeat(Math.min(u.streak, 5)) : '') + u.streak + '\u5929\u8fde\u51fb' + pillBadge + '</div></div><div class="lb-amount">' + adminDel + ' ' + periodMl + ' <span class="lb-unit">ml</span></div></div>';
     });
     document.getElementById('lbList').innerHTML = html || '<div class="lb-empty">\u8fd8\u6ca1\u6709\u6570\u636e\uff5e\u5feb\u53bb\u559d\u6c34\u5427\uff01</div>';
   }
@@ -2697,7 +2759,7 @@ function showUserRecords(el) {
   }
   /* 先显示加载中 */
   showModal(emoji + ' ' + name + ' \u7684\u4eca\u65e5\u8bb0\u5f55',
-    '<div style="text-align:center;padding:20px;color:#999;font-size:0.8125rem;">\u52a0\u8f7d\u4e2d...</div>',
+    '<div style="text-align:center;padding:20px;color:var(--text-tertiary);font-size:0.8125rem;">\u52a0\u8f7d\u4e2d...</div>',
     [{ text: '\u5173\u95ed', cls: 'btn-cancel', action: hideModal }]
   );
   /* 从云端拉取 */
@@ -2728,7 +2790,7 @@ function renderUserRecordsModal(emoji, name, userId, records) {
   var titleText = emoji + ' ' + name + (shortId ? ' (' + shortId + ')' : '');
   if (!records || records.length === 0) {
     showModal(titleText + ' \u7684\u4eca\u65e5\u8bb0\u5f55',
-      '<div style="text-align:center;padding:20px;color:#999;font-size:0.875rem;">\u6682\u65e0\u8bb0\u5f55</div>',
+      '<div style="text-align:center;padding:20px;color:var(--text-tertiary);font-size:0.875rem;">\u6682\u65e0\u8bb0\u5f55</div>',
       [{ text: '\u5173\u95ed', cls: 'btn-cancel', action: hideModal }]
     );
     return;
@@ -2748,11 +2810,11 @@ function onLbTitleTap() {
   _lbTapCount++;
   var remaining = 5 - _lbTapCount;
   if (remaining > 0) {
-    document.getElementById('lbTitle').textContent = '\u{1F3C6} \u559d\u6c34\u6392\u884c\u699c (' + remaining + ')';
+    document.getElementById('lbTitle').innerHTML = '<img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.1em;height:1.1em;"> \u559d\u6c34\u6392\u884c\u699c (' + remaining + ')';
     /* 0.6 秒后恢复标题 */
     clearTimeout(window._lbTitleTimer);
     window._lbTitleTimer = setTimeout(function() {
-      document.getElementById('lbTitle').textContent = '\u{1F3C6} \u559d\u6c34\u6392\u884c\u699c';
+      document.getElementById('lbTitle').innerHTML = '<img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.1em;height:1.1em;"> \u559d\u6c34\u6392\u884c\u699c';
     }, 600);
   }
   if (_lbTapCount === 3) {
@@ -2760,7 +2822,7 @@ function onLbTitleTap() {
   } else if (_lbTapCount === 5) {
     _lbTapCount = 0;
     _lbAdminMode = true;
-    document.getElementById('lbTitle').textContent = '\u{1F3C6} \u559d\u6c34\u6392\u884c\u699c';
+    document.getElementById('lbTitle').innerHTML = '<img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.1em;height:1.1em;"> \u559d\u6c34\u6392\u884c\u699c';
     toggleAdminUI();
     showToast('🔧 \u7ba1\u7406\u5458\u6a21\u5f0f\u5df2\u5f00\u542f');
   } else if (_lbTapCount > 5) {
@@ -2944,7 +3006,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260620';
+var SW_DEPLOY = '20260823';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 260" role="img" aria-labelledby="title desc">
+  <title id="title">咕嘟 · 水感治愈</title>
+  <desc id="desc">玻璃水杯插画，青碧水面与气泡，水感治愈风格</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4FCFA"/>
+      <stop offset="1" stop-color="#E2F4EF"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4FD1C5"/>
+      <stop offset="1" stop-color="#0FA896"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.35"/>
+    </linearGradient>
+    <clipPath id="cupClip">
+      <path d="M325,80 L325,205 C325,220 338,228 356,228 L404,228 C422,228 435,220 435,205 L435,80 Z"/>
+    </clipPath>
+  </defs>
+  <rect width="760" height="260" fill="url(#bg)"/>
+  <circle cx="88" cy="72" r="18" fill="#FFFFFF" opacity="0.5"/>
+  <circle cx="668" cy="88" r="26" fill="#FFFFFF" opacity="0.45"/>
+  <circle cx="122" cy="192" r="10" fill="#BFE8E0" opacity="0.5"/>
+  <circle cx="642" cy="200" r="8" fill="#BFE8E0" opacity="0.5"/>
+  <circle cx="56" cy="140" r="6" fill="#BFE8E0" opacity="0.4"/>
+  <circle cx="706" cy="150" r="12" fill="#FFFFFF" opacity="0.5"/>
+  <path d="M0,232 Q95,220 190,232 T380,232 T570,232 T760,232 V260 H0 Z" fill="#D7EBE4" opacity="0.65"/>
+  <path d="M435,106 C482,106 482,182 435,182" fill="none" stroke="#BFE8E0" stroke-width="10" stroke-linecap="round"/>
+  <path d="M325,80 L325,205 C325,220 338,228 356,228 L404,228 C422,228 435,220 435,205 L435,80 Z" fill="url(#glass)" stroke="#BFE8E0" stroke-width="3"/>
+  <rect x="322" y="75" width="116" height="9" rx="4.5" fill="#D7EBE4"/>
+  <g clip-path="url(#cupClip)">
+    <rect x="320" y="152" width="120" height="85" fill="url(#water)"/>
+    <path d="M320,152 Q345,146 370,152 T420,152 T470,152" fill="none" stroke="#7EE3D6" stroke-width="4"/>
+    <path d="M320,159 Q348,154 376,159 T424,159 T470,159" fill="none" stroke="#4FD1C5" stroke-width="2.5" opacity="0.75"/>
+    <circle cx="360" cy="202" r="5" fill="#FFFFFF" opacity="0.75"/>
+    <circle cx="400" cy="186" r="3.5" fill="#FFFFFF" opacity="0.6"/>
+    <circle cx="378" cy="216" r="4" fill="#FFFFFF" opacity="0.55"/>
+  </g>
+  <rect x="337" y="90" width="8" height="72" rx="4" fill="#FFFFFF" opacity="0.85"/>
+  <circle cx="282" cy="150" r="7" fill="#4FD1C5" opacity="0.5"/>
+  <circle cx="484" cy="170" r="5" fill="#4FD1C5" opacity="0.45"/>
+</svg>

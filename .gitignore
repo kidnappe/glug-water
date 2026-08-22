@@ -9,3 +9,6 @@ backup/
 
 # Agent 配置
 .reasonix/
+
+# 项目记忆（本地会话数据，不进版本库）
+.workbuddy/
