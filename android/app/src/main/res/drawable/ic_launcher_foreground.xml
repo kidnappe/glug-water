@@ -5,38 +5,29 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- 前景：蓝色渐变水杯（同 Web 版 Icon-192.svg 风格） -->
+    <!-- 前景：白色玻璃杯(在 72x72 安全区 18-90 内) -->
     <!-- 杯身 -->
-    <path android:pathData="M34,26 h40 l3,42 c0,9 -8,15 -17,15 h-12 c-9,0 -17,-6 -17,-15 z">
-        <aapt:attr name="android:fillColor">
-            <gradient android:startX="34" android:startY="26" android:endX="34" android:endY="83" android:type="linear">
-                <item android:offset="0" android:color="#64B5F6"/>
-                <item android:offset="1" android:color="#1565C0"/>
-            </gradient>
-        </aapt:attr>
-    </path>
+    <path android:pathData="M24,28 h60 l5,56 c0,10 -10,18 -20,18 H39 c-10,0 -20,-8 -20,-18z"
+        android:fillColor="#4DFFFFFF"/>
     <!-- 杯口线 -->
-    <path
-        android:pathData="M34,26 h40"
-        android:strokeColor="#1565C0"
-        android:strokeWidth="2.5"
+    <path android:pathData="M24,28 h60"
+        android:strokeColor="#FFFFFF" android:strokeWidth="4" android:strokeLineCap="round"
         android:fillColor="#00000000"/>
-    <!-- 水面（白色半透明） -->
-    <path
-        android:pathData="M38,50 q5,-3 10,0 t10,0 10,0 t10,0 l-2,18 H40 z"
-        android:fillColor="#59FFFFFF"/>
-    <!-- 把手 -->
-    <path
-        android:pathData="M74,36 h5 c4,0 7,3 7,7 s-3,7 -7,7 h-4"
-        android:strokeColor="#1565C0"
-        android:strokeWidth="3.5"
-        android:strokeLineCap="round"
-        android:fillColor="#00000000"/>
-    <!-- 气泡 -->
-    <path
-        android:pathData="M48,40 m-1.8,0 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0"
-        android:fillColor="#80FFFFFF"/>
-    <path
-        android:pathData="M58,34 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0"
+    <!-- 第一层水面(高亮) -->
+    <path android:pathData="M28,62 q6,-5 12,0 t12,0 12,0 12,0 l-3,18 H31z"
+        android:fillColor="#CCFFFFFF"/>
+    <!-- 第二层水面(浅) -->
+    <path android:pathData="M28,80 q6,-4 12,0 t12,0 12,0 12,0 l-1.5,8 H29.5z"
         android:fillColor="#66FFFFFF"/>
+    <!-- 气泡 -->
+    <path android:pathData="M62,40 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"
+        android:fillColor="#99FFFFFF"/>
+    <path android:pathData="M72,48 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0"
+        android:fillColor="#73FFFFFF"/>
+    <path android:pathData="M52,46 m-1.8,0 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0"
+        android:fillColor="#66FFFFFF"/>
+    <!-- 把手 -->
+    <path android:pathData="M90,36 h4 c4,0 7,3 7,7 s-3,7 -7,7 h-4"
+        android:strokeColor="#FFFFFF" android:strokeWidth="3.5" android:strokeLineCap="round"
+        android:fillColor="#00000000"/>
 </vector>

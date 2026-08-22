@@ -4,8 +4,8 @@
   "description": "咕嘟咕嘟，保持水分摄入",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f0f4fb",
-  "theme_color": "#4A90E2",
+  "background_color": "#0C7A6B",
+  "theme_color": "#0FA896",
   "icons": [
     {
       "src": "icons/Icon-192.svg",
