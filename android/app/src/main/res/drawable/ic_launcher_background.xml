@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 背景：澎湃OS1风格 水青三色渐变 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- 背景：深水青渐变(整图覆盖,启动器会做圆形/圆角遮罩) -->
     <path android:pathData="M0,0 h108 v108 h-108z">
         <aapt:attr name="android:fillColor">
             <gradient android:startX="0" android:startY="0" android:endX="0" android:endY="108" android:type="linear">
-                <item android:offset="0" android:color="#0FA896"/>
-                <item android:offset="1" android:color="#0C7A6B"/>
+                <item android:offset="0" android:color="#16C8B2"/>
+                <item android:offset="0.6" android:color="#0FA896"/>
+                <item android:offset="1" android:color="#0B7266"/>
             </gradient>
         </aapt:attr>
     </path>

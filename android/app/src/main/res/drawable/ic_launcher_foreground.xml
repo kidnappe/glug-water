@@ -1,33 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 前景：澎湃OS1风格 白色水杯 + 满杯水 + 深青描边 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- 前景：白色玻璃杯(在 72x72 安全区 18-90 内) -->
-    <!-- 杯身 -->
-    <path android:pathData="M24,28 h60 l5,56 c0,10 -10,18 -20,18 H39 c-10,0 -20,-8 -20,-18z"
-        android:fillColor="#4DFFFFFF"/>
-    <!-- 杯口线 -->
-    <path android:pathData="M24,28 h60"
-        android:strokeColor="#FFFFFF" android:strokeWidth="4" android:strokeLineCap="round"
+    <!-- 杯体：白色 + 深青描边 (53-155, 58-157 → 缩放至 18-90 安全区) -->
+    <path android:pathData="M30.1,32.9 h48.4 c2.8,0 5.1,2 5.6,4.8 l3.4,39.4 c0.6,6.2 -3.7,11.5 -9.8,11.5 h-46.7 c-6.2,0 -10.4,-5.3 -9.8,-11.5 l3.4,-39.4 c0.6,-2.8 2.8,-4.8 5.6,-4.8z"
+        android:fillColor="#FFFFFF" android:strokeColor="#0B5E55" android:strokeWidth="1.7"/>
+    <!-- 杯口沿描边 -->
+    <path android:pathData="M30.1,32.9 h48.4"
+        android:strokeColor="#0B5E55" android:strokeWidth="1.7" android:strokeLineCap="round"
         android:fillColor="#00000000"/>
-    <!-- 第一层水面(高亮) -->
-    <path android:pathData="M28,62 q6,-5 12,0 t12,0 12,0 12,0 l-3,18 H31z"
-        android:fillColor="#CCFFFFFF"/>
-    <!-- 第二层水面(浅) -->
-    <path android:pathData="M28,80 q6,-4 12,0 t12,0 12,0 12,0 l-1.5,8 H29.5z"
-        android:fillColor="#66FFFFFF"/>
-    <!-- 气泡 -->
-    <path android:pathData="M62,40 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"
-        android:fillColor="#99FFFFFF"/>
-    <path android:pathData="M72,48 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0"
-        android:fillColor="#73FFFFFF"/>
-    <path android:pathData="M52,46 m-1.8,0 a1.8,1.8 0 1,0 3.6,0 a1.8,1.8 0 1,0 -3.6,0"
-        android:fillColor="#66FFFFFF"/>
-    <!-- 把手 -->
-    <path android:pathData="M90,36 h4 c4,0 7,3 7,7 s-3,7 -7,7 h-4"
-        android:strokeColor="#FFFFFF" android:strokeWidth="3.5" android:strokeLineCap="round"
+    <!-- 水：灌满杯腔 (42.5-155, 72-157) -->
+    <path android:pathData="M24.1,40.7 h60.1 l3,36.5 c0.6,6.2 -3.7,11.5 -9.8,11.5 h-46.7 c-6.2,0 -10.4,-5.3 -9.8,-11.5z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:startX="0" android:startY="56" android:endX="0" android:endY="88" android:type="linear">
+                <item android:offset="0" android:color="#2DD4C2"/>
+                <item android:offset="1" android:color="#0E8A7A"/>
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- 水面白色主浪 -->
+    <path android:pathData="M24.1,40.7 q5,-2.2 10.1,0 t10.1,0 10.1,0 10.1,0 9.6,0"
+        android:strokeColor="#FFFFFF" android:strokeWidth="1.7" android:strokeLineCap="round"
+        android:fillColor="#00000000"/>
+    <!-- 水面亮青次浪 -->
+    <path android:pathData="M24.1,44.5 q5,-2.2 10.1,0 t10.1,0 10.1,0 10.1,0 9.6,0"
+        android:strokeColor="#7CE8DA" android:strokeWidth="1.1" android:strokeLineCap="round"
+        android:fillColor="#00000000"/>
+    <!-- 波峰光点 -->
+    <path android:pathData="M40.7,38.5 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0" android:fillColor="#FFFFFF"/>
+    <path android:pathData="M61,37.4 m-1.6,0 a1.6,1.6 0 1,0 3.2,0 a1.6,1.6 0 1,0 -3.2,0" android:fillColor="#FFFFFF"/>
+    <path android:pathData="M78.9,39.1 m-1.1,0 a1.1,1.1 0 1,0 2.2,0 a1.1,1.1 0 1,0 -2.2,0" android:fillColor="#FFFFFF"/>
+    <!-- 杯壁左侧高光 -->
+    <path android:pathData="M33.3,36.7 h2.5 v45 h-2.5z" android:fillColor="#B3FFFFFF"/>
+    <!-- 水下气泡（带高光） -->
+    <path android:pathData="M49.6,60.9 m-3.1,0 a3.1,3.1 0 1,0 6.2,0 a3.1,3.1 0 1,0 -6.2,0" android:fillColor="#61FFFFFF"/>
+    <path android:pathData="M64.2,68.8 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" android:fillColor="#54FFFFFF"/>
+    <path android:pathData="M74.3,58.7 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0" android:fillColor="#59FFFFFF"/>
+    <!-- 水上漂浮气泡 -->
+    <path android:pathData="M42.8,35 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0" android:fillColor="#D9FFFFFF"/>
+    <path android:pathData="M68.7,35.6 m-1.4,0 a1.4,1.4 0 1,0 2.8,0 a1.4,1.4 0 1,0 -2.8,0" android:fillColor="#BFFFFFFF"/>
+    <!-- 把手：深青描边白心 -->
+    <path android:pathData="M82.7,40.6 h1.4 c2.8,0 5.1,2.2 5.1,5.1 s-2.2,5.1 -5.1,5.1 h-1.4"
+        android:strokeColor="#0B5E55" android:strokeWidth="3.7" android:strokeLineCap="round"
+        android:fillColor="#00000000"/>
+    <path android:pathData="M82.7,40.6 h1.4 c2.8,0 5.1,2.2 5.1,5.1 s-2.2,5.1 -5.1,5.1 h-1.4"
+        android:strokeColor="#FFFFFF" android:strokeWidth="1.4" android:strokeLineCap="round"
         android:fillColor="#00000000"/>
 </vector>
