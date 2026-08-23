@@ -3,7 +3,7 @@
  * 更新：改 SW_VERSION 值触发新版本部署
  */
 var CACHE_NAME = 'drink-water-v3';
-var SW_VERSION = 'v3-20260823n';
+var SW_VERSION = 'v3-20260823o';
 
 /* install：预缓存核心资源，正确使用 waitUntil */
 self.addEventListener('install', function(e) {
@@ -15,6 +15,8 @@ self.addEventListener('install', function(e) {
         './manifest.json',
         './icons/Icon-192.png',
         './icons/Icon-512.png',
+        './icons/Icon-maskable-192.png',
+        './icons/Icon-maskable-512.png',
         './icons/emoji/core-1F310.png',
         './icons/emoji/core-1F319.png',
         './icons/emoji/core-1F3AF.png',

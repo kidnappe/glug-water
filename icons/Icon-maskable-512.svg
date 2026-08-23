@@ -1,18 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0FA896"/>
-      <stop offset="100%" stop-color="#0C7A6B"/>
+      <stop offset="0%" stop-color="#16C8B2"/>
+      <stop offset="55%" stop-color="#0FA896"/>
+      <stop offset="100%" stop-color="#0B7266"/>
     </linearGradient>
   </defs>
-  <rect width="192" height="192" rx="40" fill="url(#g)"/>
-  <path fill="rgba(255,255,255,0.30)" d="M52 44h88l7 78c0 16-14 28-31 28H76c-17 0-31-12-31-28z"/>
-  <path fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" d="M52 44h88"/>
-  <path fill="rgba(255,255,255,0.80)" d="M58 96q9-7 18 0t18 0 18 0 18 0l-4 26H62z"/>
-  <path fill="rgba(255,255,255,0.40)" d="M58 124q9-6 18 0t18 0 18 0 18 0l-2 12H60z"/>
-  <circle cx="104" cy="62" r="5" fill="rgba(255,255,255,0.60)"/>
-  <circle cx="120" cy="76" r="3.5" fill="rgba(255,255,255,0.45)"/>
-  <circle cx="90" cy="72" r="3" fill="rgba(255,255,255,0.40)"/>
-  <path fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" opacity="0.85" d="M148 54h5c5 0 9 4 9 9s-4 9-9 9h-5"/>
-  <path fill="none" stroke="rgba(255,255,255,0.50)" stroke-width="4" stroke-linecap="round" d="M40 160q14-8 28 0t28 0 28 0 28 0"/>
+  <rect width="192" height="192" rx="46" fill="url(#g)"/>
+  <g transform="translate(19,22) scale(0.80)">
+    <path fill="rgba(255,255,255,0.90)" d="M56 52h80c4 0 8 3 9 7l6 66c1 10-6 19-16 19H57c-10 0-17-9-16-19l6-66c1-4 5-7 9-7z"/>
+    <path fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" d="M57 52h78"/>
+    <path fill="rgba(15,168,150,0.92)" d="M60 102q10-7 20 0t20 0 20 0 20 0l-4 28H64z"/>
+    <path fill="rgba(11,114,102,0.85)" d="M60 128q10-6 20 0t20 0 20 0 20 0l-2 10H62z"/>
+    <path fill="none" stroke="rgba(255,255,255,0.95)" stroke-width="4" stroke-linecap="round" d="M66 104q8-5 15 0"/>
+    <circle cx="100" cy="76" r="4.5" fill="rgba(255,255,255,0.85)"/>
+    <circle cx="114" cy="86" r="3" fill="rgba(255,255,255,0.65)"/>
+    <circle cx="88" cy="88" r="2.5" fill="rgba(255,255,255,0.55)"/>
+    <path fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" d="M146 58h4c5 0 8 3.5 8 8s-3 8-8 8h-4" opacity="0.9"/>
+  </g>
 </svg>
