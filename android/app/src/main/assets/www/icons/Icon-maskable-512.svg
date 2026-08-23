@@ -1,18 +1,41 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0FA896"/>
-      <stop offset="100%" stop-color="#0C7A6B"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#16C8B2"/>
+      <stop offset="60%" stop-color="#0FA896"/>
+      <stop offset="100%" stop-color="#0B7266"/>
+    </linearGradient>
+    <linearGradient id="water" gradientUnits="userSpaceOnUse" x1="0" y1="100" x2="0" y2="157">
+      <stop offset="0%" stop-color="#2DD4C2"/>
+      <stop offset="100%" stop-color="#0E8A7A"/>
+    </linearGradient>
+    <linearGradient id="cupBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#EAF7F4"/>
     </linearGradient>
   </defs>
-  <rect width="192" height="192" rx="40" fill="url(#g)"/>
-  <path fill="rgba(255,255,255,0.30)" d="M52 44h88l7 78c0 16-14 28-31 28H76c-17 0-31-12-31-28z"/>
-  <path fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" d="M52 44h88"/>
-  <path fill="rgba(255,255,255,0.80)" d="M58 96q9-7 18 0t18 0 18 0 18 0l-4 26H62z"/>
-  <path fill="rgba(255,255,255,0.40)" d="M58 124q9-6 18 0t18 0 18 0 18 0l-2 12H60z"/>
-  <circle cx="104" cy="62" r="5" fill="rgba(255,255,255,0.60)"/>
-  <circle cx="120" cy="76" r="3.5" fill="rgba(255,255,255,0.45)"/>
-  <circle cx="90" cy="72" r="3" fill="rgba(255,255,255,0.40)"/>
-  <path fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round" opacity="0.85" d="M148 54h5c5 0 9 4 9 9s-4 9-9 9h-5"/>
-  <path fill="none" stroke="rgba(255,255,255,0.50)" stroke-width="4" stroke-linecap="round" d="M40 160q14-8 28 0t28 0 28 0 28 0"/>
+  <rect width="192" height="192" rx="46" fill="url(#bg)"/>
+  <g transform="translate(24,28) scale(0.75)">
+    <path fill="url(#cupBody)" stroke="#0B5E55" stroke-width="3" stroke-linejoin="round" d="M53 58h86c5 0 9 3.5 10 8.5l6 70c1 11-6.5 20.5-17.5 20.5h-83c-11 0-18.5-9.5-17.5-20.5l6-70c1-5 5-8.5 10-8.5z"/>
+    <path fill="none" stroke="#0B5E55" stroke-width="3" stroke-linecap="round" d="M53 58h86"/>
+    <path fill="url(#water)" d="M42.5 72H149.5L155 136.5c1 11-6.5 20.5-17.5 20.5h-83c-11 0-18.5-9.5-17.5-20.5L42.5 72z"/>
+    <path fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" d="M42.5 72q9-4 18 0t18 0t18 0t18 0t18 0t17 0"/>
+    <path fill="none" stroke="#7CE8DA" stroke-width="2" stroke-linecap="round" opacity="0.85" d="M42.5 79q9-4 18 0t18 0t18 0t18 0t18 0t17 0"/>
+    <circle cx="72" cy="68" r="2.2" fill="#FFFFFF"/>
+    <circle cx="108" cy="66" r="2.8" fill="#FFFFFF"/>
+    <circle cx="140" cy="69" r="2" fill="#FFFFFF"/>
+    <path fill="rgba(255,255,255,0.7)" d="M59 65h4.5v80h-4.5z" rx="2"/>
+    <circle cx="88" cy="108" r="5.5" fill="rgba(255,255,255,0.38)"/>
+    <circle cx="86" cy="106" r="1.8" fill="rgba(255,255,255,0.95)"/>
+    <circle cx="114" cy="122" r="3.5" fill="rgba(255,255,255,0.33)"/>
+    <circle cx="112.5" cy="120.5" r="1.2" fill="rgba(255,255,255,0.95)"/>
+    <circle cx="132" cy="104" r="4" fill="rgba(255,255,255,0.35)"/>
+    <circle cx="130.5" cy="102.5" r="1.3" fill="rgba(255,255,255,0.95)"/>
+    <circle cx="76" cy="62" r="3.5" fill="rgba(255,255,255,0.85)"/>
+    <circle cx="74.8" cy="60.8" r="1.2" fill="#FFFFFF"/>
+    <circle cx="122" cy="63" r="2.5" fill="rgba(255,255,255,0.75)"/>
+    <circle cx="121.2" cy="62.2" r="0.9" fill="#FFFFFF"/>
+    <path fill="none" stroke="#0B5E55" stroke-width="6.5" stroke-linecap="round" d="M147 72h2.5c5 0 9 4 9 9s-4 9-9 9h-2.5"/>
+    <path fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" d="M147 72h2.5c5 0 9 4 9 9s-4 9-9 9h-2.5"/>
+  </g>
 </svg>

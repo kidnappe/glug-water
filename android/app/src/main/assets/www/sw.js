@@ -3,7 +3,7 @@
  * 更新：改 SW_VERSION 值触发新版本部署
  */
 var CACHE_NAME = 'drink-water-v3';
-var SW_VERSION = 'v3-20260823b';
+var SW_VERSION = 'v3-20260823o';
 
 /* install：预缓存核心资源，正确使用 waitUntil */
 self.addEventListener('install', function(e) {
@@ -15,6 +15,8 @@ self.addEventListener('install', function(e) {
         './manifest.json',
         './icons/Icon-192.png',
         './icons/Icon-512.png',
+        './icons/Icon-maskable-192.png',
+        './icons/Icon-maskable-512.png',
         './icons/emoji/core-1F310.png',
         './icons/emoji/core-1F319.png',
         './icons/emoji/core-1F3AF.png',
@@ -58,6 +60,20 @@ self.addEventListener('install', function(e) {
         './icons/emoji/mood-1F976.png',
         './icons/emoji/mood-1F97A.png',
         './icons/emoji/mood-1F9E0.png',
+        './icons/emoji/mood-1F605.png',
+        './icons/emoji/mood-1F975.png',
+        './icons/emoji/mood-1F979.png',
+        './icons/emoji/mood-1F92D.png',
+        './icons/emoji/mood-1F633.png',
+        './icons/emoji/mood-1F62E.png',
+        './icons/emoji/mood-1F912.png',
+        './icons/emoji/mood-1F915.png',
+        './icons/emoji/mood-1F927.png',
+        './icons/emoji/mood-1F637.png',
+        './icons/emoji/mood-1FAE0.png',
+        './icons/emoji/mood-1F636.png',
+        './icons/emoji/mood-1F610.png',
+        './icons/emoji/mood-1F924.png',
         './icons/emoji/nav-1F331.png',
         './icons/emoji/nav-1F3C6.png',
         './icons/emoji/nav-1F3E0.png',

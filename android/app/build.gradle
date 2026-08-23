@@ -18,8 +18,8 @@ android {
         applicationId 'com.drinkwater.web'
         minSdk 27  // Android 8.1
         targetSdk 33
-        versionCode 9
-        versionName '2.2.2'
+        versionCode 10
+        versionName '2.3.0'
     }
 
     signingConfigs {

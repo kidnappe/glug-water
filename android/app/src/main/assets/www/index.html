@@ -40,15 +40,20 @@
     }
     html { background: #F7FDFB; color-scheme: light; }
     body { font-family: -apple-system, 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(180deg, #F7FDFB 0%, #EEFBF8 100%); color: var(--text); max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
-    .page { display: none; padding: 16px 16px 80px; }
+    .page { display: none; padding: 10px 10px 76px; }
     .page.active { display: block; }
-    .appbar { background: linear-gradient(135deg, #0FA896 0%, #0B7285 100%); color: #fff; padding: 12px 16px 12px; padding-top: calc(12px + env(safe-area-inset-top)); font-size: 1rem; font-weight: 600; text-align: center; position: sticky; top: 0; z-index: 10; border-radius: 0 0 18px 18px; box-shadow: var(--shadow-pop); }
-    .appbar #appbarTitle { font-size: 1.0625rem; font-weight: 600; letter-spacing: .02em; }
-    .appbar #motivationMsg { font-size: .75rem; font-weight: 400; opacity: .85; margin-top: 2px; }
+    .appbar { background: linear-gradient(135deg, #0FA896 0%, #0B7285 100%); color: #fff; padding: 8px 12px; padding-top: calc(8px + env(safe-area-inset-top)); border-radius: 0 0 16px 16px; box-shadow: var(--shadow-pop); }
+    .appbar-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .appbar-brand { font-size: 0.875rem; font-weight: 600; letter-spacing: .02em; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+    .appbar-title { flex: 1; text-align: center; font-size: 0.78125rem; font-weight: 500; opacity: .95; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .appbar-spacer { width: 54px; flex-shrink: 0; }
     .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--nav-bg); display: flex; border-top: 1px solid var(--border); z-index: 100; padding-bottom: env(safe-area-inset-bottom); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-    .bottom-nav button { flex: 1; border: none; background: none; padding: 10px 0 8px; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; transition: color var(--dur-pop) var(--ease-out); position: relative; }
-    .bottom-nav button .icon { font-size: 1.375rem; }
+    .bottom-nav button { flex: 1; border: none; background: none; padding: 9px 0 8px; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: color var(--dur-pop) var(--ease-out), transform var(--dur-press) var(--ease-out); position: relative; }
+    .bottom-nav button:active { transform: scale(0.94); }
+    .bottom-nav button .icon { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+    .bottom-nav button .icon svg { width: 23px; height: 23px; transition: transform var(--dur-pop) var(--ease-out); }
     .bottom-nav button.active { color: var(--primary); font-weight: 600; }
+    .bottom-nav button.active .icon svg { transform: translateY(-1px); }
     .bottom-nav button.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
     .lb-card { background: var(--card-bg); border-radius: 16px; padding: 14px 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); margin-bottom: 12px; }
     .lb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -132,45 +137,87 @@
 .lb-admin-del { display:inline-block;color:var(--danger);cursor:pointer;font-size:0.75rem;font-weight:700;padding:0 3px;vertical-align:middle; }
     .lb-empty { text-align: center; padding: 30px 0; color: var(--text-tertiary); font-size: 0.8125rem; }
     .lb-footer { font-size: 0.75rem; color: var(--text-tertiary); text-align: center; padding: 10px; line-height: 1.6; }
-    .card { background: var(--card-bg); border-radius: 16px; padding: 12px 14px; border: 1px solid var(--border); box-shadow: var(--shadow-card); margin-bottom: 10px; }
-    .card-title { font-size: 0.9375rem; font-weight: 600; margin-bottom: 8px; }
-    .garden { text-align: center; padding: 20px 16px 14px; }
+    .card { background: var(--card-bg); border-radius: 14px; padding: 10px 12px; border: 1px solid var(--border); box-shadow: var(--shadow-card); margin-bottom: 6px; }
+    .card-title { font-size: 0.9375rem; font-weight: 600; margin-bottom: 6px; }
+    .garden { text-align: center; padding: 16px 12px 10px; }
     .plant-emoji { font-size: 4rem; transition: transform .5s; }
     .plant-name { font-size: 0.875rem; color: #666; margin-top: 4px; }
-    .progress-wrap { display: flex; flex-direction: column; align-items: center; padding: 8px 0; }
-    .cup-container { width: 95px; height: 115px; position: relative; }
-    .cup-body { width: 100%; height: 100%; border: 2px solid #BFE8E0; border-top: none; border-radius: 0 0 16px 16px; position: relative; overflow: hidden; background: var(--glass); }
-    .cup-body::before { content: ''; position: absolute; top: -3px; left: -5px; right: -5px; height: 7px; background: #BFE8E0; border-radius: 4px; }
-    .cup-body::after { content: ''; position: absolute; top: 7px; left: 6px; width: 5px; height: 34px; border-radius: 3px; background: rgba(255,255,255,.85); }
+    .progress-wrap { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 22px; padding: 4px 0 2px; }
+    .cup-container { width: 124px; height: 152px; position: relative; flex-shrink: 0; }
+    .cup-side { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+    .cup-body { width: 100%; height: 100%; border: 2.5px solid #BFE8E0; border-top: none; border-radius: 0 0 20px 20px; position: relative; overflow: hidden; background: var(--glass); }
+    .cup-body::before { content: ''; position: absolute; top: -3px; left: -6px; right: -6px; height: 8px; background: #BFE8E0; border-radius: 4px; }
+    .cup-body::after { content: ''; position: absolute; top: 9px; left: 8px; width: 6px; height: 42px; border-radius: 3px; background: rgba(255,255,255,.85); animation: glassGlint 5s ease-in-out infinite; }
+    /* 杯壁流光：每 6 秒一道柔和光线扫过 */
+    .cup-sheen { position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.16), transparent); transform: skewX(-18deg); pointer-events: none; animation: cupSheen 6s ease-in-out infinite; }
+    @keyframes cupSheen { 0%, 88% { left: -60%; opacity: 0; } 92% { opacity: 1; } 96% { left: 130%; opacity: 0; } 100% { left: 130%; opacity: 0; } }
+    .cup-glow { position: absolute; top: 0; bottom: 0; left: 0; right: 0; border-radius: 0 0 20px 20px; pointer-events: none; }
+    .cup-glow.hit { animation: cupGlowHit 1.2s ease-out; }
+    @keyframes cupGlowHit { 0% { box-shadow: inset 0 0 0 rgba(255,215,130,0); } 25% { box-shadow: inset 0 0 26px rgba(255,215,130,0.55); } 100% { box-shadow: inset 0 0 0 rgba(255,215,130,0); } }
+    @keyframes glassGlint { 0%, 82% { opacity: 0.85; } 88%, 96% { opacity: 1; } 92%, 100% { opacity: 0.6; } }
     .water-area { position: absolute; bottom: 0; left: 0; right: 0; height: 0%; transition: height var(--dur-water) var(--ease-spring); overflow: hidden; }
+    /* 重力物理层：包住波浪+水面，随手机倾角倾斜/涌动 */
+    .water-tilt { position: absolute; inset: 0; transform-origin: 50% 100%; will-change: transform; }
+    .water-tilt > * { position: absolute; left: 0; right: 0; }
     .water-fill-bg { position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(180deg, #4FD1C5 0%, #0FA896 100%); }
-    .cup-wave { position: absolute; top: -4px; left: 0; width: 100%; height: 8px; }
+    /* 液态镜面：水面流动斜向高光（缓慢漂移） */
+    .water-highlight { position: absolute; top: 0; left: -40%; width: 50%; height: 100%; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.28) 55%, transparent 80%); opacity: 0.5; animation: waterSheen 5.2s ease-in-out infinite; }
+    @keyframes waterSheen { 0% { transform: translateX(0); opacity: 0.25; } 30% { opacity: 0.55; } 50% { transform: translateX(180%); opacity: 0.35; } 80% { opacity: 0.2; } 100% { transform: translateX(0); opacity: 0.25; } }
+    .cup-wave { position: absolute; top: -7px; left: 0; width: 100%; height: 14px; }
     .cup-wave svg { position: absolute; width: 100%; height: 100%; }
-    .cup-wave .w1 { animation: hmWaveSway 1.6s ease-in-out infinite alternate; }
-    .cup-wave .w2 { animation: hmWaveSway 2s ease-in-out infinite alternate-reverse; }
-    .water-highlight { position: absolute; top: 0; left: 10%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); opacity: 0.4; }
-    @keyframes hmWaveSway { 0% { transform: translateX(-2px); } 100% { transform: translateX(2px); } }
-    .cup-handle { position: absolute; right: -11px; top: 24px; width: 13px; height: 27px; border: 2px solid #BFE8E0; border-left: none; border-radius: 0 10px 10px 0; }
-    .bubble { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.4); animation: bubbleRise 2.4s ease-in infinite; }
-    .bubble:nth-child(1) { width: 6px; height: 6px; left: 20%; bottom: 10%; animation-delay: 0s; animation-duration: 2.8s; }
-    .bubble:nth-child(2) { width: 4px; height: 4px; left: 50%; bottom: 5%; animation-delay: 0.6s; animation-duration: 3.2s; }
-    .bubble:nth-child(3) { width: 5px; height: 5px; left: 70%; bottom: 15%; animation-delay: 1.2s; animation-duration: 2.6s; }
-    .bubble:nth-child(4) { width: 3px; height: 3px; left: 35%; bottom: 20%; animation-delay: 0.3s; animation-duration: 3.6s; }
-    @keyframes bubbleRise { 0% { transform: translateY(0) scale(1); opacity: 0.6; } 100% { transform: translateY(-80px) scale(0.6); opacity: 0; } }
-    .cup-stats { text-align: center; margin-top: 8px; }
-    .cup-amount { font-size: 1.625rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-    .cup-unit { font-size: 0.75rem; color: var(--text-tertiary); }
-    .cup-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: 1px; }
-    .cup-remain { font-size: 0.8125rem; font-weight: 500; color: var(--primary-dark); margin-top: 2px; }
-    .track-wrap { width: 100%; max-width: 300px; margin: 14px auto 0; position: relative; }
-    .track-bg { width: 100%; height: 10px; background: #E2F0EB; border-radius: 5px; position: relative; overflow: hidden; }
+    .cup-wave .w1 { animation: hmWaveSway 1.3s ease-in-out infinite alternate; }
+    .cup-wave .w2 { animation: hmWaveSway 1.8s ease-in-out infinite alternate-reverse; }
+    .cup-wave .w3 { animation: hmWaveBob 2.2s ease-in-out infinite; }
+    .cup-wave .w4 { animation: hmWaveSway 2.4s ease-in-out infinite alternate; }
+    /* 双层水波：横移（幅度增大）+ 纵向起伏叠加 */
+    @keyframes hmWaveBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+    @keyframes hmWaveSway { 0% { transform: translateX(-4px); } 100% { transform: translateX(4px); } }
+    .cup-handle { position: absolute; right: -13px; top: 34px; width: 15px; height: 36px; border: 2.5px solid #BFE8E0; border-left: none; border-radius: 0 12px 12px 0; }
+    /* 气泡群呼吸：上升 + 微颤 + S 形摆动 + 到水面消散 */
+    .bubble { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0.4) 55%, rgba(255,255,255,0.12)); animation: bubbleRise var(--dur) ease-in infinite; box-shadow: inset 0 0 4px rgba(255,255,255,0.5); --sway-x: 4px; }
+    .bubble:nth-child(odd) { --sway-x: 4px; }
+    .bubble:nth-child(even) { --sway-x: -4px; }
+    .bubble:nth-child(1) { width: 8px; height: 8px; left: 15%; bottom: 8%; --dur: 2.8s; animation-delay: 0s; }
+    .bubble:nth-child(2) { width: 6px; height: 6px; left: 32%; bottom: 4%; --dur: 3.4s; animation-delay: 0.7s; }
+    .bubble:nth-child(3) { width: 7px; height: 7px; left: 50%; bottom: 12%; --dur: 2.6s; animation-delay: 1.2s; }
+    .bubble:nth-child(4) { width: 5px; height: 5px; left: 68%; bottom: 6%; --dur: 3.8s; animation-delay: 0.4s; }
+    .bubble:nth-child(5) { width: 9px; height: 9px; left: 82%; bottom: 10%; --dur: 3.1s; animation-delay: 1.6s; }
+    .bubble:nth-child(6) { width: 4px; height: 4px; left: 22%; bottom: 16%; --dur: 4.2s; animation-delay: 0.9s; }
+    .bubble:nth-child(7) { width: 6px; height: 6px; left: 60%; bottom: 18%; --dur: 3.6s; animation-delay: 2s; }
+    .bubble:nth-child(8) { width: 5px; height: 5px; left: 88%; bottom: 14%; --dur: 3.2s; animation-delay: 1s; }
+    @keyframes bubbleRise { 0% { transform: translate(0, 0) scale(0.7); opacity: 0; } 10% { opacity: 0.85; } 40% { transform: translate(var(--sway-x), -38%) scale(1.12); } 70% { transform: translate(calc(var(--sway-x) * -0.5), -72%) scale(0.95); opacity: 0.7; } 100% { transform: translate(calc(var(--sway-x) * -1), -100%) scale(0.45); opacity: 0; } }
+    .cup-stats { text-align: left; min-width: 0; }
+    .cup-amount { font-size: 1.875rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+    .cup-unit { font-size: 0.8125rem; color: var(--text-tertiary); }
+    .cup-label { font-size: 0.78125rem; color: var(--text-secondary); margin-top: 2px; }
+    .cup-remain { font-size: 0.84375rem; font-weight: 500; color: var(--primary-dark); margin-top: 2px; }
+    .track-wrap { width: 100%; position: relative; margin-top: 8px; }
+    .track-bg { width: 100%; height: 9px; background: #E2F0EB; border-radius: 5px; position: relative; overflow: hidden; }
     .track-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #4FD1C5, #0FA896); transition: width 0.6s var(--ease-spring); width: 0%; }
-    .track-runner { position: absolute; top: -8px; font-size: 1.375rem; transition: left 0.6s var(--ease-spring); left: 0%; z-index: 2; animation: runnerBob 0.3s ease-in-out infinite alternate; transform: scaleX(-1); }
+    .track-runner { position: absolute; top: -7px; font-size: 1.25rem; transition: left 0.6s var(--ease-spring); left: 0%; z-index: 2; animation: runnerBob 0.3s ease-in-out infinite alternate; transform: scaleX(-1); }
     @keyframes runnerBob { 0% { transform: translateY(0); } 100% { transform: translateY(-3px); } }
-    .track-label { display: flex; justify-content: space-between; font-size: 0.6875rem; color: var(--text-tertiary); margin-top: 2px; font-variant-numeric: tabular-nums; }
+    .track-label { display: flex; justify-content: space-between; font-size: 0.65625rem; color: var(--text-tertiary); margin-top: 1px; font-variant-numeric: tabular-nums; }
     .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
     .confetti-piece { position: absolute; width: 8px; height: 8px; top: -10px; animation: confettiFall var(--duration) linear forwards; opacity: 0; }
     @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+    /* 达标仪式①：水面沸腾（急速起伏后落定） */
+    .water-area.boil { animation: waterBoil 0.5s ease-out; }
+    @keyframes waterBoil { 0% { filter: none; } 30% { filter: brightness(1.12); } 0%, 100% { } }
+    .water-tilt.boil { animation: tiltBoil 0.5s ease-out; }
+    @keyframes tiltBoil { 0% { transform: translateY(0) scaleY(1); } 20% { transform: translateY(-3%) scaleY(1.03); } 40% { transform: translateY(1%) scaleY(0.99); } 60% { transform: translateY(-1.5%) scaleY(1.015); } 100% { transform: translateY(0) scaleY(1); } }
+    /* 达标仪式②：金色涟漪环从杯口扩散 */
+    .cup-ripple { position: absolute; top: 0; left: 50%; width: 0; height: 0; transform: translateX(-50%); border: 2px solid rgba(255,196,86,0); border-radius: 50%; pointer-events: none; }
+    .cup-ripple.fired { animation: cupRipple 1.1s ease-out; }
+    @keyframes cupRipple { 0% { width: 20px; height: 6px; border-color: rgba(255,196,86,0.85); border-width: 2px; } 100% { width: 105%; height: 26px; border-color: rgba(255,196,86,0); border-width: 1px; } }
+    /* 达标仪式③：金色星辉升起盘旋 */
+    .cup-stars { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
+    .cup-stars .cs { position: absolute; bottom: 30%; font-size: 0.875rem; opacity: 0; }
+    .cup-stars.fired .cs { animation: starRise var(--d) ease-out forwards; }
+    .cup-stars.fired .cs:nth-child(1) { left: 22%; --d: 1.15s; }
+    .cup-stars.fired .cs:nth-child(2) { left: 42%; --d: 1.3s; animation-delay: 0.08s; }
+    .cup-stars.fired .cs:nth-child(3) { left: 62%; --d: 1.2s; animation-delay: 0.15s; }
+    .cup-stars.fired .cs:nth-child(4) { left: 78%; --d: 1.4s; animation-delay: 0.05s; }
+    @keyframes starRise { 0% { transform: translateY(0) scale(0.6); opacity: 0; } 25% { opacity: 1; } 70% { transform: translateY(-46%) scale(1.05) rotate(18deg); opacity: 1; } 100% { transform: translateY(-78%) scale(1.2) rotate(40deg); opacity: 0; } }
     .plant-accessories { position: relative; display: inline-block; }
     .accessory { position: absolute; animation: accessoryFloat 2s ease-in-out infinite alternate; pointer-events: none; }
     .accessory.star { top: -10px; right: -20px; font-size: 1.25rem; }
@@ -182,22 +229,22 @@
     @keyframes butterflyFlutter { 0% { transform: translate(0, 0) rotate(-5deg); } 100% { transform: translate(8px, -8px) rotate(5deg); } }
     /* 固化 emoji 图标基础样式（保留 Windows Segoe UI Emoji 风格） */
     .emoji { width: 1em; height: 1em; vertical-align: -0.15em; display: inline-block; pointer-events: none; user-select: none; }
-    .btn-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
-    .btn-water { flex: 1; min-width: 72px; padding: 10px 0; background: linear-gradient(180deg, #0FA896 0%, #0B8C7D 100%); color: #fff; border: none; border-radius: 12px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), box-shadow var(--dur-press) var(--ease-out); box-shadow: 0 2px 6px rgba(15,168,150,.28); font-variant-numeric: tabular-nums; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+    .btn-water { flex: 1; min-width: 72px; padding: 9px 0; background: linear-gradient(180deg, #0FA896 0%, #0B8C7D 100%); color: #fff; border: none; border-radius: 12px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), box-shadow var(--dur-press) var(--ease-out); box-shadow: 0 2px 6px rgba(15,168,150,.28); font-variant-numeric: tabular-nums; }
     .btn-water:active { transform: scale(0.96); box-shadow: 0 1px 2px rgba(15,168,150,.2); }
     .btn-water.custom { background: linear-gradient(180deg, #F59E0B 0%, #D97A00 100%); box-shadow: 0 2px 6px rgba(245,158,11,.3); }
-    .btn-water.small { flex: 1; min-width: 52px; padding: 10px 4px; font-size: 0.8125rem; }
-    .btn-water.sip { width: 100%; background: var(--bg); color: var(--primary); font-size: 0.8125rem; padding: 8px 0; font-weight: 500; border: 1px dashed var(--primary); box-shadow: none; }
+    .btn-water.small { flex: 1; min-width: 52px; padding: 9px 4px; font-size: 0.8125rem; }
+    .btn-water.sip { width: 100%; background: var(--bg); color: var(--primary); font-size: 0.8125rem; padding: 7px 0; font-weight: 500; border: 1px dashed var(--primary); box-shadow: none; }
     .btn-water.sip:active { transform: scale(0.97); }
-    .mood-row { display: flex; flex-wrap: wrap; gap: 6px; }
-    .mood-btn { font-size: 1.375rem; padding: 6px 10px; border: 2px solid transparent; border-radius: 10px; background: #E9F4EF; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), background var(--dur-press) var(--ease-out), border-color var(--dur-press) var(--ease-out); line-height: 1; }
+    .mood-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; max-height: 96px; overflow-y: auto; overflow-x: hidden; padding-right: 2px; -webkit-overflow-scrolling: touch; }
+    .mood-btn { font-size: 1.375rem; padding: 5px 4px; border: 2px solid transparent; border-radius: 10px; background: #E9F4EF; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), background var(--dur-press) var(--ease-out), border-color var(--dur-press) var(--ease-out); line-height: 1; display: flex; align-items: center; justify-content: center; }
     .mood-btn img.emoji { width: 1.875rem !important; height: 1.875rem !important; display: block; }
     .mood-btn:hover { background: #D7EBE4; transform: scale(1.08); }
     .mood-btn:active { transform: scale(0.94); }
     .mood-btn.active { border-color: var(--primary); background: #D7EBE4; box-shadow: 0 0 0 2px rgba(15,168,150,.2); transform: scale(1.1); }
-    .record-item { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-light); }
+    .record-item { display: flex; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border-light); }
     .record-item:last-child { border-bottom: none; }
-    .record-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(15,168,150,.12); display: flex; align-items: center; justify-content: center; font-size: 1.125rem; margin-right: 12px; flex-shrink: 0; }
+    .record-icon { width: 34px; height: 34px; border-radius: 50%; background: rgba(15,168,150,.12); display: flex; align-items: center; justify-content: center; font-size: 1.125rem; margin-right: 10px; flex-shrink: 0; }
     .record-mood-add { font-size: 0.875rem; font-weight: 700; color: var(--primary); cursor: pointer; margin-left: 4px; }
     .record-mood-set { font-size: 1rem; margin-right: 4px; cursor: pointer; padding: 2px 4px; border-radius: 4px; transition: background .2s; }
     .record-mood-set:hover { background: #D7EBE4; }
@@ -205,18 +252,18 @@
     .record-mood-add { font-size: 0.875rem; font-weight: 700; color: var(--primary); }
     .record-info { flex: 1; }
     .record-amount { font-weight: 600; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
-    .record-time { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px; font-variant-numeric: tabular-nums; }
+    .record-time { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 1px; font-variant-numeric: tabular-nums; }
     .record-del { border: none; background: none; color: var(--danger); font-size: 1.125rem; cursor: pointer; padding: 4px; transition: transform var(--dur-press) var(--ease-out); }
     .record-del:active { transform: scale(0.9); }
-    .empty-state { text-align: center; padding: 20px; color: var(--text-tertiary); font-size: 0.875rem; }
-    .chart-toggle { display: flex; gap: 8px; margin-bottom: 12px; }
+    .empty-state { text-align: center; padding: 14px; color: var(--text-tertiary); font-size: 0.875rem; }
+    .chart-toggle { display: flex; gap: 8px; margin-bottom: 8px; }
     .chart-toggle button { flex: 1; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); cursor: pointer; font-size: 0.8125rem; transition: color var(--dur-pop) var(--ease-out), background var(--dur-pop) var(--ease-out), border-color var(--dur-pop) var(--ease-out); color: var(--text-secondary); }
     .chart-toggle button.active { background: var(--primary); color: #fff; border-color: var(--primary); }
-    .chart-box { width: 100%; height: 200px; display: block; }
-    .stat-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.875rem; }
+    .chart-box { width: 100%; height: 190px; display: block; }
+    .stat-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.875rem; }
     .stat-row .label { color: var(--text-secondary); }
     .stat-row .value { font-weight: 600; font-variant-numeric: tabular-nums; }
-    .setting-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; }
+    .setting-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; }
     .setting-item:last-child { border-bottom: none; }
     .setting-icon { font-size: 1.25rem; margin-right: 14px; width: 24px; text-align: center; }
     .setting-info { flex: 1; }
@@ -229,7 +276,7 @@
     .setting-switch.on::after { transform: translateX(20px); }
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(11,26,23,.45); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
     .modal-overlay.show { display: flex; }
-    .modal { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 24px; width: 320px; max-width: 100%; max-height: 86vh; overflow-y: auto; overflow-x: hidden; box-shadow: var(--shadow-pop); -webkit-overflow-scrolling: touch; }
+    .modal { position: relative; background: #FFFFFF; border: 1px solid var(--border); border-radius: 20px; padding: 24px; width: 320px; max-width: 100%; max-height: 86vh; overflow-y: auto; overflow-x: hidden; box-shadow: var(--shadow-pop); -webkit-overflow-scrolling: touch; }
     .modal h3 { font-size: 1rem; margin-bottom: 14px; }
     .modal input { width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 12px; font-size: 0.9375rem; margin-bottom: 14px; background: var(--bg); color: var(--text); box-sizing: border-box; }
     .modal input:focus { outline: 2px solid rgba(15,168,150,.4); outline-offset: 1px; border-color: var(--primary); }
@@ -239,6 +286,10 @@
     .modal-actions .btn-cancel { background: #E9F1EE; color: var(--text); }
     .modal-actions .btn-confirm { background: var(--primary); color: #fff; }
     .modal-actions .btn-danger { background: var(--danger); color: #fff; }
+    /* 弹窗右上角关闭按钮：绝对定位不占内容流，44px 命中区 */
+    .modal-close { position: absolute; top: 6px; right: 6px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 50%; font-size: 1rem; line-height: 1; color: var(--text-tertiary); cursor: pointer; transition: background var(--dur-press) var(--ease-out), transform var(--dur-press) var(--ease-out), color var(--dur-press) var(--ease-out); }
+    .modal-close:hover { background: var(--border-light); color: var(--text-secondary); }
+    .modal-close:active { transform: scale(0.92); }
     #modalBody { overflow-x: hidden; word-break: break-word; }
     .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(8px); background: #26332F; color: #F2FAF7; padding: 10px 20px; border-radius: 10px; font-size: 0.8125rem; z-index: 300; opacity: 0; transition: opacity var(--dur-pop) var(--ease-out), transform var(--dur-pop) var(--ease-out); pointer-events: none; box-shadow: var(--shadow-pop); }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -259,77 +310,122 @@
     .hm-date { position: relative; z-index: 1; }
     .plant-pop { animation: plantPop .4s ease-out; }
     @keyframes plantPop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
-    @media (max-width: 374px) { .btn-water.small { min-width: 44px; padding: 8px 2px; font-size: 0.75rem; } .cup-container { transform: scale(0.85); } .plant-emoji { font-size: 3rem; } }
+    @media (max-width: 374px) { .btn-water.small { min-width: 44px; padding: 8px 2px; font-size: 0.75rem; } .cup-container { width: 100px; height: 124px; } .progress-wrap { gap: 14px; } .cup-amount { font-size: 1.5rem; } .plant-emoji { font-size: 3rem; } }
+    /* 首页速览数据条 */
+    .quick-stats { display: flex; margin-top: 8px; background: var(--bg); border-radius: 12px; padding: 7px 0; }
+    .quick-stat { flex: 1; text-align: center; position: relative; }
+    .quick-stat:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 15%; height: 70%; width: 1px; background: var(--border); }
+    .quick-stat .qs-value { font-size: 0.90625rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; line-height: 1.2; }
+    .quick-stat .qs-value.accent { color: var(--primary); }
+    .quick-stat .qs-label { font-size: 0.625rem; color: var(--text-tertiary); margin-top: 2px; }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-      .cup-wave .w1, .cup-wave .w2, .bubble, .track-runner, .hm-wave .w1, .hm-wave .w2 { animation: none !important; }
+      .cup-wave .w1, .cup-wave .w2, .bubble, .track-runner, .hm-wave .w1, .hm-wave .w2, .cup-sheen, .water-highlight, .cup-body::after { animation: none !important; }
     }
   </style>
 </head>
 <body>
 <div class="appbar" id="appbar">
-  <div id="appbarTitle">咕嘟 <img src="icons/emoji/core-1F4A7.png" alt="" class="emoji" style="width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;"></div>
-  <div id="motivationMsg" style="font-size:0.75rem;font-weight:400;opacity:.9;margin-top:2px;"></div>
+  <div class="appbar-row">
+    <span class="appbar-brand" id="appbarBrand">咕嘟</span>
+    <div class="appbar-title" id="appbarTitle"></div>
+    <span class="appbar-spacer"></span>
+  </div>
 </div>
 <div class="page active" id="page-home">
   <div class="card">
     <div class="progress-wrap">
       <div class="cup-container">
         <div class="cup-body" id="cupBody">
+            <div class="cup-sheen"></div>
+            <div class="cup-glow" id="cupGlow"></div>
             <div class="water-area" id="waterArea">
-              <div class="cup-wave"><svg viewBox="0 0 110 8" preserveAspectRatio="none">
-                <path class="w1" d="M0,4 Q14,0 28,4 T56,4 T84,4 T110,4 V8 H0 Z" fill="rgba(79,209,197,.6)"/>
-                <path class="w2" d="M0,5 Q14,8 28,5 T56,5 T84,5 T110,5 V8 H0 Z" fill="rgba(15,168,150,.4)"/>
-              </svg></div>
-              <div class="water-fill-bg"></div>
-              <div class="water-highlight"></div>
-              <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+              <div class="water-tilt" id="waterTilt">
+                <div class="cup-ripple" id="cupRipple"></div>
+                <div class="cup-stars" id="cupStars">
+                  <span class="cs">&#x2728;</span><span class="cs">&#x2B50;</span><span class="cs">&#x2728;</span><span class="cs">&#x2B50;</span>
+                </div>
+                <div class="cup-wave"><svg viewBox="0 0 110 12" preserveAspectRatio="none">
+                  <path class="w1" d="M0,6 Q14,1 28,6 T56,6 T84,6 T110,6 V12 H0 Z" fill="rgba(79,209,197,.7)"/>
+                  <path class="w2" d="M0,8 Q14,3 28,8 T56,8 T84,8 T110,8 V12 H0 Z" fill="rgba(15,168,150,.5)"/>
+                  <path class="w3" d="M0,5 Q14,9 28,5 T56,5 T84,5 T110,5 V12 H0 Z" fill="rgba(255,255,255,.14)"/>
+                  <path class="w4" d="M0,10 Q14,7 28,10 T56,10 T84,10 T110,10 V12 H0 Z" fill="rgba(11,140,125,.35)"/>
+                </svg></div>
+                <div class="water-fill-bg"></div>
+                <div class="water-highlight"></div>
+                <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+              </div>
             </div>
           </div>
           <div class="cup-handle"></div>
           <div class="overflow-wrap" id="overflowWrap"></div>
         </div>
-        <div class="cup-stats">
-          <span class="cup-amount" id="todayAmount">0</span><span class="cup-unit">ml</span>
-          <div class="cup-label" id="todayGoalText">目标：2000 ml</div>
-          <div class="cup-remain" id="todayRemainText">还差 2000 ml</div>
+        <div class="cup-side">
+          <div class="cup-stats">
+            <span class="cup-amount" id="todayAmount">0</span><span class="cup-unit">ml</span>
+            <div class="cup-label" id="todayGoalText">目标：2000 ml</div>
+            <div class="cup-remain" id="todayRemainText">还差 2000 ml</div>
+          </div>
+          <div class="track-wrap">
+            <div class="track-runner" id="trackRunner">🏃</div>
+            <div class="track-bg"><div class="track-fill" id="trackFill"></div></div>
+            <div class="track-label"><span>0 ml</span><span id="trackGoalLabel">2000 ml</span></div>
+          </div>
         </div>
     </div>
-    <div class="track-wrap" style="margin-top:6px;">
-      <div class="track-runner" id="trackRunner">🏃</div>
-      <div class="track-bg"><div class="track-fill" id="trackFill"></div></div>
-      <div class="track-label"><span>0 ml</span><span id="trackGoalLabel">2000 ml</span></div>
+    <div class="quick-stats">
+      <div class="quick-stat" onclick="switchTab(1)" style="cursor:pointer;"><div class="qs-value accent"><span id="qsStreak">0</span> 天</div><div class="qs-label">连续达标</div></div>
+      <div class="quick-stat" onclick="switchTab(3)" style="cursor:pointer;"><div class="qs-value"><span id="qsAvg">0</span> ml</div><div class="qs-label">本周日均</div></div>
+      <div class="quick-stat" onclick="switchTab(3)" style="cursor:pointer;"><div class="qs-value"><span id="qsCount">0</span> 次</div><div class="qs-label">今日杯数</div></div>
+      <div class="quick-stat" onclick="switchTab(2)" style="cursor:pointer;"><div class="qs-value" id="qsPlant">🌰</div><div class="qs-label">花园阶段</div></div>
     </div>
   </div>
   <div class="card">
-    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleMood()">
-      <span><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;vertical-align:-0.2em;margin-right:2px;"> 当下心情 <span class="mood-help" onclick="event.stopPropagation();showMoodHelp()" title="&#x5982;&#x4F55;&#x6DFB;&#x52A0;&#x5FC3;&#x60C5;">&#x2754;</span></span>
-      <span id="moodToggleBtn" style="font-size:0.75rem;color:var(--primary);">&#x6536;&#x8D77; &#x25B2;</span>
+    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+      <span style="display:flex;align-items:center;gap:4px;min-width:0;flex:1;">
+        <span id="moodTitleEmoji"><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;vertical-align:-0.2em;flex-shrink:0;"></span>
+        <span style="min-width:0;">当下心情<span id="moodTitleMeaning" style="font-size:0.75rem;color:var(--text-secondary);font-weight:400;margin-left:4px;"></span></span>
+      </span>
+      <span class="mood-help" onclick="event.stopPropagation();showMoodGallery()" title="&#x67E5;&#x770B;&#x5168;&#x90E8;&#x5FC3;&#x60C5;&#x542B;&#x4E49;">&#x2754;</span>
     </div>
     <div id="moodBody">
       <div class="mood-row" id="moodRow">
         <button class="mood-btn" data-mood="&#x1F60A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F604;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F604.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F970;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F970.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F60C;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60C.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F624;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F624.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F622;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F622.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F92F;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92F.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F4AA;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F4AA.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F9E0;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F9E0.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F917;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F917.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F60E;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60E.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F973;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F973.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F929;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F929.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F607;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F607.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F60F;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60F.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F914;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F914.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F976;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F976.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F97A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F97A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F634;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F634.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F92A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-      <button class="mood-btn" data-mood="&#x1F630;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F630.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
-    </div>
+        <button class="mood-btn" data-mood="&#x1F604;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F604.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F970;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F970.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F60C;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60C.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F605;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F605.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F60E;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60E.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F914;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F914.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F97A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F97A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F607;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F607.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F973;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F973.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F929;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F929.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F60F;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60F.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F917;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F917.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F62E;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F62E.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F624;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F624.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F622;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F622.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F92F;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92F.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F92D;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92D.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F633;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F633.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F979;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F979.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F975;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F975.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F976;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F976.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F634;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F634.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F92A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F630;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F630.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1FAE0;" onclick="selectMood(this)"><img src="icons/emoji/mood-1FAE0.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F636;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F636.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F610;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F610.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F924;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F924.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F912;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F912.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F915;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F915.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F927;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F927.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F637;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F637.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F4AA;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F4AA.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+        <button class="mood-btn" data-mood="&#x1F9E0;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F9E0.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      </div>
     </div>
   </div>
   <div class="card">
@@ -349,7 +445,7 @@
     </div>
   </div>
   <div class="card">
-    <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
       <span class="card-title" style="margin-bottom:0;">今日记录</span>
       <span style="font-size:0.8125rem;color:var(--text-tertiary);" id="recordCount">共 0 条</span>
     </div>
@@ -442,6 +538,16 @@
     </div>
   </div>
   <div class="card">
+    <div class="setting-item" onclick="showNavStyleDialog()">
+      <span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.25rem;height:1.25rem;color:var(--text-secondary);"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span>
+      <div class="setting-info"><div class="setting-label">导航栏样式</div><div class="setting-desc" id="settingNavStyleDesc">线性图标</div></div>
+      <span class="setting-arrow">›</span>
+    </div>
+    <div class="setting-item">
+      <span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.25rem;height:1.25rem;color:var(--text-secondary);"><path d="M12 2a4 4 0 0 1 4 4c0 .9-.3 1.7-.8 2.4L12 12l-3.2-3.6A4 4 0 0 1 12 2Z"/><path d="M7.5 12.5a4.5 4.5 0 1 0 6.4 6.4"/><path d="M12 13v8"/></svg></span>
+      <div class="setting-info"><div class="setting-label">重力水杯</div><div class="setting-desc" id="settingGravityDesc">水随手机倾斜晃动</div></div>
+      <div class="setting-switch" id="gravitySwitch" onclick="toggleGravityCup()"></div>
+    </div>
     <div class="setting-item" onclick="showEffectsGuide()">
       <span class="setting-icon"><img src="icons/emoji/core-2728.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">特效说明</div><div class="setting-desc">查看所有动画效果的触发条件</div></div>
@@ -532,6 +638,7 @@
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modalContent">
+    <button class="modal-close" onclick="hideModal()" aria-label="关闭弹窗">&#10005;</button>
     <h3 id="modalTitle">标题</h3>
     <div id="modalBody"></div>
     <div class="modal-actions" id="modalActions"></div>
@@ -540,13 +647,7 @@
 
 <div class="toast" id="toast"></div>
 
-<nav class="bottom-nav">
-  <button class="active" onclick="switchTab(0)"><span class="icon"><img src="icons/emoji/nav-1F3E0.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 首页</button>
-  <button onclick="switchTab(1)"><span class="icon"><img src="icons/emoji/nav-1F331.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 花园</button>
-  <button onclick="switchTab(2)"><span class="icon"><img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 排行</button>
-  <button onclick="switchTab(3)"><span class="icon"><img src="icons/emoji/nav-1F4CA.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 历史</button>
-  <button onclick="switchTab(4)"><span class="icon"><img src="icons/emoji/nav-2699-FE0F.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 设置</button>
-</nav>
+<nav class="bottom-nav" id="bottomNav"><!-- 由 renderNav() 渲染 --></nav>
 
 <script>
 /* ── 固化 emoji 映射（保留 Windows Segoe UI Emoji 风格） ── */
@@ -559,6 +660,11 @@ var EMOJI_FILE = {
   '\u{1F929}':'mood-1F929', '\u{1F607}':'mood-1F607', '\u{1F60F}':'mood-1F60F',
   '\u{1F914}':'mood-1F914', '\u{1F976}':'mood-1F976', '\u{1F97A}':'mood-1F97A',
   '\u{1F634}':'mood-1F634', '\u{1F92A}':'mood-1F92A', '\u{1F630}':'mood-1F630',
+  /* v2.4.2 扩充 14 个心情 */
+  '\u{1F605}':'mood-1F605', '\u{1F975}':'mood-1F975', '\u{1F979}':'mood-1F979', '\u{1F92D}':'mood-1F92D',
+  '\u{1F633}':'mood-1F633', '\u{1F62E}':'mood-1F62E', '\u{1F912}':'mood-1F912', '\u{1F915}':'mood-1F915',
+  '\u{1F927}':'mood-1F927', '\u{1F637}':'mood-1F637', '\u{1FAE0}':'mood-1FAE0', '\u{1F636}':'mood-1F636',
+  '\u{1F610}':'mood-1F610', '\u{1F924}':'mood-1F924',
   /* 5 导航 */
   '\u{1F3E0}':'nav-1F3E0', '\u{1F331}':'nav-1F331', '\u{1F3C6}':'nav-1F3C6',
   '\u{1F4CA}':'nav-1F4CA', '\u{2699}\u{FE0F}':'nav-2699-FE0F',
@@ -580,7 +686,70 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.3.2';
+var APP_VERSION = 'v2.5.1';
+var NAV_STYLE_KEY = 'drink_water_nav_style'; /* 'svg' 线性 / 'emoji' 经典 */
+
+/* 底部导航双模板：svg=线性图标(默认)，emoji=经典固化PNG */
+var NAV_TEMPLATES = {
+  svg: [
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8"/><path d="M12 13c0-4.2 3.2-7.4 8-7.4 0 4.8-3.4 7.4-8 7.4Z"/><path d="M12 9.5C12 5.9 9.4 3.4 5 3.4c0 3.8 2.8 6.1 7 6.1Z"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 5H4v1.2a4 4 0 0 0 4 3.8"/><path d="M17 5h3v1.2a4 4 0 0 1-4 3.8"/><path d="M12 14v3.5"/><path d="M9 21h6"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9"/><path d="M10 20V5"/><path d="M16 20v-8"/><path d="M3.5 20h17"/></svg>',
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>'
+  ],
+  emoji: [
+    '<img src="icons/emoji/nav-1F3E0.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">',
+    '<img src="icons/emoji/nav-1F331.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">',
+    '<img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">',
+    '<img src="icons/emoji/nav-1F4CA.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">',
+    '<img src="icons/emoji/nav-2699-FE0F.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">'
+  ]
+};
+var NAV_LABELS = ['首页', '花园', '排行', '历史', '设置'];
+
+function getNavStyle() {
+  var s = localStorage.getItem(NAV_STYLE_KEY);
+  return (s === 'emoji' || s === 'svg') ? s : 'svg';
+}
+function renderNav() {
+  var style = getNavStyle();
+  var nav = document.getElementById('bottomNav');
+  if (!nav) return;
+  var html = '';
+  for (var i = 0; i < NAV_LABELS.length; i++) {
+    html += '<button' + (i === 0 ? ' class="active"' : '') + ' onclick="switchTab(' + i + ')"><span class="icon">' +
+      NAV_TEMPLATES[style][i] + '</span> ' + NAV_LABELS[i] + '</button>';
+  }
+  nav.innerHTML = html;
+}
+/* 设置页：导航栏样式选单 */
+function showNavStyleDialog() {
+  var cur = getNavStyle();
+  showModal('<img src="icons/emoji/nav-1F3E0.png" alt="" class="emoji" style="width:1em;height:1em;vertical-align:-0.1em;"> 导航栏样式',
+    '<div style="font-size:0.8125rem;line-height:1.8;color:var(--text-secondary);margin-bottom:10px;">选择底部导航栏的图标风格：</div>' +
+    '<div style="display:grid;gap:8px;">' +
+    '<div onclick="setNavStyle(\'svg\')" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;border:2px solid ' + (cur === 'svg' ? 'var(--primary)' : 'var(--border)') + ';background:' + (cur === 'svg' ? 'rgba(15,168,150,.06)' : 'var(--bg)') + ';">' +
+      '<span style="width:26px;height:26px;flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);width:100%;height:100%;"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span>' +
+      '<div style="flex:1;"><div style="font-size:0.8125rem;font-weight:600;color:var(--text);">线性图标</div><div style="font-size:0.6875rem;color:var(--text-tertiary);">简约描边风格（新版）</div></div>' +
+      (cur === 'svg' ? '<span style="color:var(--primary);font-weight:700;">✓</span>' : '') +
+    '</div>' +
+    '<div onclick="setNavStyle(\'emoji\')" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;border:2px solid ' + (cur === 'emoji' ? 'var(--primary)' : 'var(--border)') + ';background:' + (cur === 'emoji' ? 'rgba(15,168,150,.06)' : 'var(--bg)') + ';">' +
+      '<span style="width:26px;height:26px;flex-shrink:0;font-size:1.25rem;line-height:1;">💧</span>' +
+      '<div style="flex:1;"><div style="font-size:0.8125rem;font-weight:600;color:var(--text);">经典表情</div><div style="font-size:0.6875rem;color:var(--text-tertiary);">彩色 emoji 图标（旧版）</div></div>' +
+      (cur === 'emoji' ? '<span style="color:var(--primary);font-weight:700;">✓</span>' : '') +
+    '</div>' +
+    '</div>',
+    [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]);
+}
+function setNavStyle(style) {
+  localStorage.setItem(NAV_STYLE_KEY, style);
+  renderNav();
+  hideModal();
+  showToast('导航栏已切换');
+  updateSettingsUI();
+}
+
 var STORAGE_KEY = 'drink_water_data';
 var SETTINGS_KEY = 'drink_water_settings';
 var SUPABASE_CONFIG_KEY = 'drink_water_supabase';
@@ -1113,10 +1282,9 @@ function renderGarden(records, settings) {
   document.getElementById('plantEmoji').innerHTML = plantHtml;
   document.getElementById('plantName').textContent = stage.name;
   document.getElementById('streakCount').textContent = streak;
-  var msgs = ['\u5f00\u59cb\u559d\u6c34\u5427\uff01\u6bcf\u4e00\u53e3\u90fd\u662f\u5bf9\u8eab\u4f53\u7684\u7231\u2764\ufe0f', '\u4eca\u5929\u4e5f\u8981\u52a0\u6cb9\u559d\u6c34\u54e6\uff01', '\u8bb0\u5f97\u5b9a\u65f6\u8865\u5145\u6c34\u5206\u54e6 \u{1F4A7}', '\u6c34\u662f\u6700\u597d\u7684\u996e\u6599\uff0c\u575a\u6301\u5c31\u662f\u80dc\u5229\uff01'];
-  var idx = Math.floor(Math.random() * msgs.length);
+  var idx = Math.floor(Math.random() * _motivationMsgs.length);
   var el = document.getElementById('motivationMsg');
-  if (el) { el.textContent = msgs[idx]; }
+  if (el) { el.textContent = _motivationMsgs[idx]; }
 }
 var lastGoalMet = false;
 
@@ -1135,12 +1303,42 @@ function renderCupAndTrack(total, goal) {
   remainEl.textContent = isMet ? '\u{1F389} \u4eca\u65e5\u76ee\u6807\u5df2\u8fbe\u6210\uff01' : '\u8fd8\u5dee ' + remain + ' ml';
   remainEl.style.color = isMet ? '#2F9E6E' : '#5B6B78';
   document.getElementById('trackGoalLabel').textContent = goal + ' ml';
-  if (isMet && !lastGoalMet) { setTimeout(function() { fireConfetti(); }, 200); }
+  if (isMet && !lastGoalMet) {
+    setTimeout(function() { fireConfetti(); }, 200);
+    celebrateCup();
+  }
   lastGoalMet = isMet;
   if (isMet) {
     var pe = document.getElementById('plantEmoji');
     if (pe) { pe.classList.remove('plant-pop'); void pe.offsetWidth; pe.classList.add('plant-pop'); }
   }
+}
+
+/* 达标奢华仪式：水面沸腾 → 金色涟漪 → 星辉洒落 → 杯壁金光 */
+function celebrateCup() {
+  var tiltEl = document.getElementById('waterTilt');
+  var waterEl = document.getElementById('waterArea');
+  var glowEl = document.getElementById('cupGlow');
+  var rippleEl = document.getElementById('cupRipple');
+  var starsEl = document.getElementById('cupStars');
+  if (tiltEl) { tiltEl.classList.remove('boil'); void tiltEl.offsetWidth; tiltEl.classList.add('boil'); }
+  if (waterEl) { waterEl.classList.remove('boil'); void waterEl.offsetWidth; waterEl.classList.add('boil'); }
+  setTimeout(function() {
+    if (rippleEl) { rippleEl.classList.remove('fired'); void rippleEl.offsetWidth; rippleEl.classList.add('fired'); }
+  }, 120);
+  setTimeout(function() {
+    if (starsEl) { starsEl.classList.remove('fired'); void starsEl.offsetWidth; starsEl.classList.add('fired'); }
+  }, 260);
+  setTimeout(function() {
+    if (glowEl) { glowEl.classList.remove('hit'); void glowEl.offsetWidth; glowEl.classList.add('hit'); }
+  }, 420);
+  setTimeout(function() {
+    if (tiltEl) tiltEl.classList.remove('boil');
+    if (waterEl) waterEl.classList.remove('boil');
+    if (rippleEl) rippleEl.classList.remove('fired');
+    if (starsEl) starsEl.classList.remove('fired');
+    if (glowEl) glowEl.classList.remove('hit');
+  }, 1800);
 }
 
 function fireConfetti() {
@@ -1372,14 +1570,97 @@ function selectMood(el) {
   document.querySelectorAll('.mood-btn').forEach(function(b) { b.classList.remove('active'); });
   el.classList.add('active');
   _selectedMood = mood;
+  updateMoodMeaning(mood);
 }
 
+/* 心情含义映射（释义条 + 图鉴弹窗共用） */
 function startEditMood(id) {
   /* 取消之前可能的高亮 */
   _editingRecordId = id;
   showToast('\u70b9\u51fb\u4e00\u4e2a\u65b0\u7684\u5fc3\u60c5\u8868\u60c5\u6765\u66f4\u6362');
   refreshUI();
 }
+
+var MOOD_MEANINGS = {
+  '\u{1F60A}': { name: '\u5f00\u5fc3', desc: '\u5fc3\u60c5\u6b63\u597d\uff0c\u72b6\u6001\u5728\u7ebf' },
+  '\u{1F604}': { name: '\u5927\u7b11', desc: '\u5f00\u5fc3\u5230\u54c8\u54c8\u54c8' },
+  '\u{1F970}': { name: '\u559c\u6b22', desc: '\u5fc3\u52a8\uff0c\u7231\u4e86\u7231\u4e86' },
+  '\u{1F60C}': { name: '\u5b89\u5fc3', desc: '\u6109\u60a6\u5e73\u548c\uff0c\u4e00\u5207\u90fd\u597d' },
+  '\u{1F624}': { name: '\u751f\u6c14', desc: '\u95f7\u95f7\u4e0d\u4e50\uff0c\u6c14\u9f13\u9f13' },
+  '\u{1F622}': { name: '\u96be\u8fc7', desc: '\u6709\u70b9\u59d4\u5c48\uff0c\u60f3\u54ed\u4e00\u573a' },
+  '\u{1F92F}': { name: '\u9707\u60ca', desc: '\u5934\u76ae\u53d1\u9ebb\uff0c\u4e0d\u53ef\u601d\u8bae' },
+  '\u{1F4AA}': { name: '\u52a0\u6cb9', desc: '\u6ee1\u8eab\u5e72\u52b2\uff0c\u51b2\u51b2\u51b2' },
+  '\u{1F9E0}': { name: '\u70e7\u8111', desc: '\u601d\u8003\u4e2d\uff0c\u8111\u5b50\u9ad8\u901f\u8fd0\u8f6c' },
+  '\u{1F917}': { name: '\u62e5\u62b1', desc: '\u60f3\u8981\u4e00\u4e2a\u62e5\u62b1\uff0c\u6e29\u6696\u4e0b' },
+  '\u{1F60E}': { name: '\u5f97\u610f', desc: '\u5e26\u4e0a\u9ed1\u955c\uff0c\u6211\u6700\u5e05' },
+  '\u{1F973}': { name: '\u5e86\u795d', desc: '\u6709\u559c\u4e8b\uff0c\u5f00\u59cb\u62c9\u5f69\u5e26' },
+  '\u{1F929}': { name: '\u5174\u594b', desc: '\u6fc0\u52a8\u5230\u5f00\u5fc3\u98de\u8d77' },
+  '\u{1F607}': { name: '\u5929\u4f7f', desc: '\u5b8c\u7f8e\u65e5\uff0c\u65e0\u53ef\u6311\u5254' },
+  '\u{1F60F}': { name: '\u50b2\u5a07', desc: '\u5634\u89d2\u4e0a\u626c\uff0c\u5c31\u662f\u8fd9\u4e48\u50b2' },
+  '\u{1F914}': { name: '\u601d\u8003', desc: '\u7591\u60d1\u4e2d\uff0c\u6b63\u5728\u78e8\u80e1\u601d' },
+  '\u{1F976}': { name: '\u51b7\u5f97\u53d1\u6296', desc: '\u7f29\u6210\u4e00\u56e2\uff0c\u8fd8\u5728\u6296' },
+  '\u{1F97A}': { name: '\u59d4\u5c48', desc: '\u7709\u770c\u4e0b\u5782\uff0c\u53ef\u601c\u5154\u5154' },
+  '\u{1F634}': { name: '\u72af\u56f0', desc: '\u56f0\u5230\u7edd\u5bf9\uff0c\u8ff7\u7cca\u4e2d' },
+  '\u{1F92A}': { name: '\u641e\u602a', desc: '\u53d1\u72c2\u6a21\u5f0f\uff0c\u4e0d\u8d70\u5e38\u8def' },
+  '\u{1F630}': { name: '\u7d27\u5f20', desc: '\u51fa\u6c57\u4e86\uff0c\u522b\u8d76\u6211' },
+  '\u{1F605}': { name: '\u5c34\u5c2c', desc: '\u597d\u5c34\u5c2c\uff0c\u7b11\u4e00\u7b11\u5f53\u8fc7\u53bb' },
+  '\u{1F975}': { name: '\u597d\u70ed', desc: '\u7194\u5316\u524d\u591c\uff0c\u5feb\u559d\u6c34\u964d\u6e29' },
+  '\u{1F979}': { name: '\u611f\u52a8', desc: '\u7709\u5f00\u773c\u7b11\u53c8\u542b\u6cea' },
+  '\u{1F92D}': { name: '\u5077\u7b11', desc: '\u6309\u62b9\u4f4f\u5f00\u5fc3\uff0c\u6697\u81ea\u5f97\u610f' },
+  '\u{1F633}': { name: '\u5bb3\u7f9e', desc: '\u8138\u7ea2\u4e86\uff0c\u522b\u518d\u770b\u6211\u4e86' },
+  '\u{1F62E}': { name: '\u60ca\u8bb6', desc: '\u5634\u5df4\u5f20\u6210 O\uff0c\u4ec0\u4e48\uff1f' },
+  '\u{1F912}': { name: '\u751f\u75c5', desc: '\u53d1\u70e7\u4e2d\uff0c\u8bb0\u5f97\u591a\u559d\u6c34\u4f11\u606f' },
+  '\u{1F915}': { name: '\u53d7\u4f24', desc: '\u54ce\u54df\uff0c\u78b0\u5230\u4e86\uff0c\u8981\u597d\u597d\u7167\u987e\u81ea\u5df1' },
+  '\u{1F927}': { name: '\u611f\u5192', desc: '\u54ce\u55bd\uff0c\u559d\u6c34\u8ba9\u8eab\u4f53\u597d\u53d7\u70b9' },
+  '\u{1F637}': { name: '\u6234\u53e3\u7f69', desc: '\u4fdd\u62a4\u81ea\u5df1\u4e5f\u4fdd\u62a4\u4ed6\u4eba' },
+  '\u{1FAE0}': { name: '\u878d\u5316', desc: '\u5df2\u7ecf\u7194\u5316\uff0c\u4ec0\u4e48\u90fd\u4e0d\u60f3\u505a' },
+  '\u{1F636}': { name: '\u65e0\u8bed', desc: '\u95ed\u4e0a\u5634\uff0c\u65e0\u8a00\u4ee5\u5bf9' },
+  '\u{1F610}': { name: '\u9762\u65e0\u8868\u60c5', desc: '\u5e73\u9759\u5982\u6c34\uff0c\u4e0d\u559c\u4e0d\u60b2' },
+  '\u{1F924}': { name: '\u998b', desc: '\u6d41\u53e3\u6c34\u4e2d\uff0c\u770b\u5230\u4e86\u4ec0\u4e48\u7f8e\u98df' }
+};
+
+/* 选中心情后：标题 emoji 换成所选 + 「当下心情：释义」播报 */
+function updateMoodMeaning(mood) {
+  var emojiEl = document.getElementById('moodTitleEmoji');
+  var meaningEl = document.getElementById('moodTitleMeaning');
+  if (mood && MOOD_MEANINGS[mood]) {
+    var m = MOOD_MEANINGS[mood];
+    if (emojiEl) emojiEl.innerHTML = emojiImg(mood, 'width:1.25rem;height:1.25rem;vertical-align:-0.2em;');
+    if (meaningEl) meaningEl.innerHTML = '\uff1a' + m.name + ' \u2014 ' + m.desc;
+  } else {
+    if (emojiEl) emojiEl.innerHTML = '<img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;vertical-align:-0.2em;">';
+    if (meaningEl) meaningEl.textContent = '';
+  }
+}
+
+/* 心情图鉴弹窗：35 个心情 + 含义，滚动查看 */
+function showMoodGallery() {
+  var html = '<div style="font-size:0.75rem;line-height:1.7;color:var(--text-secondary);margin-bottom:10px;">' +
+    '\u70b9\u51fb\u5fc3\u60c5\u53ef\u770b\u542b\u4e49\uff0c\u9009\u62e9\u540e\u559d\u6c34\u65f6\u81ea\u52a8\u4f34\u968f\u8bb0\u5f55\u3002</div>' +
+    '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;">';
+  /* 按按钮顺序渲染，保持与选区一致 */
+  var btns = document.querySelectorAll('#moodRow .mood-btn');
+  btns.forEach(function(b) {
+    var code = b.getAttribute('data-mood');
+    var m = MOOD_MEANINGS[code];
+    if (!m) return;
+    html += '<div style="display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:10px;padding:7px 9px;min-width:0;" onclick="selectGalleryMood(\'' + code + '\')">' +
+      emojiImg(code, 'width:1.5rem;height:1.5rem;flex-shrink:0;') +
+      '<div style="min-width:0;"><div style="font-size:0.75rem;font-weight:600;color:var(--text);">' + m.name + '</div>' +
+      '<div style="font-size:0.625rem;color:var(--text-tertiary);line-height:1.5;">' + m.desc + '</div></div></div>';
+  });
+  html += '</div>';
+  showModal('<img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1em;height:1em;vertical-align:-0.1em;"> \u5fc3\u60c5\u56fe\u9274', html,
+    [{ text: '\u77e5\u9053\u4e86', cls: 'btn-confirm', action: hideModal }]);
+}
+
+function selectGalleryMood(code) {
+  var btn = document.querySelector('#moodRow .mood-btn[data-mood="' + code + '"]');
+  if (btn) { btn.click(); updateMoodMeaning(code); }
+  hideModal();
+  showToast('\u5df2\u9009\u62e9\u5fc3\u60c5\uff0c\u559d\u6c34\u65f6\u81ea\u52a8\u8bb0\u5f55');
+}
+
 
 /* 心情使用说明 */
 function showMoodHelp() {
@@ -1396,16 +1677,6 @@ function showMoodHelp() {
     '\u2461 \u518d\u70b9\u4e00\u4e2a\u65b0\u7684\u5fc3\u60c5\u8868\u60c5 \u2192 \u81ea\u52a8\u66f4\u6362</div>',
     [{ text: '\u77e5\u9053\u4e86', cls: 'btn-confirm', action: hideModal }]
   );
-}
-
-/* 心情卡片折叠切换 */
-var _moodExpanded = true;
-function toggleMood() {
-  _moodExpanded = !_moodExpanded;
-  var body = document.getElementById('moodBody');
-  var btn = document.getElementById('moodToggleBtn');
-  if (body) { body.style.display = _moodExpanded ? '' : 'none'; }
-  if (btn) { btn.textContent = _moodExpanded ? '\u6536\u8d77 \u25B2' : '\u5C55\u5F00 \u25BC'; }
 }
 
 function exportData() {
@@ -1493,6 +1764,175 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.5.1 — 应用图标重绘：澎湃 OS 1 风格（2026-08-23）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **应用图标重绘为澎湃 OS 1 风格** — 大圆角方形（rx 46 / 192）+ 明快水青渐变底（#16C8B2 → #0B7266）+ 顶部柔光高光 + 简洁白色杯体 + 双层水波 + 气泡 + 把手；**舍弃液态玻璃**（HyperOS 2 风格的透明磨砂）',
+  '- **manifest 同步** — background_color → #0B7266，添加 maskable 图标，SW 预缓存覆盖两套（192/512 × 主图/maskable）',
+  '',
+  '---',
+  '',
+  '## v2.5.0 — 奢华水杯动画（2026-08-23）',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **日常态五层水感** — 液态镜面（水面流动斜向高光）/ 双层水波（横移+纵向起伏叠加）/ 气泡群呼吸（折射亮斑+微颤+水面消散）/ 杯壁流光（6 秒一次柔和扫光）/ 高光呼吸（玻璃高光明暗律动）',
+  '- **达标态三阶仪式** — 水面沸腾（急速起伏后落定）→ 金色涟漪（杯口扩散光环）→ 星辉洒落（四粒金星升起盘旋）→ 杯壁金光',
+  '- 全部只用 transform/opacity 保证 60fps；`prefers-reduced-motion` 用户自动禁用',
+  '',
+  '### 🎨 视觉增强',
+  '',
+  '- **气泡 4 → 8 颗** — 更大（4-9px）、更亮（折射渐变 + 内发光），上升带 S 形左右摆动，奇数/偶数方向交错',
+  '- **波浪 2 → 4 层** — 新增白色高光浪 + 深青底层浪，浪高 10 → 14px，横移幅度 ±2 → ±4px，节奏错开',
+  '',
+  '---',
+  '',
+  '## v2.4.9 — 重力水杯改为设置开关 + 顶栏去 emoji（2026-08-23）',
+  '',
+  '### 🎨 优化',
+  '',
+  '- **重力水杯默认关闭** — 改为设置页开关控制（默认关），需要晃动效果的用户可手动开启，避免无感传感器功耗',
+  '- **顶栏标题去除 emoji** — 页面说明文字旁的 emoji 移除，仅剩纯文字标题（咕嘟/我的花园/排行榜/喝水历史/设置）',
+  '',
+  '---',
+  '',
+  '## v2.4.8 — 水物理晃动稳定性修复（2026-08-23）',
+  '',
+  '### 🐛 修复',
+  '',
+  '- **水动画鬼畜抖动** — 重力物理参数欠阻尼（刚度 0.09 / 阻尼 0.86）+ 传感器噪声直入，导致水面高频振荡停不下来',
+  '- 调参：刚度 0.045（水更柔）、阻尼 0.93（衰减更快）、输入 EMA 平滑 0.25、死区 3°、速度钳制 ±1.6/帧、幅度收窄（rotate ±14° / skew ±10°）',
+  '- 验证：注入 120 帧带噪传感器流，帧间零抖动，平滑收敛',
+  '',
+  '---',
+  '',
+  '## v2.4.7 — 重力物理水杯（2026-08-23）',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **水随手机晃动** — 读取手机重力感应（`deviceorientation`），水杯里的水会随倾斜方向涌动、回正后带惯性晃动几下才停（弹簧-阻尼物理模型）',
+  '- 左右倾（gamma）驱动水面旋转 ±20°、前后倾（beta）驱动斜切 ±14°；中心 2° 死区防微抖',
+  '- iOS 需首次触摸授权；无传感器设备（桌面/老手机）自动静默降级，不影响原动画',
+  '',
+  '---',
+  '',
+  '## v2.4.6 — 首页信息密度全面压缩（2026-08-23）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **顶栏压缩为一行** — 咕嘟品牌移左上角，页面标题居中（首页居中区显示鼓励语），纵向省出一行空间',
+  '- **水杯放大** — 88×106 → 108×132（+36%），把手/波浪/气泡/数据字号同步放大',
+  '- **设置图标重绘** — 底部导航设置 tab 改用标准 12 齿齿轮图案',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **导航栏样式切换** — 设置页新增「导航栏样式」选单：线性图标（新版 SVG）/ 经典表情（旧版 emoji PNG），选择即时生效并记忆',
+  '',
+  '---',
+  '',
+  '## v2.4.5 — 底部导航改线性 SVG 图标（2026-08-23）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **导航图标从固化 emoji PNG 改为线性 SVG** — 首页/花园/排行/历史/设置五个 tab 统一 24px 线性图标（1.8 描边、圆角端点），颜色随选中态变水青',
+  '- **选中微动效** — 选中图标轻微上浮 1px + 底部圆点保留；按下缩放 0.94',
+  '- 排行榜标题等处的 emoji 装饰保留不变',
+  '',
+  '---',
+  '',
+  '## v2.4.4 — 心情释义改标题联动 + 弹窗标题修复（2026-08-23）',
+  '',
+  '### 🎨 优化',
+  '',
+  '- **释义呈现改为标题联动** — 点击某心情后，「当下心情」标题的 emoji 替换为所选表情，并在其后播报释义（如「😤 当下心情：生气 — 闷闷不乐，气鼓鼓」）',
+  '- **删除独立释义条** — 移除「点击心情查看含义」行（与 ❔ 图鉴入口重复）',
+  '- **问号按钮置右** — ❔ 移到「当下心情」标题行最右侧',
+  '',
+  '### 🐛 修复',
+  '',
+  '- **弹窗标题源码外泄** — `showModal` 用 `textContent` 设置标题，含固化 emoji `<img>` 的标题显示为源码；改用 `innerHTML`',
+  '',
+  '---',
+  '',
+  '## v2.4.3 — 心情释义：释义条 + 图鉴弹窗（2026-08-23）',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **心情释义条** — 点选任意心情，卡片底部即时显示它的名称与含义',
+  '- **心情图鉴弹窗** — 点 ❔ 或释义条「全部」打开 35 个心情全量图鉴，每条带含义，点图鉴条目可直接选中',
+  '- **黄脸常用心情置顶** — 最常用的 10 个黄脸表情排在前两行，不常用/特殊心情滚动查看',
+  '',
+  '---',
+  '',
+  '## v2.4.2 — 心情扩充至 35 个（2026-08-23）',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **心情从 21 个扩充到 35 个** — 新增 14 个：😅🥵🥹🤭😳😮（高频情绪）、🤒🤕🤧😷（身体不适）、🫠😶😐🤤（趣味搞怪），全部固化 PNG 跨设备一致',
+  '- 心情区保持两行 × 每行五个滚动布局，扩充后滚动查看更多',
+  '',
+  '---',
+  '',
+  '## v2.4.1 — 心情选区两行滚动布局（2026-08-23）',
+  '',
+  '### 🎨 优化',
+  '',
+  '- **心情默认两行 × 每行五个** — 21 个心情固定两行（10 个）展示，其余通过滚动查看',
+  '- **删除心情解释文字** — 移除「喝水时选个心情…」提示与旧折叠逻辑',
+  '',
+  '---',
+  '',
+  '## v2.4.0 — 首页信息密度优化 + 更新日志补全（2026-08-23）',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **首页速览数据条** — 水杯下方新增四格速览：连续达标天数 / 本周日均 / 今日杯数 / 花园阶段，点击直达对应页面',
+  '- **心情卡片默认收起** — 首屏不再被 21 个心情按钮占满，收起态显示速览（当前心情），点标题或速览条一键展开',
+  '',
+  '### 🎨 优化',
+  '',
+  '- **水杯与数据横排** — 杯子紧凑为 88×106，纵向省出约 90px 首屏空间',
+  '- **更新日志补全** — 内嵌日志此前停在 v2.1.2（App 的 file:// 环境拉不到 CHANGELOG.md），补齐 v2.3.2 / v2.3.3 / v2.4.0',
+  '',
+  '---',
+  '',
+  '## v2.3.3 — 弹窗体验统一 + 日历水波配色修正（2026-08-23）',
+  '',
+  '### 🐛 修复',
+  '',
+  '- **弹窗背景半透明** — `.modal` 引用的 `--card-bg` 本身是玻璃半透明色（上次只改了深色模式），浅色模式改为纯白 `#FFFFFF`',
+  '- **日历水波混入旧蓝色** — 热力图水波 SVG 还是旧模板蓝 `rgba(74,144,226,…)`，改为水青，与首页水杯一致',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **弹窗右上角 ✕ 关闭按钮** — 所有弹窗统一新增（36px 命中区），并补充点遮罩关闭、Esc 关闭',
+  '',
+  '### 🎨 优化',
+  '',
+  '- **消除弹窗双滚动条** — 移除「关于应用」更新日志区等 6 处内嵌滚动；弹窗本体成为唯一滚动容器',
+  '',
+  '---',
+  '',
+  '## v2.3.2 — UI 修复（appbar / 弹窗 / 心情 / 手动更新）（2026-08-23）',
+  '',
+  '### 🐛 修复',
+  '',
+  '- **appbar 标题源码外泄** — `switchTab` 用 `textContent` 设置含 `<img>` 的标题导致源码显示，改 `innerHTML` 并统一固化 emoji',
+  '- **弹窗横向溢出** — `.modal` 加 `max-height:86vh; overflow-y:auto; overflow-x:hidden`，手机上完整展示且无横向滚动',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **心情按钮放大** — 图片 1.5rem → 1.875rem（+25%），padding 增大',
+  '- **「当下心情」emoji 固化** — 系统字符改固化图片，跨设备一致',
+  '',
+  '### 🚀 新功能',
+  '',
+  '- **「检查更新」设置项** — 拉取远程 version.txt 对比当前版本；Web 端刷新立即生效，App 端重启后热更新拉取',
+  '- **「关于应用」自动更新说明**',
+  '',
+  '---',
+  '',
   '## v2.1.2 — 深色模式跟随系统加固（2026-08-15）',
   '',
   '### 🐛 修复',
@@ -1924,7 +2364,7 @@ function showAboutDialog() {
     '<br>\u2022 \u60a8\u4e5f\u53ef\u4ee5\u5728\u8bbe\u7f6e\u4e2d\u70b9\u51fb\u300c\u68c0\u67e5\u66f4\u65b0\u300d\u624b\u52a8\u89e6\u53d1\u3002' +
     '</div><br>' +
     '<span style="font-size:0.625rem;color:var(--text-tertiary);word-break:break-all;">ID: ' + uid + '</span>' +
-    '<div id="aboutChangelog" style="max-height:320px;overflow-y:auto;overflow-x:hidden;word-break:break-all;-webkit-overflow-scrolling:touch;border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:0.75rem;line-height:1.7;text-align:left;"><div style="text-align:center;color:var(--text-tertiary);padding:10px;">加载中...</div></div>' +
+    '<div id="aboutChangelog" style="border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:0.75rem;line-height:1.7;text-align:left;"><div style="text-align:center;color:var(--text-tertiary);padding:10px;">加载中...</div></div>' +
     '</div>',
     [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]
   );
@@ -2052,6 +2492,33 @@ function refreshUI() {
   renderRecords(getTodayRecords(gState.records));
   updateSettingsUI();
   updateStats();
+  renderHomeQuickStats();
+}
+
+/* 首页速览数据条：连续达标 / 本周日均 / 今日杯数 / 花园阶段 */
+function renderHomeQuickStats() {
+  var goal = gState.settings.dailyGoal;
+  var el;
+  /* 连续达标 */
+  var streak = calcStreak(gState.records, goal);
+  el = document.getElementById('qsStreak');
+  if (el) el.textContent = streak;
+  /* 本周日均（近 7 天喝水均值，保留整数） */
+  var weekMap = getWeekStats(gState.records);
+  var weekVals = Object.values(weekMap);
+  var weekTotal = 0;
+  for (var i = 0; i < weekVals.length; i++) { weekTotal += weekVals[i]; }
+  var weekAvg = Math.round(weekTotal / 7);
+  el = document.getElementById('qsAvg');
+  if (el) el.textContent = weekAvg;
+  /* 今日杯数（不含 pill） */
+  var todayRecs = getTodayRecords(gState.records).filter(function(r) { return r.type !== 'pill'; });
+  el = document.getElementById('qsCount');
+  if (el) el.textContent = todayRecs.length;
+  /* 花园阶段 */
+  var stage = getPlantStage(streak);
+  el = document.getElementById('qsPlant');
+  if (el) el.textContent = stage.emoji;
 }
 
 function addWater(amount) {
@@ -2072,6 +2539,7 @@ function addWater(amount) {
   /* 重置情绪选择 */
   _selectedMood = '';
   document.querySelectorAll('.mood-btn').forEach(function(b) { b.classList.remove('active'); });
+  updateMoodMeaning('');
   showToast('\u5df2\u8bb0\u5f55 ' + amount + ' ml \u559d\u6c34');
 }
 
@@ -2249,6 +2717,13 @@ function updateStats() {
 
 function updateSettingsUI() {
   var s = gState.settings;
+  var navStyleDesc = document.getElementById('settingNavStyleDesc');
+  if (navStyleDesc) navStyleDesc.textContent = (getNavStyle() === 'emoji') ? '\u7ecf\u5178\u8868\u60c5' : '\u7ebf\u6027\u56fe\u6807';
+  var gravitySwitch = document.getElementById('gravitySwitch');
+  var gravityOn = localStorage.getItem('drink_water_gravity_cup') === 'on';
+  if (gravitySwitch) gravitySwitch.className = 'setting-switch' + (gravityOn ? ' on' : '');
+  var gravityDesc = document.getElementById('settingGravityDesc');
+  if (gravityDesc) gravityDesc.textContent = gravityOn ? '\u5df2\u5f00\u542f\uff0c\u6c34\u968f\u624b\u673a\u503e\u659c\u6643\u52a8' : '\u5df2\u5173\u95ed';
   document.getElementById('settingGoal').textContent = s.dailyGoal + ' ml';
   document.getElementById('settingCustom').textContent = s.customAmount + ' ml';
   var sipLabel = document.getElementById('sipLabel');
@@ -2561,7 +3036,8 @@ function applyDarkMode(mode) {
 }
 
 function showModal(title, body, actions) {
-  document.getElementById('modalTitle').textContent = title;
+  /* 标题可能含固化 emoji <img>，用 innerHTML 渲染（与 appbar 同理） */
+  document.getElementById('modalTitle').innerHTML = title;
   if (typeof body === 'string') { document.getElementById('modalBody').innerHTML = body; }
   else { document.getElementById('modalBody').innerHTML = ''; if (body) { document.getElementById('modalBody').appendChild(body); } }
   var actionsEl = document.getElementById('modalActions');
@@ -2577,6 +3053,12 @@ function showModal(title, body, actions) {
 }
 
 function hideModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+/* 点遮罩关闭（点弹窗本体不关）；Esc 关闭 */
+document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) hideModal(); });
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('modalOverlay').classList.contains('show')) hideModal();
+});
 
 function showToast(msg) {
   var el = document.getElementById('toast');
@@ -2604,7 +3086,7 @@ function showAvatarDialog() {
   }
   grid += '</div>';
   showModal('\u9009\u62e9\u5934\u50cf',
-    '<style>.avatar-opt{font-size:1.75rem;text-align:center;padding:6px;cursor:pointer;border-radius:10px;border:2px solid transparent;transition:transform var(--dur-press) var(--ease-out),background var(--dur-press) var(--ease-out);}.avatar-opt:hover{background:var(--bg);transform:scale(1.1);}</style><div style="max-height:55vh;overflow-y:auto;padding:4px 0;">' + grid + '</div>',
+    '<style>.avatar-opt{font-size:1.75rem;text-align:center;padding:6px;cursor:pointer;border-radius:10px;border:2px solid transparent;transition:transform var(--dur-press) var(--ease-out),background var(--dur-press) var(--ease-out);}.avatar-opt:hover{background:var(--bg);transform:scale(1.1);}</style><div>' + grid + '</div>',
     [{ text: '\u5173\u95ed', cls: 'btn-cancel', action: hideModal }]);
 }
 
@@ -2629,22 +3111,21 @@ function showNicknameDialog() {
 
 function switchTab(idx) {
   var pages = ['page-home', 'page-garden', 'page-leaderboard', 'page-history', 'page-settings'];
-  var titles = ['咕嘟 ' + emojiImg('\u{1F4A7}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;'),
-    '我的花园 ' + emojiImg('\u{1F331}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;'),
-    '排行榜 ' + emojiImg('\u{1F3C6}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;'),
-    '喝水历史 ' + emojiImg('\u{1F4CA}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;'),
-    '设置 ' + emojiImg('\u{2699}\u{FE0F}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;')];
+  var titles = ['咕嘟', '我的花园', '排行榜', '喝水历史', '设置'];
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.getElementById(pages[idx]).classList.add('active');
-  document.getElementById('appbarTitle').innerHTML = titles[idx];
-  /* 只在首页显示鼓励语 */
+  /* 顶栏一行布局：左=咕嘟品牌，中=页面标题（首页显示鼓励语） */
+  document.getElementById('appbarTitle').innerHTML = (idx === 0)
+    ? '<span id="motivationMsg">\u5f00\u59cb\u559d\u6c34\u5427\uff01</span>'
+    : titles[idx];
   var msgEl = document.getElementById('motivationMsg');
-  if (msgEl) { msgEl.style.display = (idx === 0) ? '' : 'none'; }
+  if (msgEl) { msgEl.textContent = _motivationMsgs[Math.floor(Math.random() * _motivationMsgs.length)]; }
   document.querySelectorAll('.bottom-nav button').forEach(function(b, i) { b.classList.toggle('active', i === idx); });
   if (idx === 2) { renderLeaderboard(); }
   if (idx === 3) { _heatmapYear = null; _heatmapMonth = null; createChart(); renderHeatmap(); }
   if (idx === 1) { renderGarden(gState.records, gState.settings); }
 }
+var _motivationMsgs = ['\u5f00\u59cb\u559d\u6c34\u5427\uff01\u6bcf\u4e00\u53e3\u90fd\u662f\u5bf9\u8eab\u4f53\u7684\u7231\u2764\ufe0f', '\u4eca\u5929\u4e5f\u8981\u52a0\u6cb9\u559d\u6c34\u54e6\uff01', '\u8bb0\u5f97\u5b9a\u65f6\u8865\u5145\u6c34\u5206\u54e6 \u{1F4A7}', '\u6c34\u662f\u6700\u597d\u7684\u996e\u6599\uff0c\u575a\u6301\u5c31\u662f\u80dc\u5229\uff01'];
 
 var lbPeriod = 'today';
 var lbInterval = null;
@@ -2670,7 +3151,7 @@ function lbDebug(msg) {
 function toggleLBDebug() {
   var logs = _lbLogs.join('<br>') || '<div style="text-align:center;color:var(--text-tertiary);padding:12px;">暂无日志</div>';
   showModal('📋 网络日志',
-    '<div style="max-height:60vh;overflow-y:auto;font-size:0.75rem;line-height:1.8;color:var(--text-secondary);word-break:break-all;">' + logs + '</div>',
+    '<div style="font-size:0.75rem;line-height:1.8;color:var(--text-secondary);word-break:break-all;">' + logs + '</div>',
     [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]
   );
 }
@@ -2692,7 +3173,7 @@ function showLBHelp() {
 }
 function showLBRules() {
   showModal('🏆 排行榜规则',
-    '<div style="max-height:60vh;overflow-y:auto;font-size:0.8125rem;line-height:2;">' +
+    '<div style="font-size:0.8125rem;line-height:2;">' +
     '⭐ 喝水越多排名越高，从高到低排序。<br>' +
     '🔥 连续达标天数相同时，按总水量排序。<br><br>' +
     '📊 支持今日 / 本周 / 本月三个周期视图。<br>' +
@@ -2876,7 +3357,7 @@ function renderUserRecordsModal(emoji, name, userId, records) {
     return;
   }
   var total = 0;
-  var html = '<div style="max-height:50vh;overflow-y:auto;">';
+  var html = '<div>';
   for (var ri = records.length - 1; ri >= 0; ri--) { var r = records[ri]; total += r.amount; html += '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-light);">' + formatRecordLine(r) + '</div>'; }
   html += '</div>' + formatRecordTotal(total);
   showModal(titleText + ' \u7684\u4eca\u65e5\u8bb0\u5f55', html,
@@ -3042,7 +3523,7 @@ function renderHeatmap() {
     if (hasWater) {
       html += '<div class="hm-water-wrap"><div class="hm-water-fill" style="height:' + fillPct + '%">';
       html += '<div class="hm-wave"><svg viewBox="0 0 30 6" preserveAspectRatio="none">';
-      html += '<path class="w1" d="M0,3 Q4,0 8,3 T16,3 T24,3 T30,3 V6 H0 Z" fill="rgba(74,144,226,.5)"/><path class="w2" d="M0,4 Q4,6 8,4 T16,4 T24,4 T30,4 V6 H0 Z" fill="rgba(74,144,226,.3)"/>';
+      html += '<path class="w1" d="M0,3 Q4,0 8,3 T16,3 T24,3 T30,3 V6 H0 Z" fill="rgba(79,209,197,.5)"/><path class="w2" d="M0,4 Q4,6 8,4 T16,4 T24,4 T30,4 V6 H0 Z" fill="rgba(15,168,150,.35)"/>';
       html += '</svg></div></div></div>';
     }
     html += '<div class="hm-date">' + d + (hasWater ? '<div class="hm-tip">' + key + ' ' + amt + 'ml</div>' : '') + '</div></div>';
@@ -3081,12 +3562,13 @@ function showDayRecords(dateKey) {
 }
 
 loadAll();
+renderNav();
 /* 网络恢复时自动推送离线期间的数据 */
 window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823b';
+var SW_DEPLOY = '20260823o';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
@@ -3099,6 +3581,127 @@ if (window.matchMedia) {
   if (_darkMq.addEventListener) { _darkMq.addEventListener('change', _onDarkChange); }
   else if (_darkMq.addListener) { _darkMq.addListener(_onDarkChange); }
 }
+</script>
+<script>
+/* ── 重力水物理：水随手机倾斜晃动（弹簧-阻尼模型） ──
+ * 默认关闭，由设置页「重力水杯」开关控制（localStorage 记忆）。
+ * 开启条件：传感器支持 + 非 reduced-motion + 开关打开。 */
+(function() {
+  var tiltEl = document.getElementById('waterTilt');
+  var GRAVITY_KEY = 'drink_water_gravity_cup';
+  if (!tiltEl) return;
+
+  var attached = false;
+  var requested = false;
+
+  /* 参数：低刚度 + 高阻尼 + 输入平滑，避免欠阻尼高频振荡（"鬼畜"） */
+  var k = 0.045;        /* 弹簧刚度：越小水越"柔"，振荡越缓 */
+  var damp = 0.93;      /* 阻尼：越接近 1 衰减越快、越稳 */
+  var SMOOTH = 0.25;    /* 传感器 EMA 平滑系数：越小越抗噪 */
+  var DEADZONE = 3;     /* 中心死区（度）：手持微颤不触发 */
+  var MAX_TILT = 22;    /* 最大倾斜角（度） */
+
+  var posX = 0, velX = 0, smX = 0;
+  var posY = 0, velY = 0, smY = 0;
+  var targetX = 0, targetY = 0;
+  var rafId = null;
+
+  function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
+
+  function onDeviceOrientation(e) {
+    /* gamma: 左右倾斜 -90~90；beta: 前后倾斜 -180~180 */
+    var g = e.gamma, b = e.beta;
+    if (g === null || g === undefined || b === null || b === undefined) return;
+    /* EMA 平滑原始信号，压掉传感器噪声 */
+    smX += (g - smX) * SMOOTH;
+    smY += (b - smY) * SMOOTH;
+    /* 死区 + 限幅 */
+    targetX = (Math.abs(smX) < DEADZONE) ? 0 : clamp(smX, -MAX_TILT, MAX_TILT);
+    targetY = (Math.abs(smY) < DEADZONE) ? 0 : clamp(smY, -MAX_TILT, MAX_TILT);
+    if (!rafId) tick();
+  }
+
+  function tick() {
+    /* 弹簧-阻尼积分：低刚度 → 平滑追赶；高阻尼 → 回正后缓停，不抖 */
+    var ax = (targetX - posX) * k;
+    var ay = (targetY - posY) * k;
+    velX = velX * damp + ax;
+    velY = velY * damp + ay;
+    /* 速度钳制：防爆发式跳动 */
+    velX = clamp(velX, -1.6, 1.6);
+    velY = clamp(velY, -1.6, 1.6);
+    posX += velX;
+    posY += velY;
+
+    /* 应用变换：左右倾转 rotate、前后倾用斜切模拟透视 */
+    var rot = clamp(posX, -14, 14);
+    var skew = clamp(posY, -10, 10);
+    tiltEl.style.transform = 'rotate(' + rot.toFixed(2) + 'deg) skewX(' + skew.toFixed(2) + 'deg)';
+
+    if (Math.abs(velX) > 0.05 || Math.abs(velY) > 0.05) {
+      rafId = requestAnimationFrame(tick);
+    } else {
+      rafId = null;
+      posX = posY = 0;
+      smX = smY = 0;
+      tiltEl.style.transform = '';
+    }
+  }
+
+  /* 是否开启（默认关闭） */
+  function isEnabled() {
+    return localStorage.getItem(GRAVITY_KEY) === 'on';
+  }
+
+  function attach() {
+    if (attached) return;
+    if (!window.DeviceOrientationEvent) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    attached = true;
+    window.addEventListener('deviceorientation', onDeviceOrientation, true);
+  }
+  function detach() {
+    if (!attached) return;
+    attached = false;
+    window.removeEventListener('deviceorientation', onDeviceOrientation, true);
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    posX = posY = velX = velY = smX = smY = targetX = targetY = 0;
+    tiltEl.style.transform = '';
+  }
+
+  /* 全局切换接口（设置页开关调用） */
+  window.toggleGravityCup = function() {
+    var next = localStorage.getItem(GRAVITY_KEY) === 'on' ? 'off' : 'on';
+    localStorage.setItem(GRAVITY_KEY, next);
+    if (next === 'on') {
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        /* iOS 13+：首次触摸后请求授权 */
+        if (!requested) {
+          requested = true;
+          DeviceOrientationEvent.requestPermission().then(function(state) {
+            if (state === 'granted') attach();
+          }).catch(function() {});
+        } else { attach(); }
+      } else {
+        attach();
+      }
+      showToast('\u5df2\u5f00\u542f\u91cd\u529b\u6c34\u676f');
+    } else {
+      detach();
+      showToast('\u5df2\u5173\u95ed\u91cd\u529b\u6c34\u676f');
+    }
+    updateSettingsUI();
+  };
+
+  /* 页面加载：默认关闭；仅当开关已开启时自动挂载 */
+  if (isEnabled()) {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      /* iOS 需要用户手势，无法静默开启——维持关闭，等待用户手动开 */
+    } else {
+      attach();
+    }
+  }
+})();
 </script>
 </body>
 </html>
