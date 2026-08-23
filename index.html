@@ -147,25 +147,38 @@
     .cup-side { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
     .cup-body { width: 100%; height: 100%; border: 2.5px solid #BFE8E0; border-top: none; border-radius: 0 0 20px 20px; position: relative; overflow: hidden; background: var(--glass); }
     .cup-body::before { content: ''; position: absolute; top: -3px; left: -6px; right: -6px; height: 8px; background: #BFE8E0; border-radius: 4px; }
-    .cup-body::after { content: ''; position: absolute; top: 9px; left: 8px; width: 6px; height: 42px; border-radius: 3px; background: rgba(255,255,255,.85); }
+    .cup-body::after { content: ''; position: absolute; top: 9px; left: 8px; width: 6px; height: 42px; border-radius: 3px; background: rgba(255,255,255,.85); animation: glassGlint 5s ease-in-out infinite; }
+    /* 杯壁流光：每 6 秒一道柔和光线扫过 */
+    .cup-sheen { position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.16), transparent); transform: skewX(-18deg); pointer-events: none; animation: cupSheen 6s ease-in-out infinite; }
+    @keyframes cupSheen { 0%, 88% { left: -60%; opacity: 0; } 92% { opacity: 1; } 96% { left: 130%; opacity: 0; } 100% { left: 130%; opacity: 0; } }
+    .cup-glow { position: absolute; top: 0; bottom: 0; left: 0; right: 0; border-radius: 0 0 20px 20px; pointer-events: none; }
+    .cup-glow.hit { animation: cupGlowHit 1.2s ease-out; }
+    @keyframes cupGlowHit { 0% { box-shadow: inset 0 0 0 rgba(255,215,130,0); } 25% { box-shadow: inset 0 0 26px rgba(255,215,130,0.55); } 100% { box-shadow: inset 0 0 0 rgba(255,215,130,0); } }
+    @keyframes glassGlint { 0%, 82% { opacity: 0.85; } 88%, 96% { opacity: 1; } 92%, 100% { opacity: 0.6; } }
     .water-area { position: absolute; bottom: 0; left: 0; right: 0; height: 0%; transition: height var(--dur-water) var(--ease-spring); overflow: hidden; }
     /* 重力物理层：包住波浪+水面，随手机倾角倾斜/涌动 */
     .water-tilt { position: absolute; inset: 0; transform-origin: 50% 100%; will-change: transform; }
     .water-tilt > * { position: absolute; left: 0; right: 0; }
     .water-fill-bg { position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(180deg, #4FD1C5 0%, #0FA896 100%); }
+    /* 液态镜面：水面流动斜向高光（缓慢漂移） */
+    .water-highlight { position: absolute; top: 0; left: -40%; width: 50%; height: 100%; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.28) 55%, transparent 80%); opacity: 0.5; animation: waterSheen 5.2s ease-in-out infinite; }
+    @keyframes waterSheen { 0% { transform: translateX(0); opacity: 0.25; } 30% { opacity: 0.55; } 50% { transform: translateX(180%); opacity: 0.35; } 80% { opacity: 0.2; } 100% { transform: translateX(0); opacity: 0.25; } }
     .cup-wave { position: absolute; top: -5px; left: 0; width: 100%; height: 10px; }
     .cup-wave svg { position: absolute; width: 100%; height: 100%; }
     .cup-wave .w1 { animation: hmWaveSway 1.6s ease-in-out infinite alternate; }
     .cup-wave .w2 { animation: hmWaveSway 2s ease-in-out infinite alternate-reverse; }
-    .water-highlight { position: absolute; top: 0; left: 10%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); opacity: 0.4; }
+    /* 双层水波：横移 + 纵向起伏叠加 */
+    .cup-wave .w3 { animation: hmWaveBob 2.4s ease-in-out infinite; }
+    @keyframes hmWaveBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
     @keyframes hmWaveSway { 0% { transform: translateX(-2px); } 100% { transform: translateX(2px); } }
     .cup-handle { position: absolute; right: -13px; top: 34px; width: 15px; height: 36px; border: 2.5px solid #BFE8E0; border-left: none; border-radius: 0 12px 12px 0; }
-    .bubble { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.4); animation: bubbleRise 2.4s ease-in infinite; }
-    .bubble:nth-child(1) { width: 7px; height: 7px; left: 20%; bottom: 10%; animation-delay: 0s; animation-duration: 2.8s; }
-    .bubble:nth-child(2) { width: 5px; height: 5px; left: 50%; bottom: 5%; animation-delay: 0.6s; animation-duration: 3.2s; }
-    .bubble:nth-child(3) { width: 6px; height: 6px; left: 70%; bottom: 15%; animation-delay: 1.2s; animation-duration: 2.6s; }
-    .bubble:nth-child(4) { width: 4px; height: 4px; left: 35%; bottom: 20%; animation-delay: 0.3s; animation-duration: 3.6s; }
-    @keyframes bubbleRise { 0% { transform: translateY(0) scale(1); opacity: 0.6; } 100% { transform: translateY(-100px) scale(0.6); opacity: 0; } }
+    /* 气泡群呼吸：上升 + 微颤 + 到水面消散 */
+    .bubble { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.25) 60%, rgba(255,255,255,0.05)); animation: bubbleRise var(--dur) ease-in infinite; box-shadow: inset 0 0 3px rgba(255,255,255,0.4); }
+    .bubble:nth-child(1) { width: 7px; height: 7px; left: 20%; bottom: 10%; --dur: 3.1s; animation-delay: 0s; }
+    .bubble:nth-child(2) { width: 5px; height: 5px; left: 50%; bottom: 5%; --dur: 3.6s; animation-delay: 0.8s; }
+    .bubble:nth-child(3) { width: 6px; height: 6px; left: 70%; bottom: 15%; --dur: 2.9s; animation-delay: 1.4s; }
+    .bubble:nth-child(4) { width: 4px; height: 4px; left: 35%; bottom: 20%; --dur: 3.9s; animation-delay: 0.4s; }
+    @keyframes bubbleRise { 0% { transform: translateY(0) scale(0.85); opacity: 0; } 12% { opacity: 0.75; } 40% { transform: translateY(-38%) scale(1.08); } 70% { transform: translateY(-72%) scale(0.95); opacity: 0.6; } 100% { transform: translateY(-100%) scale(0.5); opacity: 0; } }
     .cup-stats { text-align: left; min-width: 0; }
     .cup-amount { font-size: 1.875rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
     .cup-unit { font-size: 0.8125rem; color: var(--text-tertiary); }
@@ -180,6 +193,24 @@
     .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
     .confetti-piece { position: absolute; width: 8px; height: 8px; top: -10px; animation: confettiFall var(--duration) linear forwards; opacity: 0; }
     @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+    /* 达标仪式①：水面沸腾（急速起伏后落定） */
+    .water-area.boil { animation: waterBoil 0.5s ease-out; }
+    @keyframes waterBoil { 0% { filter: none; } 30% { filter: brightness(1.12); } 0%, 100% { } }
+    .water-tilt.boil { animation: tiltBoil 0.5s ease-out; }
+    @keyframes tiltBoil { 0% { transform: translateY(0) scaleY(1); } 20% { transform: translateY(-3%) scaleY(1.03); } 40% { transform: translateY(1%) scaleY(0.99); } 60% { transform: translateY(-1.5%) scaleY(1.015); } 100% { transform: translateY(0) scaleY(1); } }
+    /* 达标仪式②：金色涟漪环从杯口扩散 */
+    .cup-ripple { position: absolute; top: 0; left: 50%; width: 0; height: 0; transform: translateX(-50%); border: 2px solid rgba(255,196,86,0); border-radius: 50%; pointer-events: none; }
+    .cup-ripple.fired { animation: cupRipple 1.1s ease-out; }
+    @keyframes cupRipple { 0% { width: 20px; height: 6px; border-color: rgba(255,196,86,0.85); border-width: 2px; } 100% { width: 105%; height: 26px; border-color: rgba(255,196,86,0); border-width: 1px; } }
+    /* 达标仪式③：金色星辉升起盘旋 */
+    .cup-stars { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
+    .cup-stars .cs { position: absolute; bottom: 30%; font-size: 0.875rem; opacity: 0; }
+    .cup-stars.fired .cs { animation: starRise var(--d) ease-out forwards; }
+    .cup-stars.fired .cs:nth-child(1) { left: 22%; --d: 1.15s; }
+    .cup-stars.fired .cs:nth-child(2) { left: 42%; --d: 1.3s; animation-delay: 0.08s; }
+    .cup-stars.fired .cs:nth-child(3) { left: 62%; --d: 1.2s; animation-delay: 0.15s; }
+    .cup-stars.fired .cs:nth-child(4) { left: 78%; --d: 1.4s; animation-delay: 0.05s; }
+    @keyframes starRise { 0% { transform: translateY(0) scale(0.6); opacity: 0; } 25% { opacity: 1; } 70% { transform: translateY(-46%) scale(1.05) rotate(18deg); opacity: 1; } 100% { transform: translateY(-78%) scale(1.2) rotate(40deg); opacity: 0; } }
     .plant-accessories { position: relative; display: inline-block; }
     .accessory { position: absolute; animation: accessoryFloat 2s ease-in-out infinite alternate; pointer-events: none; }
     .accessory.star { top: -10px; right: -20px; font-size: 1.25rem; }
@@ -282,7 +313,7 @@
     .quick-stat .qs-label { font-size: 0.625rem; color: var(--text-tertiary); margin-top: 2px; }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-      .cup-wave .w1, .cup-wave .w2, .bubble, .track-runner, .hm-wave .w1, .hm-wave .w2 { animation: none !important; }
+      .cup-wave .w1, .cup-wave .w2, .bubble, .track-runner, .hm-wave .w1, .hm-wave .w2, .cup-sheen, .water-highlight, .cup-body::after { animation: none !important; }
     }
   </style>
 </head>
@@ -299,8 +330,14 @@
     <div class="progress-wrap">
       <div class="cup-container">
         <div class="cup-body" id="cupBody">
+            <div class="cup-sheen"></div>
+            <div class="cup-glow" id="cupGlow"></div>
             <div class="water-area" id="waterArea">
               <div class="water-tilt" id="waterTilt">
+                <div class="cup-ripple" id="cupRipple"></div>
+                <div class="cup-stars" id="cupStars">
+                  <span class="cs">&#x2728;</span><span class="cs">&#x2B50;</span><span class="cs">&#x2728;</span><span class="cs">&#x2B50;</span>
+                </div>
                 <div class="cup-wave"><svg viewBox="0 0 110 8" preserveAspectRatio="none">
                   <path class="w1" d="M0,4 Q14,0 28,4 T56,4 T84,4 T110,4 V8 H0 Z" fill="rgba(79,209,197,.6)"/>
                   <path class="w2" d="M0,5 Q14,8 28,5 T56,5 T84,5 T110,5 V8 H0 Z" fill="rgba(15,168,150,.4)"/>
@@ -640,7 +677,7 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.4.9';
+var APP_VERSION = 'v2.5.0';
 var NAV_STYLE_KEY = 'drink_water_nav_style'; /* 'svg' 线性 / 'emoji' 经典 */
 
 /* 底部导航双模板：svg=线性图标(默认)，emoji=经典固化PNG */
@@ -1257,12 +1294,42 @@ function renderCupAndTrack(total, goal) {
   remainEl.textContent = isMet ? '\u{1F389} \u4eca\u65e5\u76ee\u6807\u5df2\u8fbe\u6210\uff01' : '\u8fd8\u5dee ' + remain + ' ml';
   remainEl.style.color = isMet ? '#2F9E6E' : '#5B6B78';
   document.getElementById('trackGoalLabel').textContent = goal + ' ml';
-  if (isMet && !lastGoalMet) { setTimeout(function() { fireConfetti(); }, 200); }
+  if (isMet && !lastGoalMet) {
+    setTimeout(function() { fireConfetti(); }, 200);
+    celebrateCup();
+  }
   lastGoalMet = isMet;
   if (isMet) {
     var pe = document.getElementById('plantEmoji');
     if (pe) { pe.classList.remove('plant-pop'); void pe.offsetWidth; pe.classList.add('plant-pop'); }
   }
+}
+
+/* 达标奢华仪式：水面沸腾 → 金色涟漪 → 星辉洒落 → 杯壁金光 */
+function celebrateCup() {
+  var tiltEl = document.getElementById('waterTilt');
+  var waterEl = document.getElementById('waterArea');
+  var glowEl = document.getElementById('cupGlow');
+  var rippleEl = document.getElementById('cupRipple');
+  var starsEl = document.getElementById('cupStars');
+  if (tiltEl) { tiltEl.classList.remove('boil'); void tiltEl.offsetWidth; tiltEl.classList.add('boil'); }
+  if (waterEl) { waterEl.classList.remove('boil'); void waterEl.offsetWidth; waterEl.classList.add('boil'); }
+  setTimeout(function() {
+    if (rippleEl) { rippleEl.classList.remove('fired'); void rippleEl.offsetWidth; rippleEl.classList.add('fired'); }
+  }, 120);
+  setTimeout(function() {
+    if (starsEl) { starsEl.classList.remove('fired'); void starsEl.offsetWidth; starsEl.classList.add('fired'); }
+  }, 260);
+  setTimeout(function() {
+    if (glowEl) { glowEl.classList.remove('hit'); void glowEl.offsetWidth; glowEl.classList.add('hit'); }
+  }, 420);
+  setTimeout(function() {
+    if (tiltEl) tiltEl.classList.remove('boil');
+    if (waterEl) waterEl.classList.remove('boil');
+    if (rippleEl) rippleEl.classList.remove('fired');
+    if (starsEl) starsEl.classList.remove('fired');
+    if (glowEl) glowEl.classList.remove('hit');
+  }, 1800);
 }
 
 function fireConfetti() {
@@ -1688,6 +1755,16 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.5.0 — 奢华水杯动画（2026-08-23）',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **日常态五层水感** — 液态镜面（水面流动斜向高光）/ 双层水波（横移+纵向起伏叠加）/ 气泡群呼吸（折射亮斑+微颤+水面消散）/ 杯壁流光（6 秒一次柔和扫光）/ 高光呼吸（玻璃高光明暗律动）',
+  '- **达标态三阶仪式** — 水面沸腾（急速起伏后落定）→ 金色涟漪（杯口扩散光环）→ 星辉洒落（四粒金星升起盘旋）→ 杯壁金光',
+  '- 全部只用 transform/opacity 保证 60fps；`prefers-reduced-motion` 用户自动禁用',
+  '',
+  '---',
+  '',
   '## v2.4.9 — 重力水杯改为设置开关 + 顶栏去 emoji（2026-08-23）',
   '',
   '### 🎨 优化',
@@ -3468,7 +3545,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823l';
+var SW_DEPLOY = '20260823m';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
