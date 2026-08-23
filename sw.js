@@ -3,7 +3,7 @@
  * 更新：改 SW_VERSION 值触发新版本部署
  */
 var CACHE_NAME = 'drink-water-v3';
-var SW_VERSION = 'v3-20260823e';
+var SW_VERSION = 'v3-20260823f';
 
 /* install：预缓存核心资源，正确使用 waitUntil */
 self.addEventListener('install', function(e) {
