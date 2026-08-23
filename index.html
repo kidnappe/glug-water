@@ -39,10 +39,10 @@
       --shadow-pop: 0 2px 4px rgba(15,168,150,.08), 0 12px 32px rgba(15,168,150,.14);
     }
     html { background: #F7FDFB; color-scheme: light; }
-    body { font-family: -apple-system, 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(180deg, #F7FDFB 0%, #EEFBF8 100%); color: var(--text); max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+    body { font-family: -apple-system, 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(180deg, #F7FDFB 0%, #EEFBF8 100%); color: var(--text); max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; -webkit-tap-highlight-color: transparent; touch-action: manipulation; padding-top: calc(48px + env(safe-area-inset-top)); }
     .page { display: none; padding: 16px 16px 80px; }
     .page.active { display: block; }
-    .appbar { background: linear-gradient(135deg, #0FA896 0%, #0B7285 100%); color: #fff; padding: 10px 16px; padding-top: calc(10px + env(safe-area-inset-top)); position: sticky; top: 0; z-index: 10; border-radius: 0 0 18px 18px; box-shadow: var(--shadow-pop); }
+    .appbar { background: linear-gradient(135deg, #0FA896 0%, #0B7285 100%); color: #fff; padding: 10px 16px; padding-top: calc(10px + env(safe-area-inset-top)); position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 100; border-radius: 0 0 18px 18px; box-shadow: var(--shadow-pop); }
     .appbar-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .appbar-brand { font-size: 0.9375rem; font-weight: 600; letter-spacing: .02em; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
     .appbar-title { flex: 1; text-align: center; font-size: 0.8125rem; font-weight: 500; opacity: .95; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -142,8 +142,9 @@
     .garden { text-align: center; padding: 20px 16px 14px; }
     .plant-emoji { font-size: 4rem; transition: transform .5s; }
     .plant-name { font-size: 0.875rem; color: #666; margin-top: 4px; }
-    .progress-wrap { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 24px; padding: 10px 0 4px; }
-    .cup-container { width: 108px; height: 132px; position: relative; flex-shrink: 0; }
+    .progress-wrap { display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 26px; padding: 10px 0 4px; }
+    .cup-container { width: 122px; height: 150px; position: relative; flex-shrink: 0; }
+    .cup-side { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
     .cup-body { width: 100%; height: 100%; border: 2.5px solid #BFE8E0; border-top: none; border-radius: 0 0 20px 20px; position: relative; overflow: hidden; background: var(--glass); }
     .cup-body::before { content: ''; position: absolute; top: -3px; left: -6px; right: -6px; height: 8px; background: #BFE8E0; border-radius: 4px; }
     .cup-body::after { content: ''; position: absolute; top: 9px; left: 8px; width: 6px; height: 42px; border-radius: 3px; background: rgba(255,255,255,.85); }
@@ -155,19 +156,19 @@
     .cup-wave .w2 { animation: hmWaveSway 2s ease-in-out infinite alternate-reverse; }
     .water-highlight { position: absolute; top: 0; left: 10%; width: 30%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); opacity: 0.4; }
     @keyframes hmWaveSway { 0% { transform: translateX(-2px); } 100% { transform: translateX(2px); } }
-    .cup-handle { position: absolute; right: -13px; top: 30px; width: 15px; height: 32px; border: 2.5px solid #BFE8E0; border-left: none; border-radius: 0 12px 12px 0; }
+    .cup-handle { position: absolute; right: -13px; top: 34px; width: 15px; height: 36px; border: 2.5px solid #BFE8E0; border-left: none; border-radius: 0 12px 12px 0; }
     .bubble { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.4); animation: bubbleRise 2.4s ease-in infinite; }
     .bubble:nth-child(1) { width: 7px; height: 7px; left: 20%; bottom: 10%; animation-delay: 0s; animation-duration: 2.8s; }
     .bubble:nth-child(2) { width: 5px; height: 5px; left: 50%; bottom: 5%; animation-delay: 0.6s; animation-duration: 3.2s; }
     .bubble:nth-child(3) { width: 6px; height: 6px; left: 70%; bottom: 15%; animation-delay: 1.2s; animation-duration: 2.6s; }
     .bubble:nth-child(4) { width: 4px; height: 4px; left: 35%; bottom: 20%; animation-delay: 0.3s; animation-duration: 3.6s; }
     @keyframes bubbleRise { 0% { transform: translateY(0) scale(1); opacity: 0.6; } 100% { transform: translateY(-100px) scale(0.6); opacity: 0; } }
-    .cup-stats { text-align: center; min-width: 0; }
+    .cup-stats { text-align: left; min-width: 0; }
     .cup-amount { font-size: 1.875rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
     .cup-unit { font-size: 0.8125rem; color: var(--text-tertiary); }
     .cup-label { font-size: 0.8125rem; color: var(--text-secondary); margin-top: 2px; }
     .cup-remain { font-size: 0.875rem; font-weight: 500; color: var(--primary-dark); margin-top: 3px; }
-    .track-wrap { width: 100%; max-width: 300px; margin: 14px auto 0; position: relative; }
+    .track-wrap { width: 100%; position: relative; margin-top: 12px; }
     .track-bg { width: 100%; height: 10px; background: #E2F0EB; border-radius: 5px; position: relative; overflow: hidden; }
     .track-fill { height: 100%; border-radius: 5px; background: linear-gradient(90deg, #4FD1C5, #0FA896); transition: width 0.6s var(--ease-spring); width: 0%; }
     .track-runner { position: absolute; top: -8px; font-size: 1.375rem; transition: left 0.6s var(--ease-spring); left: 0%; z-index: 2; animation: runnerBob 0.3s ease-in-out infinite alternate; transform: scaleX(-1); }
@@ -268,7 +269,7 @@
     .hm-date { position: relative; z-index: 1; }
     .plant-pop { animation: plantPop .4s ease-out; }
     @keyframes plantPop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
-    @media (max-width: 374px) { .btn-water.small { min-width: 44px; padding: 8px 2px; font-size: 0.75rem; } .cup-container { width: 92px; height: 112px; } .progress-wrap { gap: 14px; } .plant-emoji { font-size: 3rem; } }
+    @media (max-width: 374px) { .btn-water.small { min-width: 44px; padding: 8px 2px; font-size: 0.75rem; } .cup-container { width: 100px; height: 124px; } .progress-wrap { gap: 14px; } .cup-amount { font-size: 1.5rem; } .plant-emoji { font-size: 3rem; } }
     /* 首页速览数据条 */
     .quick-stats { display: flex; margin-top: 12px; background: var(--bg); border-radius: 12px; padding: 8px 0; }
     .quick-stat { flex: 1; text-align: center; position: relative; }
@@ -308,16 +309,18 @@
           <div class="cup-handle"></div>
           <div class="overflow-wrap" id="overflowWrap"></div>
         </div>
-        <div class="cup-stats">
-          <span class="cup-amount" id="todayAmount">0</span><span class="cup-unit">ml</span>
-          <div class="cup-label" id="todayGoalText">目标：2000 ml</div>
-          <div class="cup-remain" id="todayRemainText">还差 2000 ml</div>
+        <div class="cup-side">
+          <div class="cup-stats">
+            <span class="cup-amount" id="todayAmount">0</span><span class="cup-unit">ml</span>
+            <div class="cup-label" id="todayGoalText">目标：2000 ml</div>
+            <div class="cup-remain" id="todayRemainText">还差 2000 ml</div>
+          </div>
+          <div class="track-wrap">
+            <div class="track-runner" id="trackRunner">🏃</div>
+            <div class="track-bg"><div class="track-fill" id="trackFill"></div></div>
+            <div class="track-label"><span>0 ml</span><span id="trackGoalLabel">2000 ml</span></div>
+          </div>
         </div>
-    </div>
-    <div class="track-wrap" style="margin-top:6px;">
-      <div class="track-runner" id="trackRunner">🏃</div>
-      <div class="track-bg"><div class="track-fill" id="trackFill"></div></div>
-      <div class="track-label"><span>0 ml</span><span id="trackGoalLabel">2000 ml</span></div>
     </div>
     <div class="quick-stats">
       <div class="quick-stat" onclick="switchTab(1)" style="cursor:pointer;"><div class="qs-value accent"><span id="qsStreak">0</span> 天</div><div class="qs-label">连续达标</div></div>
