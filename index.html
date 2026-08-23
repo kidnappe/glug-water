@@ -163,22 +163,29 @@
     /* 液态镜面：水面流动斜向高光（缓慢漂移） */
     .water-highlight { position: absolute; top: 0; left: -40%; width: 50%; height: 100%; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.28) 45%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.28) 55%, transparent 80%); opacity: 0.5; animation: waterSheen 5.2s ease-in-out infinite; }
     @keyframes waterSheen { 0% { transform: translateX(0); opacity: 0.25; } 30% { opacity: 0.55; } 50% { transform: translateX(180%); opacity: 0.35; } 80% { opacity: 0.2; } 100% { transform: translateX(0); opacity: 0.25; } }
-    .cup-wave { position: absolute; top: -5px; left: 0; width: 100%; height: 10px; }
+    .cup-wave { position: absolute; top: -7px; left: 0; width: 100%; height: 14px; }
     .cup-wave svg { position: absolute; width: 100%; height: 100%; }
-    .cup-wave .w1 { animation: hmWaveSway 1.6s ease-in-out infinite alternate; }
-    .cup-wave .w2 { animation: hmWaveSway 2s ease-in-out infinite alternate-reverse; }
-    /* 双层水波：横移 + 纵向起伏叠加 */
-    .cup-wave .w3 { animation: hmWaveBob 2.4s ease-in-out infinite; }
-    @keyframes hmWaveBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
-    @keyframes hmWaveSway { 0% { transform: translateX(-2px); } 100% { transform: translateX(2px); } }
+    .cup-wave .w1 { animation: hmWaveSway 1.3s ease-in-out infinite alternate; }
+    .cup-wave .w2 { animation: hmWaveSway 1.8s ease-in-out infinite alternate-reverse; }
+    .cup-wave .w3 { animation: hmWaveBob 2.2s ease-in-out infinite; }
+    .cup-wave .w4 { animation: hmWaveSway 2.4s ease-in-out infinite alternate; }
+    /* 双层水波：横移（幅度增大）+ 纵向起伏叠加 */
+    @keyframes hmWaveBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+    @keyframes hmWaveSway { 0% { transform: translateX(-4px); } 100% { transform: translateX(4px); } }
     .cup-handle { position: absolute; right: -13px; top: 34px; width: 15px; height: 36px; border: 2.5px solid #BFE8E0; border-left: none; border-radius: 0 12px 12px 0; }
-    /* 气泡群呼吸：上升 + 微颤 + 到水面消散 */
-    .bubble { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.25) 60%, rgba(255,255,255,0.05)); animation: bubbleRise var(--dur) ease-in infinite; box-shadow: inset 0 0 3px rgba(255,255,255,0.4); }
-    .bubble:nth-child(1) { width: 7px; height: 7px; left: 20%; bottom: 10%; --dur: 3.1s; animation-delay: 0s; }
-    .bubble:nth-child(2) { width: 5px; height: 5px; left: 50%; bottom: 5%; --dur: 3.6s; animation-delay: 0.8s; }
-    .bubble:nth-child(3) { width: 6px; height: 6px; left: 70%; bottom: 15%; --dur: 2.9s; animation-delay: 1.4s; }
-    .bubble:nth-child(4) { width: 4px; height: 4px; left: 35%; bottom: 20%; --dur: 3.9s; animation-delay: 0.4s; }
-    @keyframes bubbleRise { 0% { transform: translateY(0) scale(0.85); opacity: 0; } 12% { opacity: 0.75; } 40% { transform: translateY(-38%) scale(1.08); } 70% { transform: translateY(-72%) scale(0.95); opacity: 0.6; } 100% { transform: translateY(-100%) scale(0.5); opacity: 0; } }
+    /* 气泡群呼吸：上升 + 微颤 + S 形摆动 + 到水面消散 */
+    .bubble { position: absolute; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0.4) 55%, rgba(255,255,255,0.12)); animation: bubbleRise var(--dur) ease-in infinite; box-shadow: inset 0 0 4px rgba(255,255,255,0.5); --sway-x: 4px; }
+    .bubble:nth-child(odd) { --sway-x: 4px; }
+    .bubble:nth-child(even) { --sway-x: -4px; }
+    .bubble:nth-child(1) { width: 8px; height: 8px; left: 15%; bottom: 8%; --dur: 2.8s; animation-delay: 0s; }
+    .bubble:nth-child(2) { width: 6px; height: 6px; left: 32%; bottom: 4%; --dur: 3.4s; animation-delay: 0.7s; }
+    .bubble:nth-child(3) { width: 7px; height: 7px; left: 50%; bottom: 12%; --dur: 2.6s; animation-delay: 1.2s; }
+    .bubble:nth-child(4) { width: 5px; height: 5px; left: 68%; bottom: 6%; --dur: 3.8s; animation-delay: 0.4s; }
+    .bubble:nth-child(5) { width: 9px; height: 9px; left: 82%; bottom: 10%; --dur: 3.1s; animation-delay: 1.6s; }
+    .bubble:nth-child(6) { width: 4px; height: 4px; left: 22%; bottom: 16%; --dur: 4.2s; animation-delay: 0.9s; }
+    .bubble:nth-child(7) { width: 6px; height: 6px; left: 60%; bottom: 18%; --dur: 3.6s; animation-delay: 2s; }
+    .bubble:nth-child(8) { width: 5px; height: 5px; left: 88%; bottom: 14%; --dur: 3.2s; animation-delay: 1s; }
+    @keyframes bubbleRise { 0% { transform: translate(0, 0) scale(0.7); opacity: 0; } 10% { opacity: 0.85; } 40% { transform: translate(var(--sway-x), -38%) scale(1.12); } 70% { transform: translate(calc(var(--sway-x) * -0.5), -72%) scale(0.95); opacity: 0.7; } 100% { transform: translate(calc(var(--sway-x) * -1), -100%) scale(0.45); opacity: 0; } }
     .cup-stats { text-align: left; min-width: 0; }
     .cup-amount { font-size: 1.875rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
     .cup-unit { font-size: 0.8125rem; color: var(--text-tertiary); }
@@ -338,13 +345,15 @@
                 <div class="cup-stars" id="cupStars">
                   <span class="cs">&#x2728;</span><span class="cs">&#x2B50;</span><span class="cs">&#x2728;</span><span class="cs">&#x2B50;</span>
                 </div>
-                <div class="cup-wave"><svg viewBox="0 0 110 8" preserveAspectRatio="none">
-                  <path class="w1" d="M0,4 Q14,0 28,4 T56,4 T84,4 T110,4 V8 H0 Z" fill="rgba(79,209,197,.6)"/>
-                  <path class="w2" d="M0,5 Q14,8 28,5 T56,5 T84,5 T110,5 V8 H0 Z" fill="rgba(15,168,150,.4)"/>
+                <div class="cup-wave"><svg viewBox="0 0 110 12" preserveAspectRatio="none">
+                  <path class="w1" d="M0,6 Q14,1 28,6 T56,6 T84,6 T110,6 V12 H0 Z" fill="rgba(79,209,197,.7)"/>
+                  <path class="w2" d="M0,8 Q14,3 28,8 T56,8 T84,8 T110,8 V12 H0 Z" fill="rgba(15,168,150,.5)"/>
+                  <path class="w3" d="M0,5 Q14,9 28,5 T56,5 T84,5 T110,5 V12 H0 Z" fill="rgba(255,255,255,.14)"/>
+                  <path class="w4" d="M0,10 Q14,7 28,10 T56,10 T84,10 T110,10 V12 H0 Z" fill="rgba(11,140,125,.35)"/>
                 </svg></div>
                 <div class="water-fill-bg"></div>
                 <div class="water-highlight"></div>
-                <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
+                <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
               </div>
             </div>
           </div>
@@ -677,7 +686,7 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.5.0';
+var APP_VERSION = 'v2.5.1';
 var NAV_STYLE_KEY = 'drink_water_nav_style'; /* 'svg' 线性 / 'emoji' 经典 */
 
 /* 底部导航双模板：svg=线性图标(默认)，emoji=经典固化PNG */
@@ -1755,6 +1764,15 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.5.1 — 水杯动画加料：气泡与波浪增强（2026-08-23）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **气泡 4 → 8 颗** — 更大（4-9px）、更亮（折射渐变 + 内发光），上升带 S 形左右摆动，奇数/偶数方向交错',
+  '- **波浪 2 → 4 层** — 新增白色高光浪 + 深青底层浪，浪高 10 → 14px，横移幅度 ±2 → ±4px，节奏错开',
+  '',
+  '---',
+  '',
   '## v2.5.0 — 奢华水杯动画（2026-08-23）',
   '',
   '### ✨ 新增',
@@ -3545,7 +3563,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823m';
+var SW_DEPLOY = '20260823n';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
