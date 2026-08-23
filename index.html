@@ -345,6 +345,20 @@
       <button class="mood-btn" data-mood="&#x1F634;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F634.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
       <button class="mood-btn" data-mood="&#x1F92A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
       <button class="mood-btn" data-mood="&#x1F630;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F630.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F605;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F605.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F975;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F975.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F979;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F979.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F92D;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F92D.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F633;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F633.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F62E;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F62E.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F912;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F912.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F915;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F915.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F927;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F927.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F637;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F637.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1FAE0;" onclick="selectMood(this)"><img src="icons/emoji/mood-1FAE0.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F636;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F636.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F610;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F610.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
+      <button class="mood-btn" data-mood="&#x1F924;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F924.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
     </div>
     </div>
   </div>
@@ -576,6 +590,11 @@ var EMOJI_FILE = {
   '\u{1F929}':'mood-1F929', '\u{1F607}':'mood-1F607', '\u{1F60F}':'mood-1F60F',
   '\u{1F914}':'mood-1F914', '\u{1F976}':'mood-1F976', '\u{1F97A}':'mood-1F97A',
   '\u{1F634}':'mood-1F634', '\u{1F92A}':'mood-1F92A', '\u{1F630}':'mood-1F630',
+  /* v2.4.2 扩充 14 个心情 */
+  '\u{1F605}':'mood-1F605', '\u{1F975}':'mood-1F975', '\u{1F979}':'mood-1F979', '\u{1F92D}':'mood-1F92D',
+  '\u{1F633}':'mood-1F633', '\u{1F62E}':'mood-1F62E', '\u{1F912}':'mood-1F912', '\u{1F915}':'mood-1F915',
+  '\u{1F927}':'mood-1F927', '\u{1F637}':'mood-1F637', '\u{1FAE0}':'mood-1FAE0', '\u{1F636}':'mood-1F636',
+  '\u{1F610}':'mood-1F610', '\u{1F924}':'mood-1F924',
   /* 5 导航 */
   '\u{1F3E0}':'nav-1F3E0', '\u{1F331}':'nav-1F331', '\u{1F3C6}':'nav-1F3C6',
   '\u{1F4CA}':'nav-1F4CA', '\u{2699}\u{FE0F}':'nav-2699-FE0F',
@@ -597,7 +616,7 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.4.1';
+var APP_VERSION = 'v2.4.2';
 var STORAGE_KEY = 'drink_water_data';
 var SETTINGS_KEY = 'drink_water_settings';
 var SUPABASE_CONFIG_KEY = 'drink_water_supabase';
@@ -1500,6 +1519,15 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.4.2 — 心情扩充至 35 个（2026-08-23）',
+  '',
+  '### ✨ 新增',
+  '',
+  '- **心情从 21 个扩充到 35 个** — 新增 14 个：😅🥵🥹🤭😳😮（高频情绪）、🤒🤕🤧😷（身体不适）、🫠😶😐🤤（趣味搞怪），全部固化 PNG 跨设备一致',
+  '- 心情区保持两行 × 每行五个滚动布局，扩充后滚动查看更多',
+  '',
+  '---',
+  '',
   '## v2.4.1 — 心情选区两行滚动布局（2026-08-23）',
   '',
   '### 🎨 优化',
@@ -3185,7 +3213,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823d';
+var SW_DEPLOY = '20260823e';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
