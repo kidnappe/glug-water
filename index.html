@@ -39,10 +39,10 @@
       --shadow-pop: 0 2px 4px rgba(15,168,150,.08), 0 12px 32px rgba(15,168,150,.14);
     }
     html { background: #F7FDFB; color-scheme: light; }
-    body { font-family: -apple-system, 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(180deg, #F7FDFB 0%, #EEFBF8 100%); color: var(--text); max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; -webkit-tap-highlight-color: transparent; touch-action: manipulation; padding-top: calc(48px + env(safe-area-inset-top)); }
+    body { font-family: -apple-system, 'PingFang SC', 'Segoe UI', 'Microsoft YaHei', sans-serif; background: linear-gradient(180deg, #F7FDFB 0%, #EEFBF8 100%); color: var(--text); max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
     .page { display: none; padding: 16px 16px 80px; }
     .page.active { display: block; }
-    .appbar { background: linear-gradient(135deg, #0FA896 0%, #0B7285 100%); color: #fff; padding: 10px 16px; padding-top: calc(10px + env(safe-area-inset-top)); position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 100; border-radius: 0 0 18px 18px; box-shadow: var(--shadow-pop); }
+    .appbar { background: linear-gradient(135deg, #0FA896 0%, #0B7285 100%); color: #fff; padding: 10px 16px; padding-top: calc(10px + env(safe-area-inset-top)); border-radius: 0 0 18px 18px; box-shadow: var(--shadow-pop); }
     .appbar-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .appbar-brand { font-size: 0.9375rem; font-weight: 600; letter-spacing: .02em; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
     .appbar-title { flex: 1; text-align: center; font-size: 0.8125rem; font-weight: 500; opacity: .95; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -3441,36 +3441,6 @@ if (window.matchMedia) {
   if (_darkMq.addEventListener) { _darkMq.addEventListener('change', _onDarkChange); }
   else if (_darkMq.addListener) { _darkMq.addListener(_onDarkChange); }
 }
-/* 顶栏滚动锁定兜底：部分 WebView 对 fixed 定位不可靠（表现为随视口滚动）。
- * 策略：CSS fixed 生效时静默；滚动中发现顶栏偏离视口顶部 → 自动切换 JS 平移锁定。 */
-(function() {
-  var appbar = document.getElementById('appbar');
-  if (!appbar) return;
-  var mode = 'css';
-  var lastY = 0;
-  var tick = false;
-  function lock() {
-    if (mode === 'js') {
-      var y = window.scrollY || 0;
-      appbar.style.top = y + 'px';
-      return;
-    }
-    var top = appbar.getBoundingClientRect().top;
-    var y = window.scrollY || 0;
-    if (Math.abs(top) > 3 && Math.abs(top + y) < 3) {
-      mode = 'js';
-      appbar.style.position = 'absolute';
-      appbar.style.top = y + 'px';
-      appbar.style.left = '50%';
-      appbar.style.transform = 'translateX(-50%)';
-    }
-  }
-  function onScroll() {
-    if (!tick) { tick = true; requestAnimationFrame(function() { tick = false; lock(); }); }
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-})();
 </script>
 </body>
 </html>
