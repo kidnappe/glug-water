@@ -12,3 +12,6 @@ backup/
 
 # 项目记忆（本地会话数据，不进版本库）
 .workbuddy/
+
+# Android 构建产物残留（android/ 属于 app 分支；web 分支工作区出现时全部忽略，避免桌面端误显示 200+ 项）
+android/
