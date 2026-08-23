@@ -3441,6 +3441,26 @@ if (window.matchMedia) {
   if (_darkMq.addEventListener) { _darkMq.addEventListener('change', _onDarkChange); }
   else if (_darkMq.addListener) { _darkMq.addListener(_onDarkChange); }
 }
+/* 顶栏滚动锁定兜底：部分 WebView 对 fixed 定位不可靠（表现为随视口滚动）。
+ * 方案：fixed 生效时不做任何事；失效时退化为 absolute + 滚动事件平移，等效固定。 */
+(function() {
+  var appbar = document.getElementById('appbar');
+  if (!appbar) return;
+  if (getComputedStyle(appbar).position === 'fixed') return;
+  appbar.style.position = 'absolute';
+  appbar.style.top = '0';
+  appbar.style.left = '50%';
+  appbar.style.transform = 'translateX(-50%)';
+  var lastY = window.scrollY || 0;
+  function lock() {
+    var y = window.scrollY || 0;
+    if (y === lastY) return;
+    lastY = y;
+    appbar.style.top = y + 'px';
+  }
+  window.addEventListener('scroll', lock, { passive: true });
+  lock();
+})();
 </script>
 </body>
 </html>
