@@ -189,13 +189,9 @@
     .btn-water.small { flex: 1; min-width: 52px; padding: 10px 4px; font-size: 0.8125rem; }
     .btn-water.sip { width: 100%; background: var(--bg); color: var(--primary); font-size: 0.8125rem; padding: 8px 0; font-weight: 500; border: 1px dashed var(--primary); box-shadow: none; }
     .btn-water.sip:active { transform: scale(0.97); }
-    .mood-row { display: flex; flex-wrap: wrap; gap: 6px; }
-    .mood-btn { font-size: 1.375rem; padding: 6px 10px; border: 2px solid transparent; border-radius: 10px; background: #E9F4EF; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), background var(--dur-press) var(--ease-out), border-color var(--dur-press) var(--ease-out); line-height: 1; }
+    .mood-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 98px; overflow-y: auto; overflow-x: hidden; padding-right: 2px; -webkit-overflow-scrolling: touch; }
+    .mood-btn { font-size: 1.375rem; padding: 6px 4px; border: 2px solid transparent; border-radius: 10px; background: #E9F4EF; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), background var(--dur-press) var(--ease-out), border-color var(--dur-press) var(--ease-out); line-height: 1; display: flex; align-items: center; justify-content: center; }
     .mood-btn img.emoji { width: 1.875rem !important; height: 1.875rem !important; display: block; }
-    /* 收起状态下的心情速览条 */
-    .mood-mini { display: flex; align-items: center; gap: 8px; padding-top: 2px; cursor: pointer; }
-    .mood-mini .mini-label { font-size: 0.6875rem; color: var(--text-tertiary); flex-shrink: 0; }
-    .mood-mini img.emoji { width: 1.25rem !important; height: 1.25rem !important; }
     .mood-btn:hover { background: #D7EBE4; transform: scale(1.08); }
     .mood-btn:active { transform: scale(0.94); }
     .mood-btn.active { border-color: var(--primary); background: #D7EBE4; box-shadow: 0 0 0 2px rgba(15,168,150,.2); transform: scale(1.1); }
@@ -323,15 +319,10 @@
     </div>
   </div>
   <div class="card">
-    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleMood()">
+    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;">
       <span><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;vertical-align:-0.2em;margin-right:2px;"> 当下心情 <span class="mood-help" onclick="event.stopPropagation();showMoodHelp()" title="&#x5982;&#x4F55;&#x6DFB;&#x52A0;&#x5FC3;&#x60C5;">&#x2754;</span></span>
-      <span id="moodToggleBtn" style="font-size:0.75rem;color:var(--primary);">&#x5C55;&#x5F00; &#x25BC;</span>
     </div>
-    <div class="mood-mini" id="moodMini" onclick="toggleMood()">
-      <span class="mini-label">喝水时选个心情，记录此刻状态</span>
-      <span id="moodMiniSel"><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji"></span>
-    </div>
-    <div id="moodBody" style="display:none;">
+    <div id="moodBody">
       <div class="mood-row" id="moodRow">
         <button class="mood-btn" data-mood="&#x1F60A;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
       <button class="mood-btn" data-mood="&#x1F604;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F604.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
@@ -1398,9 +1389,6 @@ function selectMood(el) {
   document.querySelectorAll('.mood-btn').forEach(function(b) { b.classList.remove('active'); });
   el.classList.add('active');
   _selectedMood = mood;
-  /* 收起态速览条同步显示所选心情 */
-  var mini = document.getElementById('moodMiniSel');
-  if (mini) mini.innerHTML = emojiImg(mood, 'width:1.25rem;height:1.25rem;');
 }
 
 function startEditMood(id) {
@@ -1425,18 +1413,6 @@ function showMoodHelp() {
     '\u2461 \u518d\u70b9\u4e00\u4e2a\u65b0\u7684\u5fc3\u60c5\u8868\u60c5 \u2192 \u81ea\u52a8\u66f4\u6362</div>',
     [{ text: '\u77e5\u9053\u4e86', cls: 'btn-confirm', action: hideModal }]
   );
-}
-
-/* 心情卡片折叠切换（默认收起，节省首页首屏空间） */
-var _moodExpanded = false;
-function toggleMood() {
-  _moodExpanded = !_moodExpanded;
-  var body = document.getElementById('moodBody');
-  var btn = document.getElementById('moodToggleBtn');
-  var mini = document.getElementById('moodMini');
-  if (body) { body.style.display = _moodExpanded ? '' : 'none'; }
-  if (btn) { btn.textContent = _moodExpanded ? '\u6536\u8d77 \u25B2' : '\u5C55\u5F00 \u25BC'; }
-  if (mini) { mini.style.display = _moodExpanded ? 'none' : ''; }
 }
 
 function exportData() {
@@ -2180,8 +2156,6 @@ function addWater(amount) {
   /* 重置情绪选择 */
   _selectedMood = '';
   document.querySelectorAll('.mood-btn').forEach(function(b) { b.classList.remove('active'); });
-  var mini = document.getElementById('moodMiniSel');
-  if (mini) mini.innerHTML = '<img src="icons/emoji/mood-1F60A.png" alt="" class="emoji">';
   showToast('\u5df2\u8bb0\u5f55 ' + amount + ' ml \u559d\u6c34');
 }
 
