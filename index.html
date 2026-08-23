@@ -3466,12 +3466,17 @@ if (window.matchMedia) {
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (!window.DeviceOrientationEvent) return;
 
-  var k = 0.09;      /* 弹簧刚度：越大水越"紧" */
-  var damp = 0.86;   /* 阻尼：越小水越"稠"（晃动衰减越快） */
-  var posX = 0, velX = 0;  /* 左右（gamma，单位度） */
-  var posY = 0, velY = 0;  /* 前后（beta） */
+  /* 参数：低刚度 + 高阻尼 + 输入平滑，避免欠阻尼高频振荡（"鬼畜"） */
+  var k = 0.045;        /* 弹簧刚度：越小水越"柔"，振荡越缓 */
+  var damp = 0.93;      /* 阻尼：越接近 1 衰减越快、越稳 */
+  var SMOOTH = 0.25;    /* 传感器 EMA 平滑系数：越小越抗噪 */
+  var DEADZONE = 3;     /* 中心死区（度）：手持微颤不触发 */
+  var MAX_TILT = 22;    /* 最大倾斜角（度） */
+
+  var posX = 0, velX = 0, smX = 0;
+  var posY = 0, velY = 0, smY = 0;
   var targetX = 0, targetY = 0;
-  var rafId = null, hasSensor = false;
+  var rafId = null;
 
   function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
 
@@ -3479,32 +3484,38 @@ if (window.matchMedia) {
     /* gamma: 左右倾斜 -90~90；beta: 前后倾斜 -180~180 */
     var g = e.gamma, b = e.beta;
     if (g === null || g === undefined || b === null || b === undefined) return;
-    hasSensor = true;
-    /* 限幅防止过度晃动，中心死区 2° 防微抖 */
-    targetX = (Math.abs(g) < 2) ? 0 : clamp(g, -28, 28);
-    targetY = (Math.abs(b) < 2) ? 0 : clamp(b, -28, 28);
+    /* EMA 平滑原始信号，压掉传感器噪声 */
+    smX += (g - smX) * SMOOTH;
+    smY += (b - smY) * SMOOTH;
+    /* 死区 + 限幅 */
+    targetX = (Math.abs(smX) < DEADZONE) ? 0 : clamp(smX, -MAX_TILT, MAX_TILT);
+    targetY = (Math.abs(smY) < DEADZONE) ? 0 : clamp(smY, -MAX_TILT, MAX_TILT);
     if (!rafId) tick();
   }
 
   function tick() {
-    /* 弹簧-阻尼积分：手机回正后水带惯性晃动几下再停 */
+    /* 弹簧-阻尼积分：低刚度 → 平滑追赶；高阻尼 → 回正后缓停，不抖 */
     var ax = (targetX - posX) * k;
     var ay = (targetY - posY) * k;
     velX = velX * damp + ax;
     velY = velY * damp + ay;
+    /* 速度钳制：防爆发式跳动 */
+    velX = clamp(velX, -1.6, 1.6);
+    velY = clamp(velY, -1.6, 1.6);
     posX += velX;
     posY += velY;
 
-    /* 应用变换：左右倾转 rotate(±18°) + 轻微横移，前后倾用斜切模拟透视 */
-    var rot = clamp(posX, -20, 20);
-    var skew = clamp(posY, -14, 14);
-    tiltEl.style.transform = 'rotate(' + rot + 'deg) skewX(' + skew + 'deg)';
+    /* 应用变换：左右倾转 rotate、前后倾用斜切模拟透视 */
+    var rot = clamp(posX, -14, 14);
+    var skew = clamp(posY, -10, 10);
+    tiltEl.style.transform = 'rotate(' + rot.toFixed(2) + 'deg) skewX(' + skew.toFixed(2) + 'deg)';
 
-    if (Math.abs(velX) > 0.02 || Math.abs(velY) > 0.02) {
+    if (Math.abs(velX) > 0.05 || Math.abs(velY) > 0.05) {
       rafId = requestAnimationFrame(tick);
     } else {
       rafId = null;
       posX = posY = 0;
+      smX = smY = 0;
       tiltEl.style.transform = '';
     }
   }
