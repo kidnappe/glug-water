@@ -8,6 +8,28 @@
 
 ---
 
+## v2.3.2 — UI 修复（appbar / 弹窗 / 心情 / 手动更新）（2026-08-23）
+
+### 🐛 修复
+
+- **appbar 标题源码外泄** — `switchTab` 用 `textContent` 设置标题，但首页标题含 `<img>` 标签，导致 HTML 源码被当纯文本显示并挤占空间。改为 `innerHTML`，并将其他 tab 标题统一为固化 emoji 图片
+- **心情说明 `<Br>` 大小写** — 心情使用说明弹窗里一处 `<Br>` 错误标签修正为 `<br>`
+- **弹窗横向溢出** — `.modal` 加 `max-height: 86vh; overflow-y: auto; overflow-x: hidden`，`#modalBody` 加 `word-break: break-word`，所有弹窗在手机上完整展示且无横向滚动
+
+### 🎨 视觉
+
+- **心情按钮放大** — `.mood-btn` 图片尺寸从 1.5rem 提升到 1.875rem（+25%），按钮 padding 增大，可读性显著提升
+- **「当下心情」前 emoji 固化** — 系统字符 `😊` 改为固化图片 `mood-1F60A.png`，跨设备一致
+
+### 🚀 新功能
+
+- **「检查更新」设置项** — 设置页新增入口，调用 `version.txt` 远程拉取并与 `APP_VERSION` 对比，发现新版时引导刷新/重启
+  - Web 端：触发 Service Worker `update()` 并 reload 立即生效
+  - App 端：fetch GitHub Pages 绝对 URL，提示用户重启 App 后由原生层热更新拉取
+- **「关于应用」加自动更新说明** — 解释 App 内置热更新 / Web 自动检查更新机制，引导用户使用手动检查入口
+
+---
+
 ## v2.3.0 — 水感治愈视觉升级 + Windows emoji 固化
 
 ### 🎨 视觉升级（水感治愈）
