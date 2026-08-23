@@ -46,9 +46,12 @@
     .appbar #appbarTitle { font-size: 1.0625rem; font-weight: 600; letter-spacing: .02em; }
     .appbar #motivationMsg { font-size: .75rem; font-weight: 400; opacity: .85; margin-top: 2px; }
     .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--nav-bg); display: flex; border-top: 1px solid var(--border); z-index: 100; padding-bottom: env(safe-area-inset-bottom); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-    .bottom-nav button { flex: 1; border: none; background: none; padding: 10px 0 8px; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 2px; transition: color var(--dur-pop) var(--ease-out); position: relative; }
-    .bottom-nav button .icon { font-size: 1.375rem; }
+    .bottom-nav button { flex: 1; border: none; background: none; padding: 9px 0 8px; font-size: 0.75rem; color: var(--text-secondary); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: color var(--dur-pop) var(--ease-out), transform var(--dur-press) var(--ease-out); position: relative; }
+    .bottom-nav button:active { transform: scale(0.94); }
+    .bottom-nav button .icon { width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; }
+    .bottom-nav button .icon svg { width: 23px; height: 23px; transition: transform var(--dur-pop) var(--ease-out); }
     .bottom-nav button.active { color: var(--primary); font-weight: 600; }
+    .bottom-nav button.active .icon svg { transform: translateY(-1px); }
     .bottom-nav button.active::after { content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
     .lb-card { background: var(--card-bg); border-radius: 16px; padding: 14px 16px; border: 1px solid var(--border); box-shadow: var(--shadow-card); margin-bottom: 12px; }
     .lb-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -576,11 +579,11 @@
 <div class="toast" id="toast"></div>
 
 <nav class="bottom-nav">
-  <button class="active" onclick="switchTab(0)"><span class="icon"><img src="icons/emoji/nav-1F3E0.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 首页</button>
-  <button onclick="switchTab(1)"><span class="icon"><img src="icons/emoji/nav-1F331.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 花园</button>
-  <button onclick="switchTab(2)"><span class="icon"><img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 排行</button>
-  <button onclick="switchTab(3)"><span class="icon"><img src="icons/emoji/nav-1F4CA.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 历史</button>
-  <button onclick="switchTab(4)"><span class="icon"><img src="icons/emoji/nav-2699-FE0F.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;"></span> 设置</button>
+  <button class="active" onclick="switchTab(0)"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span> 首页</button>
+  <button onclick="switchTab(1)"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8"/><path d="M12 13c0-4.2 3.2-7.4 8-7.4 0 4.8-3.4 7.4-8 7.4Z"/><path d="M12 9.5C12 5.9 9.4 3.4 5 3.4c0 3.8 2.8 6.1 7 6.1Z"/></svg></span> 花园</button>
+  <button onclick="switchTab(2)"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 5H4v1.2a4 4 0 0 0 4 3.8"/><path d="M17 5h3v1.2a4 4 0 0 1-4 3.8"/><path d="M12 14v3.5"/><path d="M9 21h6"/></svg></span> 排行</button>
+  <button onclick="switchTab(3)"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9"/><path d="M10 20V5"/><path d="M16 20v-8"/><path d="M3.5 20h17"/></svg></span> 历史</button>
+  <button onclick="switchTab(4)"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"/></svg></span> 设置</button>
 </nav>
 
 <script>
@@ -620,7 +623,7 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.4.4';
+var APP_VERSION = 'v2.4.5';
 var STORAGE_KEY = 'drink_water_data';
 var SETTINGS_KEY = 'drink_water_settings';
 var SUPABASE_CONFIG_KEY = 'drink_water_supabase';
@@ -1606,6 +1609,16 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.4.5 — 底部导航改线性 SVG 图标（2026-08-23）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **导航图标从固化 emoji PNG 改为线性 SVG** — 首页/花园/排行/历史/设置五个 tab 统一 24px 线性图标（1.8 描边、圆角端点），颜色随选中态变水青',
+  '- **选中微动效** — 选中图标轻微上浮 1px + 底部圆点保留；按下缩放 0.94',
+  '- 排行榜标题等处的 emoji 装饰保留不变',
+  '',
+  '---',
+  '',
   '## v2.4.4 — 心情释义改标题联动 + 弹窗标题修复（2026-08-23）',
   '',
   '### 🎨 优化',
@@ -3326,7 +3339,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823g';
+var SW_DEPLOY = '20260823h';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
