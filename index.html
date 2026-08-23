@@ -3442,24 +3442,34 @@ if (window.matchMedia) {
   else if (_darkMq.addListener) { _darkMq.addListener(_onDarkChange); }
 }
 /* 顶栏滚动锁定兜底：部分 WebView 对 fixed 定位不可靠（表现为随视口滚动）。
- * 方案：fixed 生效时不做任何事；失效时退化为 absolute + 滚动事件平移，等效固定。 */
+ * 策略：CSS fixed 生效时静默；滚动中发现顶栏偏离视口顶部 → 自动切换 JS 平移锁定。 */
 (function() {
   var appbar = document.getElementById('appbar');
   if (!appbar) return;
-  if (getComputedStyle(appbar).position === 'fixed') return;
-  appbar.style.position = 'absolute';
-  appbar.style.top = '0';
-  appbar.style.left = '50%';
-  appbar.style.transform = 'translateX(-50%)';
-  var lastY = window.scrollY || 0;
+  var mode = 'css';
+  var lastY = 0;
+  var tick = false;
   function lock() {
+    if (mode === 'js') {
+      var y = window.scrollY || 0;
+      appbar.style.top = y + 'px';
+      return;
+    }
+    var top = appbar.getBoundingClientRect().top;
     var y = window.scrollY || 0;
-    if (y === lastY) return;
-    lastY = y;
-    appbar.style.top = y + 'px';
+    if (Math.abs(top) > 3 && Math.abs(top + y) < 3) {
+      mode = 'js';
+      appbar.style.position = 'absolute';
+      appbar.style.top = y + 'px';
+      appbar.style.left = '50%';
+      appbar.style.transform = 'translateX(-50%)';
+    }
   }
-  window.addEventListener('scroll', lock, { passive: true });
-  lock();
+  function onScroll() {
+    if (!tick) { tick = true; requestAnimationFrame(function() { tick = false; lock(); }); }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
 })();
 </script>
 </body>
