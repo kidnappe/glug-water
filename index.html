@@ -192,11 +192,6 @@
     .mood-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; max-height: 98px; overflow-y: auto; overflow-x: hidden; padding-right: 2px; -webkit-overflow-scrolling: touch; }
     .mood-btn { font-size: 1.375rem; padding: 6px 4px; border: 2px solid transparent; border-radius: 10px; background: #E9F4EF; cursor: pointer; transition: transform var(--dur-press) var(--ease-out), background var(--dur-press) var(--ease-out), border-color var(--dur-press) var(--ease-out); line-height: 1; display: flex; align-items: center; justify-content: center; }
     .mood-btn img.emoji { width: 1.875rem !important; height: 1.875rem !important; display: block; }
-    /* 心情释义条（选中联动，方案 A） */
-    .mood-meaning { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; padding: 7px 10px; background: var(--bg); border-radius: 10px; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
-    .mood-meaning b { font-weight: 600; color: var(--text); }
-    .mood-meaning-more { flex-shrink: 0; color: var(--primary); font-size: 0.75rem; cursor: pointer; padding: 2px 4px; border-radius: 6px; transition: background var(--dur-press) var(--ease-out); }
-    .mood-meaning-more:active { background: var(--border-light); }
     .mood-btn:hover { background: #D7EBE4; transform: scale(1.08); }
     .mood-btn:active { transform: scale(0.94); }
     .mood-btn.active { border-color: var(--primary); background: #D7EBE4; box-shadow: 0 0 0 2px rgba(15,168,150,.2); transform: scale(1.1); }
@@ -324,8 +319,12 @@
     </div>
   </div>
   <div class="card">
-    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;">
-      <span><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;vertical-align:-0.2em;margin-right:2px;"> 当下心情 <span class="mood-help" onclick="event.stopPropagation();showMoodGallery()" title="&#x67E5;&#x770B;&#x5168;&#x90E8;&#x5FC3;&#x60C5;&#x542B;&#x4E49;">&#x2754;</span></span>
+    <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+      <span style="display:flex;align-items:center;gap:4px;min-width:0;flex:1;">
+        <span id="moodTitleEmoji"><img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;vertical-align:-0.2em;flex-shrink:0;"></span>
+        <span style="min-width:0;">当下心情<span id="moodTitleMeaning" style="font-size:0.75rem;color:var(--text-secondary);font-weight:400;margin-left:4px;"></span></span>
+      </span>
+      <span class="mood-help" onclick="event.stopPropagation();showMoodGallery()" title="&#x67E5;&#x770B;&#x5168;&#x90E8;&#x5FC3;&#x60C5;&#x542B;&#x4E49;">&#x2754;</span>
     </div>
     <div id="moodBody">
       <div class="mood-row" id="moodRow">
@@ -365,10 +364,6 @@
         <button class="mood-btn" data-mood="&#x1F4AA;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F4AA.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
         <button class="mood-btn" data-mood="&#x1F9E0;" onclick="selectMood(this)"><img src="icons/emoji/mood-1F9E0.png" alt="" class="emoji" style="width:1.5rem;height:1.5rem;"></button>
       </div>
-    </div>
-    <div class="mood-meaning" id="moodMeaning">
-      <span id="moodMeaningText">点击心情查看含义</span>
-      <span class="mood-meaning-more" onclick="showMoodGallery()">全部</span>
     </div>
   </div>
   <div class="card">
@@ -625,7 +620,7 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.4.3';
+var APP_VERSION = 'v2.4.4';
 var STORAGE_KEY = 'drink_water_data';
 var SETTINGS_KEY = 'drink_water_settings';
 var SUPABASE_CONFIG_KEY = 'drink_water_supabase';
@@ -1466,15 +1461,17 @@ var MOOD_MEANINGS = {
   '\u{1F924}': { name: '\u998b', desc: '\u6d41\u53e3\u6c34\u4e2d\uff0c\u770b\u5230\u4e86\u4ec0\u4e48\u7f8e\u98df' }
 };
 
+/* 选中心情后：标题 emoji 换成所选 + 「当下心情：释义」播报 */
 function updateMoodMeaning(mood) {
-  var el = document.getElementById('moodMeaningText');
-  if (!el) return;
+  var emojiEl = document.getElementById('moodTitleEmoji');
+  var meaningEl = document.getElementById('moodTitleMeaning');
   if (mood && MOOD_MEANINGS[mood]) {
     var m = MOOD_MEANINGS[mood];
-    el.innerHTML = emojiImg(mood, 'width:1.05em;height:1.05em;vertical-align:-0.2em;') +
-      ' <b>' + m.name + '</b> \u2014 ' + m.desc;
+    if (emojiEl) emojiEl.innerHTML = emojiImg(mood, 'width:1.25rem;height:1.25rem;vertical-align:-0.2em;');
+    if (meaningEl) meaningEl.innerHTML = '\uff1a' + m.name + ' \u2014 ' + m.desc;
   } else {
-    el.innerHTML = '\u70b9\u51fb\u5fc3\u60c5\u67e5\u770b\u542b\u4e49';
+    if (emojiEl) emojiEl.innerHTML = '<img src="icons/emoji/mood-1F60A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;vertical-align:-0.2em;">';
+    if (meaningEl) meaningEl.textContent = '';
   }
 }
 
@@ -1609,6 +1606,20 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.4.4 — 心情释义改标题联动 + 弹窗标题修复（2026-08-23）',
+  '',
+  '### 🎨 优化',
+  '',
+  '- **释义呈现改为标题联动** — 点击某心情后，「当下心情」标题的 emoji 替换为所选表情，并在其后播报释义（如「😤 当下心情：生气 — 闷闷不乐，气鼓鼓」）',
+  '- **删除独立释义条** — 移除「点击心情查看含义」行（与 ❔ 图鉴入口重复）',
+  '- **问号按钮置右** — ❔ 移到「当下心情」标题行最右侧',
+  '',
+  '### 🐛 修复',
+  '',
+  '- **弹窗标题源码外泄** — `showModal` 用 `textContent` 设置标题，含固化 emoji `<img>` 的标题显示为源码；改用 `innerHTML`',
+  '',
+  '---',
+  '',
   '## v2.4.3 — 心情释义：释义条 + 图鉴弹窗（2026-08-23）',
   '',
   '### ✨ 新增',
@@ -2783,7 +2794,8 @@ function applyDarkMode(mode) {
 }
 
 function showModal(title, body, actions) {
-  document.getElementById('modalTitle').textContent = title;
+  /* 标题可能含固化 emoji <img>，用 innerHTML 渲染（与 appbar 同理） */
+  document.getElementById('modalTitle').innerHTML = title;
   if (typeof body === 'string') { document.getElementById('modalBody').innerHTML = body; }
   else { document.getElementById('modalBody').innerHTML = ''; if (body) { document.getElementById('modalBody').appendChild(body); } }
   var actionsEl = document.getElementById('modalActions');
@@ -3314,7 +3326,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823f';
+var SW_DEPLOY = '20260823g';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
