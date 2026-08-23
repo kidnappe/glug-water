@@ -635,7 +635,7 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.4.7';
+var APP_VERSION = 'v2.4.8';
 var NAV_STYLE_KEY = 'drink_water_nav_style'; /* 'svg' 线性 / 'emoji' 经典 */
 
 /* 底部导航双模板：svg=线性图标(默认)，emoji=经典固化PNG */
@@ -1683,6 +1683,16 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.4.8 — 水物理晃动稳定性修复（2026-08-23）',
+  '',
+  '### 🐛 修复',
+  '',
+  '- **水动画鬼畜抖动** — 重力物理参数欠阻尼（刚度 0.09 / 阻尼 0.86）+ 传感器噪声直入，导致水面高频振荡停不下来',
+  '- 调参：刚度 0.045（水更柔）、阻尼 0.93（衰减更快）、输入 EMA 平滑 0.25、死区 3°、速度钳制 ±1.6/帧、幅度收窄（rotate ±14° / skew ±10°）',
+  '- 验证：注入 120 帧带噪传感器流，帧间零抖动，平滑收敛',
+  '',
+  '---',
+  '',
   '## v2.4.7 — 重力物理水杯（2026-08-23）',
   '',
   '### ✨ 新增',
@@ -3443,7 +3453,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823j';
+var SW_DEPLOY = '20260823k';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
