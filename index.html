@@ -289,7 +289,7 @@
 <body>
 <div class="appbar" id="appbar">
   <div class="appbar-row">
-    <span class="appbar-brand" id="appbarBrand">咕嘟 <img src="icons/emoji/core-1F4A7.png" alt="" class="emoji" style="width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;"></span>
+    <span class="appbar-brand" id="appbarBrand">咕嘟</span>
     <div class="appbar-title" id="appbarTitle"></div>
     <span class="appbar-spacer"></span>
   </div>
@@ -497,6 +497,11 @@
       <div class="setting-info"><div class="setting-label">导航栏样式</div><div class="setting-desc" id="settingNavStyleDesc">线性图标</div></div>
       <span class="setting-arrow">›</span>
     </div>
+    <div class="setting-item">
+      <span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.25rem;height:1.25rem;color:var(--text-secondary);"><path d="M12 2a4 4 0 0 1 4 4c0 .9-.3 1.7-.8 2.4L12 12l-3.2-3.6A4 4 0 0 1 12 2Z"/><path d="M7.5 12.5a4.5 4.5 0 1 0 6.4 6.4"/><path d="M12 13v8"/></svg></span>
+      <div class="setting-info"><div class="setting-label">重力水杯</div><div class="setting-desc" id="settingGravityDesc">水随手机倾斜晃动</div></div>
+      <div class="setting-switch" id="gravitySwitch" onclick="toggleGravityCup()"></div>
+    </div>
     <div class="setting-item" onclick="showEffectsGuide()">
       <span class="setting-icon"><img src="icons/emoji/core-2728.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
       <div class="setting-info"><div class="setting-label">特效说明</div><div class="setting-desc">查看所有动画效果的触发条件</div></div>
@@ -635,7 +640,7 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.4.8';
+var APP_VERSION = 'v2.4.9';
 var NAV_STYLE_KEY = 'drink_water_nav_style'; /* 'svg' 线性 / 'emoji' 经典 */
 
 /* 底部导航双模板：svg=线性图标(默认)，emoji=经典固化PNG */
@@ -1683,6 +1688,15 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.4.9 — 重力水杯改为设置开关 + 顶栏去 emoji（2026-08-23）',
+  '',
+  '### 🎨 优化',
+  '',
+  '- **重力水杯默认关闭** — 改为设置页开关控制（默认关），需要晃动效果的用户可手动开启，避免无感传感器功耗',
+  '- **顶栏标题去除 emoji** — 页面说明文字旁的 emoji 移除，仅剩纯文字标题（咕嘟/我的花园/排行榜/喝水历史/设置）',
+  '',
+  '---',
+  '',
   '## v2.4.8 — 水物理晃动稳定性修复（2026-08-23）',
   '',
   '### 🐛 修复',
@@ -2605,6 +2619,11 @@ function updateSettingsUI() {
   var s = gState.settings;
   var navStyleDesc = document.getElementById('settingNavStyleDesc');
   if (navStyleDesc) navStyleDesc.textContent = (getNavStyle() === 'emoji') ? '\u7ecf\u5178\u8868\u60c5' : '\u7ebf\u6027\u56fe\u6807';
+  var gravitySwitch = document.getElementById('gravitySwitch');
+  var gravityOn = localStorage.getItem('drink_water_gravity_cup') === 'on';
+  if (gravitySwitch) gravitySwitch.className = 'setting-switch' + (gravityOn ? ' on' : '');
+  var gravityDesc = document.getElementById('settingGravityDesc');
+  if (gravityDesc) gravityDesc.textContent = gravityOn ? '\u5df2\u5f00\u542f\uff0c\u6c34\u968f\u624b\u673a\u503e\u659c\u6643\u52a8' : '\u5df2\u5173\u95ed';
   document.getElementById('settingGoal').textContent = s.dailyGoal + ' ml';
   document.getElementById('settingCustom').textContent = s.customAmount + ' ml';
   var sipLabel = document.getElementById('sipLabel');
@@ -2992,11 +3011,7 @@ function showNicknameDialog() {
 
 function switchTab(idx) {
   var pages = ['page-home', 'page-garden', 'page-leaderboard', 'page-history', 'page-settings'];
-  var titles = ['咕嘟 ' + emojiImg('\u{1F4A7}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;'),
-    '我的花园 ' + emojiImg('\u{1F331}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;'),
-    '排行榜 ' + emojiImg('\u{1F3C6}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;'),
-    '喝水历史 ' + emojiImg('\u{1F4CA}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;'),
-    '设置 ' + emojiImg('\u{2699}\u{FE0F}', 'width:1.0625rem;height:1.0625rem;vertical-align:-0.1em;')];
+  var titles = ['咕嘟', '我的花园', '排行榜', '喝水历史', '设置'];
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.getElementById(pages[idx]).classList.add('active');
   /* 顶栏一行布局：左=咕嘟品牌，中=页面标题（首页显示鼓励语） */
@@ -3453,7 +3468,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823k';
+var SW_DEPLOY = '20260823l';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
@@ -3468,13 +3483,16 @@ if (window.matchMedia) {
 }
 </script>
 <script>
-/* ── 重力水物理：水随手机倾斜晃动（弹簧-阻尼模型） ── */
+/* ── 重力水物理：水随手机倾斜晃动（弹簧-阻尼模型） ──
+ * 默认关闭，由设置页「重力水杯」开关控制（localStorage 记忆）。
+ * 开启条件：传感器支持 + 非 reduced-motion + 开关打开。 */
 (function() {
   var tiltEl = document.getElementById('waterTilt');
+  var GRAVITY_KEY = 'drink_water_gravity_cup';
   if (!tiltEl) return;
-  /* 降级保护：无传感器支持或用户偏好减少动效时不启用 */
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (!window.DeviceOrientationEvent) return;
+
+  var attached = false;
+  var requested = false;
 
   /* 参数：低刚度 + 高阻尼 + 输入平滑，避免欠阻尼高频振荡（"鬼畜"） */
   var k = 0.045;        /* 弹簧刚度：越小水越"柔"，振荡越缓 */
@@ -3530,23 +3548,58 @@ if (window.matchMedia) {
     }
   }
 
-  /* iOS 13+ 需要用户手势授权；Android/桌面直接监听 */
+  /* 是否开启（默认关闭） */
+  function isEnabled() {
+    return localStorage.getItem(GRAVITY_KEY) === 'on';
+  }
+
   function attach() {
+    if (attached) return;
+    if (!window.DeviceOrientationEvent) return;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    attached = true;
     window.addEventListener('deviceorientation', onDeviceOrientation, true);
   }
-  if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-    var granted = false;
-    function requestOnce() {
-      if (granted) return;
-      granted = true;
-      DeviceOrientationEvent.requestPermission().then(function(state) {
-        if (state === 'granted') attach();
-      }).catch(function() {});
+  function detach() {
+    if (!attached) return;
+    attached = false;
+    window.removeEventListener('deviceorientation', onDeviceOrientation, true);
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+    posX = posY = velX = velY = smX = smY = targetX = targetY = 0;
+    tiltEl.style.transform = '';
+  }
+
+  /* 全局切换接口（设置页开关调用） */
+  window.toggleGravityCup = function() {
+    var next = localStorage.getItem(GRAVITY_KEY) === 'on' ? 'off' : 'on';
+    localStorage.setItem(GRAVITY_KEY, next);
+    if (next === 'on') {
+      if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+        /* iOS 13+：首次触摸后请求授权 */
+        if (!requested) {
+          requested = true;
+          DeviceOrientationEvent.requestPermission().then(function(state) {
+            if (state === 'granted') attach();
+          }).catch(function() {});
+        } else { attach(); }
+      } else {
+        attach();
+      }
+      showToast('\u5df2\u5f00\u542f\u91cd\u529b\u6c34\u676f');
+    } else {
+      detach();
+      showToast('\u5df2\u5173\u95ed\u91cd\u529b\u6c34\u676f');
     }
-    document.addEventListener('touchstart', requestOnce, { once: true, passive: true });
-    document.addEventListener('click', requestOnce, { once: true, passive: true });
-  } else {
-    attach();
+    updateSettingsUI();
+  };
+
+  /* 页面加载：默认关闭；仅当开关已开启时自动挂载 */
+  if (isEnabled()) {
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      /* iOS 需要用户手势，无法静默开启——维持关闭，等待用户手动开 */
+    } else {
+      attach();
+    }
   }
 })();
 </script>
