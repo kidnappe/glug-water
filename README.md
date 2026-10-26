@@ -1,163 +1,190 @@
-# 💧 咕嘟 Glug-water
+<div align="center">
+  <img src="icons/Icon-192.png" width="96" alt="咕嘟 Glug Water" />
 
-> **水感治愈** —— 一个好看又好用的喝水记录工具。
-> 纯 HTML/CSS/JavaScript，单文件，打开即用，**零外部依赖**。
+  # 咕嘟 · Glug Water
 
-![咕嘟 · 水感治愈](docs/hero.svg)
+  **把喝水这件事，做成一只会慢慢满起来的杯子。**
 
-| 🏠 首页 · 一键记录 | 🏆 排行榜 · 云端比拼 |
-|:---:|:---:|
-| 玻璃水杯可视化进度，喝水就像给杯子续水 | 今日/本周/本月排行，与亲友实时竞争 |
+  纯 HTML / CSS / JavaScript 单文件 · 零依赖 · PWA · 数据保存在本机
 
-| 🪴 花园 · 养成陪伴 | 📊 历史 · 数据回顾 |
-|:---:|:---:|
-| 连续达标，植物从种子到开花陪你成长 | Canvas 自绘图表 + 喝水日历热力图 |
+  <img src="https://img.shields.io/badge/Web-HTML5-e34f26?style=flat-square&logo=html5&logoColor=white" alt="Web" />
+  <img src="https://img.shields.io/badge/PWA-installable-5a0fc8?style=flat-square" alt="PWA" />
+  <img src="https://img.shields.io/badge/dependencies-0-2ea44f?style=flat-square" alt="零依赖" />
+  <img src="https://img.shields.io/badge/Supabase-optional-3ecf8e?style=flat-square&logo=supabase&logoColor=white" alt="Supabase 可选" />
 
----
+  <a href="https://kidnappe.github.io/glug-water/">在线使用</a> · <a href="https://github.com/kidnappe/glug-water/releases">Releases</a> · <a href="CHANGELOG.md">更新日志</a> · <a href="schema.sql">数据库结构</a>
+</div>
 
-## ✨ 设计语言
-
-「水感治愈」—— 主色落在**水的蓝 × 植物的绿**之间（`#0FA896` 水青），一条色带串起首页与花园。
-
-- 🥛 签名元素：**玻璃水杯** —— 半透杯壁 + 青碧水面渐变 + 波纹 + 气泡 + 侧高光
-- 🎨 颜色只表达语义：暖橙留给大剂量/吃药，花园绿只做达标
-- 🔢 数字全部等宽（tabular-nums），记录时数值不跳动
-- 🌊 弹性缓动水面上涨，达标撒花庆祝
-
-> 完整视觉方案见 [`docs/redesign-plan.md`](docs/redesign-plan.md)。
+<img src="docs/hero.svg" width="100%" alt="咕嘟：一杯水、水面与气泡" />
 
 ---
 
-## 📱 功能一览
+## 它是什么
 
-### 🏠 首页
+咕嘟是一个喝水记录工具。打开网页，点一下杯子旁边的快捷水量，今天的进度就会往上涨；连续达标，花园里的植物会从种子慢慢长大。
 
-| 功能 | 说明 |
-|------|------|
-| 🪴 **养成花园** | 连续达标天数越多，植物从种子→嫩芽→开花不断成长 |
-| 🏃 **进度跑道** | 可视化今日喝水进度，达标签小人会举起旗帜 🏁 |
-| 🎯 **一键记录** | 快速按钮：250ml / 350ml / 500ml / 1000ml / 自定义 + 👅 15ml 小口 |
-| ✏️ **记录管理** | 查看今日喝水记录，可删除单条 |
-| 🎉 **撒花庆祝** | 达标自动触发彩纸特效 + 水杯发光 + 植物弹跳 |
-
-### 🏆 排行榜
-
-| 功能 | 说明 |
-|------|------|
-| 👤 **自定义头像** | 50 种动物头像 + 自定义昵称 |
-| 📊 **多周期排行** | 今日 / 本周 / 本月（自动累计） |
-| 🌐 **在线排行** | 配合 Supabase 可多人实时排行（可选配置） |
-| 🔥 **连击显示** | 连续达标天数用火焰图标展示 |
-| 🔧 **管理员模式** | 排行榜标题连点 5 次进入，可管理异常数据 |
-
-### 📊 历史统计
-
-| 功能 | 说明 |
-|------|------|
-| 📈 **周/月图表** | 柱状图展示每日喝水量，红色虚线标记目标线（Canvas 自绘） |
-| 📋 **统计摘要** | 日均、最高、最低喝水量，达标天数 |
-| 📅 **喝水日历** | 月度热力图，水量越高填充越满，当天高亮 |
-| 👆 **日历日期可点** | 点击日历上任一天，弹窗查看当日每条喝水记录 |
-| ◀▶ **日历翻月** | 切换显示不同月份的喝水日历 |
-
-### ⚙️ 设置
-
-| 功能 | 说明 |
-|------|------|
-| 🎯 **每日目标** | 自定义（默认 2000ml） |
-| 💧 **自定义水量** | 设置快捷按钮的默认水量 |
-| 🔔 **喝水提醒** | 浏览器通知，可自定义间隔（1-60 分钟，默认 30 分钟） |
-| 🌙 **深色模式** | 跟随系统 / 强制开启 / 关闭（auto 一键切换） |
-| 👤 **头像昵称** | 从 50 种动物中选择头像，自定义昵称 |
-| 🌐 **在线排行榜** | 配置 Supabase 后可实现多人实时排行 |
-| 📤 **数据导出/导入** | JSON 格式备份与恢复 |
-| 🗑️ **数据重置** | 一键清除所有数据 |
-| ⌚ **断开手表** | 暂停与配对设备的数据同步 |
-| 📋 **更新日志** | 关于页内置滚动版更新日志 |
-
-### 🎨 视觉特效
-
-- 🥛 水杯水面波浪动画
-- 🫧 气泡上浮效果
-- 💦 水满溢出 + 水滴飞溅
-- 🎊 目标达成撒花 + 星光特效
-- ✨ 水杯发光脉冲
-- 🥤 水杯摇晃（超额时）
-- 🏃 达标进度条小人奔跑动画
-- ⭐ 连续超额解锁：⭐ 星星 → 🦋 蝴蝶 → 👑 皇冠 → 🌈 彩虹
-- 🌙 深色模式完整配色
+整个应用就是一个 `index.html`：没有框架、没有构建步骤、没有后端依赖。数据默认保存在浏览器本地，想多设备同步时再自己接一个可选的 Supabase 项目。
 
 ---
 
-## 🚀 快速开始
+## 设计语言
 
-### 直接打开
+- 主色落在水的青和植物的绿之间，首页、花园、统计共用一条色带。
+- 签名元素是水杯：杯身、水面、气泡和刻度构成进度反馈。
+- 颜色只表达语义：暖橙留给大剂量和吃药提醒，绿色留给达标与花园。
+- 数字使用等宽字体，记录时不会左右跳动。
+- 水面、撒花、气泡和植物生长都有轻量动效，但不阻塞操作。
 
-在线版：[https://kidnappe.github.io/glug-water/](https://kidnappe.github.io/glug-water/)
+视觉方案与改版记录见 [`docs/redesign-plan.md`](docs/redesign-plan.md)。
 
-或把 `index.html` 下载到本地扔到浏览器即可使用。所有数据保存在浏览器本地。
+---
 
-### 开启在线排行榜（可选）
+## 功能
 
-1. 去 [supabase.com](https://supabase.com) 免费注册一个账号
-2. 创建项目 → 在 SQL Editor 执行：
+### 首页与记录
 
-```sql
-CREATE TABLE leaderboard (
-  user_id TEXT PRIMARY KEY,
-  nickname TEXT DEFAULT '',
-  avatar_idx INTEGER DEFAULT 0,
-  today_ml INTEGER DEFAULT 0,
-  week_ml INTEGER DEFAULT 0,
-  month_ml INTEGER DEFAULT 0,
-  streak INTEGER DEFAULT 0,
-  today_records JSONB DEFAULT '[]'::jsonb,
-  banned BOOLEAN DEFAULT FALSE,
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
+| 功能 | 说明 |
+|---|---|
+| 今日进度 | 水杯可视化今日喝水量、目标、还差多少 |
+| 一键记录 | 250 ml / 350 ml / 500 ml / 1000 ml / 自定义，另有 15 ml 小口 |
+| 心情打卡 | 记录当下心情，作为当天状态的一部分 |
+| 今日记录 | 查看每条喝水记录，可删除单条 |
+| 连续达标 | 显示连续达标天数、本周日均和今日杯数 |
+| 花园养成 | 连续达标让植物从种子、嫩芽到开花逐步成长 |
+| 达标庆祝 | 达标后触发撒花、水杯发光和植物弹跳 |
 
-CREATE TABLE device_pairing (
-  pairing_code TEXT PRIMARY KEY,
-  user_id TEXT NOT NULL,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
+### 排行榜与历史
+
+| 功能 | 说明 |
+|---|---|
+| 多周期排行 | 今日 / 本周 / 本月，自动累计 |
+| 自定义身份 | 50 种动物头像 + 自定义昵称 |
+| 连击显示 | 连续达标天数 |
+| 在线排行 | 配置 Supabase 后可与亲友实时比拼（可选） |
+| 周 / 月图表 | Canvas 自绘柱状图，标出目标线 |
+| 统计摘要 | 日均、最高、最低、达标天数 |
+| 喝水日历 | 月度热力图，点击日期查看当天记录，可翻月 |
+
+### 设置与数据
+
+| 功能 | 说明 |
+|---|---|
+| 每日目标 | 自定义，默认 2000 ml |
+| 快捷水量 | 自定义快捷按钮的默认水量 |
+| 喝水提醒 | 浏览器通知，可设置 1–60 分钟间隔 |
+| 深色模式 | 跟随系统 / 强制开启 / 关闭 |
+| 数据备份 | JSON 导出与导入 |
+| 数据重置 | 一键清除本机数据 |
+| 手表同步 | 可断开与配对设备的数据同步 |
+| 更新日志 | 关于页内置滚动版更新日志 |
+
+---
+
+## 界面
+
+<img src="docs/screenshots/home.png" width="360" alt="咕嘟首页：今日喝水进度、心情打卡、快捷水量和今日记录" />
+
+<p align="center"><sub>首页：今日进度、心情打卡、快捷水量与今日记录</sub></p>
+
+---
+
+## 快速开始
+
+### 在线使用
+
+打开 **<https://kidnappe.github.io/glug-water/>** 即可。手机浏览器可以通过菜单“添加到主屏幕 / 安装应用”装成 PWA，离线也能打开。
+
+### 本地运行
+
+```bash
+git clone https://github.com/kidnappe/glug-water.git
+cd glug-water
+python -m http.server 8080
 ```
 
-3. 在 Settings → API 中找到 Project URL 和 anon public key
-4. 打开网页 → 设置 → 在线排行榜 → 填写并测试连接
+打开 <http://localhost:8080>。也可以直接双击 `index.html`；PWA 的 Service Worker 在 `file://` 下不会注册，但记录和图表功能不受影响。
 
-> 两个人填同一个 Supabase 项目，排行榜数据就共享了。
+### Android 安装包
 
----
-
-## 🛠️ 技术栈
-
-- 纯 HTML + CSS + JavaScript（无框架，零外部依赖）
-- Canvas API — 统计数据图表（自绘，无 Chart.js）
-- Supabase — 可选在线排行榜数据库（通过原生 fetch 通信）
-- PWA Manifest — 支持添加到手机桌面
-- SVG — 应用图标
+Releases 里提供 Android 安装包：**<https://github.com/kidnappe/glug-water/releases>**（最新为 `v2.5.1`）。
 
 ---
 
-## 📄 文件结构
+## 可选：在线排行榜
 
-```
-├── index.html            ← 全部页面、样式、逻辑（单文件）
-├── manifest.json         ← PWA 配置
-├── sw.js                 ← Service Worker（离线缓存策略）
-├── CHANGELOG.md          ← 版本更新日志
-├── schema.sql            ← 数据库建表脚本
-├── migrate-week-month-ml.sql       ← 数据库迁移脚本
-├── docs/                 ← 开发文档（含视觉方案 + hero 插画）
-├── icons/                ← 应用图标
-└── README.md             ← 本文件
+默认情况下，所有数据只在本机。想让多个人看到同一个排行榜，需要自己准备一个 Supabase 项目：
+
+1. 在 [supabase.com](https://supabase.com) 创建项目。
+2. 在 SQL Editor 中执行 [`schema.sql`](schema.sql)（包含 `leaderboard` 与 `device_pairing` 两张表）。
+3. 在 Settings → API 中找到 Project URL 和 anon public key。
+4. 打开咕嘟 → 设置 → 在线排行榜，填入并测试连接。
+
+两个人填同一个 Supabase 项目，排行榜数据就会共享。除此之外没有账号体系，也没有官方服务器。
+
+---
+
+## 技术栈
+
+- 纯 HTML + CSS + JavaScript，无框架、零外部依赖
+- Canvas API 自绘统计图表，不引入 Chart.js
+- Supabase 作为可选的在线排行榜数据库（原生 `fetch`）
+- PWA Manifest + Service Worker，支持安装与离线打开
+- SVG 图标与 `docs/hero.svg` 插画
+
+---
+
+## 项目结构
+
+```text
+index.html                 页面、样式与逻辑（单文件应用）
+manifest.json              PWA 配置
+sw.js                      Service Worker（离线缓存）
+schema.sql                 在线排行榜建表脚本
+migrate-add-date-key.sql   数据库迁移脚本
+migrate-week-month-ml.sql  数据库迁移脚本
+docs/                      设计文档、hero 插画、开发交接
+icons/                     应用图标与表情资源
+build-www.py               打包 www.zip 的脚本
+version.txt                当前版本号
+CHANGELOG.md               版本更新日志
 ```
 
 ---
 
-## 🤝 更新功能
+## 数据与隐私
 
-直接改 `index.html`，改完提交推送到 GitHub 仓库即可。GitHub Pages 会自动部署，等 1-2 分钟刷新就看到新版本。
+- 默认使用浏览器 `localStorage` 保存记录、目标、头像和设置。
+- 不配置 Supabase 时，没有任何数据离开本机；配置后只会把排行榜需要的昵称、头像索引和水量同步到你自己的项目。
+- 没有账号、没有遥测、没有广告。
+- 导出的 JSON 由你自己保管；清除浏览器数据或点击“数据重置”会删除本地记录。
 
-每次提交前记得问：「要不要写进更新日志？」
+---
+
+## 已知限制
+
+- 喝水提醒依赖浏览器通知权限；页面关闭后能否提醒取决于浏览器的通知与后台策略。
+- 在线排行榜需要自己配置 Supabase；配置错误时只会影响排行榜，不影响本地记录。
+- 项目是单文件应用，`index.html` 较大；修改后需要自行检查移动端与深色模式。
+- PWA 安装和 Service Worker 需要 HTTPS 或 `localhost`；直接双击 `file://` 打开时不会启用离线缓存。
+- 仓库目前没有附带 `LICENSE` 文件，授权状态见文末。
+
+---
+
+## 更新与贡献
+
+直接修改 `index.html`，提交并推送到 `web` 分支即可；GitHub Pages 会自动部署，等 1–2 分钟刷新就能看到新版本。
+
+提交前建议：
+
+1. 更新 [`CHANGELOG.md`](CHANGELOG.md) 与 `version.txt`；
+2. 在手机宽度和桌面宽度各检查一次；
+3. 涉及数据结构的改动同时更新 `schema.sql` 或迁移脚本；
+4. 不提交个人喝水数据、Supabase key 和构建产物。
+
+---
+
+## 授权说明
+
+本仓库目前**没有附带开源许可证文件**。在没有明确授权的情况下，代码默认保留所有权利；如需转载、二次分发或商用，请先联系作者确认。
+
+第三方依赖与素材（Supabase、SVG 图标等）各按其自身许可使用。
