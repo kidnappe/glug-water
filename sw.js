@@ -2,8 +2,8 @@
  * 策略：网络优先，离线回退到缓存
  * 更新：改 SW_VERSION 值触发新版本部署
  */
-var CACHE_NAME = 'drink-water-v3';
-var SW_VERSION = 'v3-20260823o';
+var CACHE_NAME = 'drink-water-v4';
+var SW_VERSION = 'v4-20261102-iconpark';
 
 /* install：预缓存核心资源，正确使用 waitUntil */
 self.addEventListener('install', function(e) {
@@ -17,28 +17,6 @@ self.addEventListener('install', function(e) {
         './icons/Icon-512.png',
         './icons/Icon-maskable-192.png',
         './icons/Icon-maskable-512.png',
-        './icons/emoji/core-1F310.png',
-        './icons/emoji/core-1F319.png',
-        './icons/emoji/core-1F3AF.png',
-        './icons/emoji/core-1F445.png',
-        './icons/emoji/core-1F48A.png',
-        './icons/emoji/core-1F4A7.png',
-        './icons/emoji/core-1F4CB.png',
-        './icons/emoji/core-1F4D6.png',
-        './icons/emoji/core-1F4E4.png',
-        './icons/emoji/core-1F4E5.png',
-        './icons/emoji/core-1F504.png',
-        './icons/emoji/core-1F514.png',
-        './icons/emoji/core-1F517.png',
-        './icons/emoji/core-1F525.png',
-        './icons/emoji/core-1F557.png',
-        './icons/emoji/core-1F5D1-FE0F.png',
-        './icons/emoji/core-1F947.png',
-        './icons/emoji/core-1F948.png',
-        './icons/emoji/core-1F949.png',
-        './icons/emoji/core-231A.png',
-        './icons/emoji/core-23F1-FE0F.png',
-        './icons/emoji/core-2728.png',
         './icons/emoji/mood-1F4AA.png',
         './icons/emoji/mood-1F604.png',
         './icons/emoji/mood-1F607.png',
@@ -74,11 +52,6 @@ self.addEventListener('install', function(e) {
         './icons/emoji/mood-1F636.png',
         './icons/emoji/mood-1F610.png',
         './icons/emoji/mood-1F924.png',
-        './icons/emoji/nav-1F331.png',
-        './icons/emoji/nav-1F3C6.png',
-        './icons/emoji/nav-1F3E0.png',
-        './icons/emoji/nav-1F4CA.png',
-        './icons/emoji/nav-2699-FE0F.png',
       ]).catch(function() {
         /* 预缓存失败不阻止安装，后续 fetch 会按需缓存 */
       });
