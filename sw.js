@@ -2,8 +2,8 @@
  * 策略：网络优先，离线回退到缓存
  * 更新：改 SW_VERSION 值触发新版本部署
  */
-var CACHE_NAME = 'drink-water-v5';
-var SW_VERSION = 'v5-20261102-pills';
+var CACHE_NAME = 'drink-water-v6';
+var SW_VERSION = 'v6-20261102-settings';
 
 /* install：预缓存核心资源，正确使用 waitUntil */
 self.addEventListener('install', function(e) {
