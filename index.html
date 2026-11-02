@@ -450,7 +450,7 @@
   <div class="card">
     <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;">
       选择水量
-      <span id="pillHomeBtn" onclick="addPill()" style="display:none;cursor:pointer;padding:4px 10px;border-radius:8px;background:rgba(245,158,11,.12);border:1px solid var(--warning);" title="记录吃药" data-ip="pill" data-ip-style="width:1.25rem;height:1.25rem;display:block;"></span>
+      <span id="pillHomeBtn" onclick="addPill()" style="display:none;cursor:pointer;padding:4px 10px;border-radius:8px;background:rgba(245,158,11,.12);border:1px solid var(--warning);" title="记录吃药" data-ip="pills" data-ip-style="width:1.25rem;height:1.25rem;display:block;"></span>
     </div>
     <div class="btn-row">
       <button class="btn-water small" onclick="addWater(250)">250ml</button>
@@ -534,7 +534,7 @@
       <span class="setting-arrow" data-ip="right"></span>
     </div>
     <div class="setting-item">
-      <span class="setting-icon" data-ip="pill"></span>
+      <span class="setting-icon" data-ip="pills"></span>
       <div class="setting-info"><div class="setting-label">吃药</div><div class="setting-desc" id="settingPillDesc">已关闭</div></div>
       <div class="setting-switch" id="pillSwitch" onclick="togglePill()"></div>
     </div>
@@ -701,7 +701,7 @@ var IP_ICONS = {
   'remind': { v: '0 0 48 48', d: '<path d="M24 4C16.268 4 10 10.268 10 18V38H38V18C38 10.268 31.732 4 24 4Z" fill="none"/><path d="M10 38V18C10 10.268 16.268 4 24 4C31.732 4 38 10.268 38 18V38M4 38H44"/><path d="M24 44C26.7614 44 29 41.7614 29 39V38H19V39C19 41.7614 21.2386 44 24 44Z" fill="none"/>' },
   'timer': { v: '0 0 48 48', d: '<circle cx="24" cy="28" r="16" fill="none"/><path d="M28 4L20 4"/><path d="M24 4V12"/><path d="M35 16L38 13"/><path d="M24 28V22"/><path d="M24 28H18"/>' },
   'alarm-clock': { v: '0 0 48 48', d: '<path d="M23.9998 44.3332C34.1251 44.3332 42.3332 36.1251 42.3332 25.9999C42.3332 15.8747 34.1251 7.66656 23.9998 7.66656C13.8746 7.66656 5.6665 15.8747 5.6665 25.9999C5.6665 36.1251 13.8746 44.3332 23.9998 44.3332Z" fill="none"/><path d="M23.7594 15.3536L23.7582 26.3624L31.5305 34.1347"/><path d="M4 9.00001L11 4.00001"/><path d="M44 9.00001L37 4.00001"/>' },
-  'pill': { v: '0 0 48 48', d: '<path d="M5.61497 22.5852C4.4434 21.4136 4.4434 19.5141 5.61497 18.3425L18.3429 5.61463C19.5145 4.44305 21.414 4.44305 22.5855 5.61462L42.3845 25.4136C43.5561 26.5852 43.5561 28.4847 42.3845 29.6563L29.6566 42.3842C28.485 43.5557 26.5855 43.5557 25.414 42.3842L5.61497 22.5852Z" fill="none"/><circle cx="14.8079" cy="20.4648" r="2" transform="rotate(-45 14.8079 20.4648)" fill="currentColor"/><circle cx="23.2928" cy="28.9492" r="2" transform="rotate(-45 23.2928 28.9492)" fill="currentColor"/><circle cx="19.0501" cy="24.707" r="2" transform="rotate(-45 19.0501 24.707)" fill="currentColor"/><circle cx="27.5364" cy="33.1934" r="2" transform="rotate(-45 27.5364 33.1934)" fill="currentColor"/><circle cx="20.4642" cy="14.8066" r="2" transform="rotate(-45 20.4642 14.8066)" fill="currentColor"/><circle cx="28.95" cy="23.293" r="2" transform="rotate(-45 28.95 23.293)" fill="currentColor"/><circle cx="24.7073" cy="19.0508" r="2" transform="rotate(-45 24.7073 19.0508)" fill="currentColor"/><circle cx="33.1927" cy="27.5352" r="2" transform="rotate(-45 33.1927 27.5352)" fill="currentColor"/>' },
+  'pills': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M9.97315 22.0623L17.2506 15.9558L24.528 9.84929C28.9703 6.12177 35.5932 6.7012 39.3207 11.1435C43.0483 15.5858 42.4688 22.2087 38.0265 25.9362L30.7491 32.0427L23.4717 38.1492C19.0294 41.8767 12.4065 41.2973 8.67896 36.855C4.95144 32.4127 5.53087 25.7898 9.97315 22.0623Z" fill="none"/><path d="M19.6885 21.8613L25.4261 28.6992"/>' },
   'dark-mode': { v: '0 0 48 48', d: '<path d="M24.0033 4L29.2737 9.27038H38.7296V18.7263L44 23.9967L38.7296 29.2737V38.7296H29.2737L24.0033 44L18.7264 38.7296H9.27036V29.2737L4 23.9967L9.27036 18.7263V9.27038H18.7264L24.0033 4Z" fill="none" stroke-miterlimit="10"/><path d="M27 17C27 25 22 26 17 26C17 30 23.5 34 29 30C34.5 26 31 17 27 17Z" fill="none" stroke-miterlimit="10"/>' },
   'avatar': { v: '0 0 48 48', d: '<path d="M5.00372 42.2311C5.00372 42.6557 5.35807 42.9999 5.79521 42.9999L42.2023 43C42.6394 43 42.9938 42.6558 42.9938 42.2313V41.3131C43.012 41.0364 43.049 39.6555 42.1388 38.1289C41.5648 37.1663 40.7318 36.3347 39.6628 35.6573C38.3696 34.8378 36.7245 34.244 34.7347 33.8865C34.72 33.8846 33.2446 33.689 31.7331 33.303C29.101 32.6307 28.8709 32.0357 28.8694 32.0299C28.8539 31.9711 28.8315 31.9146 28.8028 31.8615C28.7813 31.7505 28.7281 31.3328 28.8298 30.2136C29.088 27.371 30.6128 25.691 31.838 24.3412C32.2244 23.9155 32.5893 23.5134 32.8704 23.1191C34.0827 21.4181 34.1952 19.4839 34.2003 19.364C34.2003 19.1211 34.1724 18.9214 34.1127 18.7363C33.9937 18.3659 33.7698 18.1351 33.6063 17.9666L33.6052 17.9654C33.564 17.923 33.5251 17.8828 33.4933 17.8459C33.4812 17.8318 33.449 17.7945 33.4783 17.603C33.5859 16.8981 33.6505 16.3079 33.6815 15.7456C33.7367 14.7438 33.7798 13.2456 33.5214 11.7875C33.4895 11.5385 33.4347 11.2755 33.3494 10.9622C33.0764 9.95814 32.6378 9.09971 32.0284 8.39124C31.9236 8.27722 29.3756 5.5928 21.9788 5.04201C20.956 4.96586 19.9449 5.00688 18.9496 5.05775C18.7097 5.06961 18.3812 5.08589 18.0738 5.16554C17.3101 5.36337 17.1063 5.84743 17.0528 6.11834C16.9641 6.56708 17.12 6.91615 17.2231 7.14718L17.2231 7.1472L17.2231 7.14723C17.2381 7.18072 17.2566 7.22213 17.2243 7.32997C17.0526 7.59588 16.7825 7.83561 16.5071 8.06273C16.4275 8.13038 14.5727 9.72968 14.4707 11.8189C14.1957 13.4078 14.2165 15.8834 14.5417 17.5944C14.5606 17.6889 14.5885 17.8288 14.5432 17.9233L14.5432 17.9233C14.1935 18.2367 13.7971 18.5919 13.7981 19.4024C13.8023 19.4839 13.9148 21.4181 15.1272 23.1191C15.408 23.5131 15.7726 23.9149 16.1587 24.3403L16.1596 24.3412L16.1596 24.3413C17.3848 25.6911 18.9095 27.371 19.1678 30.2135C19.2694 31.3327 19.2162 31.7505 19.1947 31.8614C19.166 31.9145 19.1436 31.971 19.1282 32.0298C19.1266 32.0356 18.8974 32.6287 16.2772 33.2996C14.7656 33.6867 13.2775 33.8845 13.2331 33.8909C11.2994 34.2173 9.66438 34.7963 8.37351 35.6115C7.30813 36.2844 6.47354 37.1175 5.89289 38.0877C4.96517 39.6379 4.99025 41.0497 5.00372 41.3074V42.2311Z" fill="none"/>' },
   'edit': { v: '0 0 48 48', d: '<path d="M7 42H43"/><path d="M11 26.7199V34H18.3172L39 13.3081L31.6951 6L11 26.7199Z" fill="none"/>' },
@@ -778,7 +778,7 @@ function hydrateIcons(scope) {
   }
 }
 
-var APP_VERSION = 'v2.6.0';
+var APP_VERSION = 'v2.6.1';
 var NAV_STYLE_KEY = 'drink_water_nav_style'; /* 'svg' 线性 / 'color' 双色 */
 
 /* 底部导航模板：svg=IconPark 线性，color=IconPark 双色 */
@@ -1454,7 +1454,7 @@ function formatRecordLine(r) {
   var ts = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
   var mood = r.mood || '';
   var isPill = r.type === 'pill' || (!r.type && r.amount === 0);
-  var icon = isPill ? ip('pill', 'width:1.25rem;height:1.25rem;margin-right:10px;') : ip('water', 'width:1.25rem;height:1.25rem;margin-right:10px;');
+  var icon = isPill ? ip('pills', 'width:1.25rem;height:1.25rem;margin-right:10px;') : ip('water', 'width:1.25rem;height:1.25rem;margin-right:10px;');
   var label = isPill ? '\u5403\u836f' : r.amount + ' ml';
   return '<div style="display:flex;align-items:center;flex:1;min-width:0;">' +
     '<span>' + icon + '</span>' +
@@ -1491,7 +1491,7 @@ function renderRecords(todayRecords) {
       ? '<span class="record-mood-add" onclick="applyMoodToRecord(\'' + r.id + '\')" title="标注心情">' + ip('add', 'width:0.85rem;height:0.85rem;') + '</span>'
       : '';
     var isPill = r.type === 'pill' || (!r.type && r.amount === 0);
-    var icon = isPill ? ip('pill', 'width:1.25rem;height:1.25rem;margin-right:10px;') : ip('water', 'width:1.25rem;height:1.25rem;margin-right:10px;');
+    var icon = isPill ? ip('pills', 'width:1.25rem;height:1.25rem;margin-right:10px;') : ip('water', 'width:1.25rem;height:1.25rem;margin-right:10px;');
     var label = isPill ? '\u5403\u836f' : r.amount + ' ml';
     div.innerHTML = '<span>' + icon + '</span>' +
       '<div style="flex:1;min-width:0;"><span style="font-weight:600;">' + moodHtml + label + addBtn + '</span>' +
@@ -1845,6 +1845,14 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.6.1 — 吃药图标改为胶囊（2026-11-02）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **吃药图标改用 pills 胶囊** — 原 pill 图标在 16–20px 下像菱形标签，换成更易辨认的胶囊轮廓',
+  '',
+  '---',
+  '',
   '## v2.6.0 — 全站图标统一为 IconPark（2026-11-02）',
   '',
   '### 🎨 视觉',
@@ -3328,7 +3336,7 @@ function renderLeaderboardContent() {
       var uid = u.isMe ? '' : (u.user_id || '');
       var adminDel = _lbAdminMode && uid ? '<span class="lb-admin-del" data-deluid="' + uid + '" data-delnick="' + u.name.replace(/"/g, '&quot;') + '" onclick="event.stopPropagation();deleteUserRanking(this.getAttribute(\'data-deluid\'),this.getAttribute(\'data-delnick\'))" title="删除此用户排名">' + ip('close', 'width:.75rem;height:.75rem;vertical-align:-.05em;') + '</span>' : '';
       var periodMl = getPeriodMl(u);
-      var pillBadge = u.pillToday ? ' <span title="已吃药">' + ip('pill', 'width:0.85rem;height:0.85rem;vertical-align:-0.05em;') + '</span>' : '';
+      var pillBadge = u.pillToday ? ' <span title="已吃药">' + ip('pills', 'width:0.85rem;height:0.85rem;vertical-align:-0.05em;') + '</span>' : '';
       html += '<div class="lb-item ' + (u.isMe ? 'lb-me' : '') + '" data-userid="' + uid + '" data-myname="' + u.name + '" data-myoji="' + u.emoji + '" onclick="showUserRecords(this)" style="cursor:pointer;">' + meTag + '<div class="lb-rank ' + (rank <= 3 ? ['gold','silver','bronze'][rank-1] : '') + '">' + rankText + '</div><div class="lb-avatar">' + u.emoji + '</div><div class="lb-info"><div class="lb-name">' + u.name + (u.isMe ? ' (\u4f60)' : '') + '</div><div class="lb-streak">' + (u.streak > 0 ? ip('fire', 'width:.8em;height:.8em;vertical-align:-.05em;margin-right:1px;color:#F5A623;').repeat(Math.min(u.streak, 5)) : '') + u.streak + '\u5929\u8fde\u51fb' + pillBadge + '</div></div><div class="lb-amount">' + adminDel + ' ' + periodMl + ' <span class="lb-unit">ml</span></div></div>';
     });
     document.getElementById('lbList').innerHTML = html || '<div class="lb-empty">\u8fd8\u6ca1\u6709\u6570\u636e\uff5e\u5feb\u53bb\u559d\u6c34\u5427\uff01</div>';
@@ -3664,7 +3672,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20261102a';
+var SW_DEPLOY = '20261102b';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
