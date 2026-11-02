@@ -72,6 +72,7 @@ sync-www.bat
 
 ## 版本
 
+- v2.7.0 — 内置网页同步 Web v2.7.0：全站 IconPark 图标 + 设置页三步排版改版（2026-11-02）
 - v2.0.1 — 提醒修复与全面屏适配（2026-08）：精确闹钟、整分钟对齐、开机自动恢复、每周一自动保活、edge-to-edge 无黑条、Web 版图标、导入导出原生化、更新日志继承 Web 版历史
 - v2.0.0 — Android 套壳版（2026-08）：WebView 套壳 + AlarmManager 喝水提醒
 - v1.x — Web 版历史（套壳前，见 `CHANGELOG.md`）

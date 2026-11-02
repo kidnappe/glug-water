@@ -263,17 +263,48 @@
     .stat-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.875rem; }
     .stat-row .label { color: var(--text-secondary); }
     .stat-row .value { font-weight: 600; font-variant-numeric: tabular-nums; }
-    .setting-item { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; }
+    .setting-item { display: flex; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--border-light); cursor: pointer; }
     .setting-item:last-child { border-bottom: none; }
-    .setting-icon { font-size: 1.25rem; margin-right: 14px; width: 24px; text-align: center; }
-    .setting-info { flex: 1; }
-    .setting-label { font-size: 0.875rem; }
-    .setting-desc { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px; }
-    .setting-arrow { color: var(--text-tertiary); font-size: 1rem; }
+    .setting-icon { font-size: 1.25rem; margin-right: 12px; width: 24px; text-align: center; flex-shrink: 0; line-height: 1; }
+    .ip-icon { width: 1em; height: 1em; display: inline-block; vertical-align: -0.15em; flex-shrink: 0; }
+    .setting-icon .ip-icon { width: 1.25rem; height: 1.25rem; display: block; margin: 0 auto; color: var(--text-secondary); }
+    .setting-arrow .ip-icon { width: 1rem; height: 1rem; display: block; }
+    .card-title .ip-icon { width: 1.05em; height: 1.05em; vertical-align: -0.12em; }
+    .inline-icon { display: inline-flex; vertical-align: -0.15em; margin-right: 2px; }
+    .inline-icon .ip-icon { width: 1em; height: 1em; }
+    .track-runner .ip-icon { width: 1.25rem; height: 1.25rem; display: block; }
+    .plant-emoji .ip-icon { width: 1em; height: 1em; color: var(--primary); }
+    .accessory .ip-icon { width: 1em; height: 1em; display: block; }
+    .accessory.star .ip-icon, .accessory.crown .ip-icon { color: #F5A623; }
+    .accessory.butterfly .ip-icon { color: #4A90E2; }
+    .accessory.rainbow .ip-icon { color: #7C4DFF; }
+    .lb-refresh .ip-icon { width: 1rem; height: 1rem; display: block; }
+    .modal-close .ip-icon { width: 1rem; height: 1rem; }
+    .lb-admin-del .ip-icon { width: 0.75rem; height: 0.75rem; vertical-align: -0.05em; }
+    .record-del .ip-icon { width: 1rem; height: 1rem; display: block; }
+    .record-mood-add .ip-icon { width: 0.85rem; height: 0.85rem; vertical-align: -0.05em; }
+    .cup-remain .ip-icon { width: 1em; height: 1em; vertical-align: -0.12em; }
+    .qs-value .ip-icon { width: 1.25em; height: 1.25em; vertical-align: -0.2em; color: var(--primary); }
+    .setting-info { flex: 1; min-width: 0; }
+    .setting-label { font-size: 0.9375rem; font-weight: 500; color: var(--text); line-height: 1.35; }
+    .setting-desc { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px; line-height: 1.45; }
+    .setting-arrow { color: var(--text-tertiary); font-size: 1rem; margin-left: 6px; flex-shrink: 0; display: flex; align-items: center; }
     .setting-switch { position: relative; width: 44px; height: 24px; background: #D7E3DE; border-radius: 12px; cursor: pointer; transition: background .3s; flex-shrink: 0; }
     .setting-switch.on { background: var(--primary); }
     .setting-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: transform .3s var(--ease-spring); box-shadow: 0 1px 3px rgba(0,0,0,.15); }
     .setting-switch.on::after { transform: translateX(20px); }
+    /* 设置页分组：组标题在卡片外，组内细线、组间留白 */
+    .settings-section { margin: 0 0 24px; }
+    .settings-section:last-child { margin-bottom: 8px; }
+    .settings-section-title { font-size: 0.75rem; font-weight: 600; color: var(--text-tertiary); letter-spacing: .02em; margin: 0 6px 8px; }
+    .settings-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 0 16px; box-shadow: var(--shadow-card); }
+    .settings-card .setting-item { padding: 13px 0; }
+    .settings-card .setting-item.no-click { cursor: default; }
+    .setting-value { flex-shrink: 1; min-width: 0; max-width: 48%; margin-left: 8px; color: var(--text-secondary); font-size: 0.8125rem; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+    .setting-chip { flex-shrink: 0; margin-right: 8px; padding: 0 6px; border: 1px solid var(--primary); border-radius: 6px; color: var(--primary); font-size: 0.625rem; line-height: 1.7; cursor: pointer; }
+    .settings-section--danger .settings-card { border-color: rgba(229,72,77,.2); }
+    .dark-mode .settings-section-title { color: #6E8A80; }
+    .dark-mode .settings-section--danger .settings-card { border-color: rgba(229,72,77,.28); }
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(11,26,23,.45); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
     .modal-overlay.show { display: flex; }
     .modal { position: relative; background: #FFFFFF; border: 1px solid var(--border); border-radius: 20px; padding: 24px; width: 320px; max-width: 100%; max-height: 86vh; overflow-y: auto; overflow-x: hidden; box-shadow: var(--shadow-pop); -webkit-overflow-scrolling: touch; }
@@ -367,7 +398,7 @@
             <div class="cup-remain" id="todayRemainText">还差 2000 ml</div>
           </div>
           <div class="track-wrap">
-            <div class="track-runner" id="trackRunner">🏃</div>
+            <div class="track-runner" id="trackRunner" data-ip="sport"></div>
             <div class="track-bg"><div class="track-fill" id="trackFill"></div></div>
             <div class="track-label"><span>0 ml</span><span id="trackGoalLabel">2000 ml</span></div>
           </div>
@@ -377,7 +408,7 @@
       <div class="quick-stat" onclick="switchTab(1)" style="cursor:pointer;"><div class="qs-value accent"><span id="qsStreak">0</span> 天</div><div class="qs-label">连续达标</div></div>
       <div class="quick-stat" onclick="switchTab(3)" style="cursor:pointer;"><div class="qs-value"><span id="qsAvg">0</span> ml</div><div class="qs-label">本周日均</div></div>
       <div class="quick-stat" onclick="switchTab(3)" style="cursor:pointer;"><div class="qs-value"><span id="qsCount">0</span> 次</div><div class="qs-label">今日杯数</div></div>
-      <div class="quick-stat" onclick="switchTab(2)" style="cursor:pointer;"><div class="qs-value" id="qsPlant">🌰</div><div class="qs-label">花园阶段</div></div>
+      <div class="quick-stat" onclick="switchTab(2)" style="cursor:pointer;"><div class="qs-value" id="qsPlant" data-ip="seedling"></div><div class="qs-label">花园阶段</div></div>
     </div>
   </div>
   <div class="card">
@@ -431,7 +462,7 @@
   <div class="card">
     <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;">
       选择水量
-      <span id="pillHomeBtn" onclick="addPill()" style="display:none;cursor:pointer;padding:4px 10px;border-radius:8px;background:rgba(245,158,11,.12);border:1px solid var(--warning);" title="记录吃药"><img src="icons/emoji/core-1F48A.png" alt="吃药" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
+      <span id="pillHomeBtn" onclick="addPill()" style="display:none;cursor:pointer;padding:4px 10px;border-radius:8px;background:rgba(245,158,11,.12);border:1px solid var(--warning);" title="记录吃药" data-ip="pills" data-ip-style="width:1.25rem;height:1.25rem;display:block;"></span>
     </div>
     <div class="btn-row">
       <button class="btn-water small" onclick="addWater(250)">250ml</button>
@@ -441,7 +472,7 @@
       <button class="btn-water small custom" onclick="showCustomDialog()">&#x81EA;&#x5B9A;&#x4E49;</button>
     </div>
     <div class="btn-row">
-      <button class="btn-water sip" onclick="addWater(gState.settings.sipAmount || 15)">&#x1F445; &#x559d;&#x4E00;&#x5C0F;&#x53E3; (<span id="sipLabel">15</span>ml)</button>
+      <button class="btn-water sip" onclick="addWater(gState.settings.sipAmount || 15)"><span class="inline-icon" data-ip="water"></span> &#x559d;&#x4E00;&#x5C0F;&#x53E3; (<span id="sipLabel">15</span>ml)</button>
     </div>
   </div>
   <div class="card">
@@ -454,7 +485,7 @@
 </div>
 <div class="page" id="page-garden">
   <div class="card garden" style="text-align:center;padding:40px 16px;">
-    <div class="plant-emoji" id="plantEmoji" style="font-size:5rem;">🌰</div>
+    <div class="plant-emoji" id="plantEmoji" style="font-size:5rem;" data-ip="seedling"></div>
     <div class="plant-name" id="plantName" style="font-size:1rem;color:var(--text-secondary);margin-top:8px;">种子休眠中</div>
     <div style="font-size:0.875rem;color:var(--text-tertiary);margin-top:20px;">连续达标</div>
     <div style="font-size:2.5rem;font-weight:700;color:var(--primary);margin-top:4px;"><span id="streakCount">0</span> 天</div>
@@ -477,168 +508,215 @@
     <div class="stat-row"><span class="label">达标天数</span><span class="value" id="statGoal">0 天</span></div>
   </div>
   <div class="card">
-    <div class="card-title"><img src="icons/emoji/core-1F4D6.png" alt="" class="emoji" style="width:1.05em;height:1.05em;"> 喝水日历</div>
+    <div class="card-title"><span class="inline-icon" data-ip="calendar"></span> 喝水日历</div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-      <button onclick="prevMonth()" style="border:none;background:var(--bg);border-radius:6px;padding:2px 10px;font-size:1rem;cursor:pointer;color:var(--primary);">◀</button>
+      <button onclick="prevMonth()" style="border:none;background:var(--bg);border-radius:6px;padding:2px 10px;font-size:1rem;cursor:pointer;color:var(--primary);" data-ip="arrow-left" data-ip-style="width:1rem;height:1rem;display:block;"></button>
       <span id="heatmapMonthLabel" style="font-size:0.8125rem;font-weight:600;color:var(--text);flex:1;text-align:center;"></span>
-      <button onclick="nextMonth()" style="border:none;background:var(--bg);border-radius:6px;padding:2px 10px;font-size:1rem;cursor:pointer;color:var(--primary);">▶</button>
+      <button onclick="nextMonth()" style="border:none;background:var(--bg);border-radius:6px;padding:2px 10px;font-size:1rem;cursor:pointer;color:var(--primary);" data-ip="arrow-right" data-ip-style="width:1rem;height:1rem;display:block;"></button>
     </div>
     <div class="heatmap-wrap" id="heatmapWrap"></div>
   </div>
 </div>
 
 <div class="page" id="page-settings">
-  <div class="card">
-    <div class="setting-item" onclick="showGoalDialog()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F3AF.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">每日目标</div><div class="setting-desc" id="settingGoal">2000 ml</div></div>
-      <span class="setting-arrow">›</span>
+  <section class="settings-section">
+    <div class="settings-section-title">账户</div>
+    <div class="settings-card">
+      <div class="setting-item" onclick="showAvatarDialog()">
+        <span class="setting-icon" id="settingAvatarPreview" data-ip="avatar"></span>
+        <div class="setting-info"><div class="setting-label">我的头像</div></div>
+        <span class="setting-value" id="settingAvatarName">点击更换</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="showNicknameDialog()">
+        <span class="setting-icon" data-ip="edit"></span>
+        <div class="setting-info"><div class="setting-label">我的昵称</div></div>
+        <span class="setting-value" id="settingNickname">未设置</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="showSupabaseDialog()">
+        <span class="setting-icon" data-ip="earth"></span>
+        <div class="setting-info"><div class="setting-label">在线排行榜</div></div>
+        <span class="setting-value" id="settingSupabaseDesc">未配置</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
     </div>
-    <div class="setting-item" onclick="showCustomAmountDialog()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F4A7.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">自定义水量</div><div class="setting-desc" id="settingCustom">250 ml</div></div>
-      <span class="setting-arrow">›</span>
+  </section>
+
+  <section class="settings-section">
+    <div class="settings-section-title">饮水目标</div>
+    <div class="settings-card">
+      <div class="setting-item" onclick="showGoalDialog()">
+        <span class="setting-icon" data-ip="target-one"></span>
+        <div class="setting-info"><div class="setting-label">每日目标</div></div>
+        <span class="setting-value" id="settingGoal">2000 ml</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="showCustomAmountDialog()">
+        <span class="setting-icon" data-ip="water"></span>
+        <div class="setting-info"><div class="setting-label">自定义水量</div></div>
+        <span class="setting-value" id="settingCustom">250 ml</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
     </div>
-    <div class="setting-item">
-      <span class="setting-icon"><img src="icons/emoji/core-1F514.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">喝水提醒</div><div class="setting-desc" id="settingRemindDesc">已关闭</div></div>
-      <div class="setting-switch" id="remindSwitch" onclick="toggleReminder()"></div>
+  </section>
+
+  <section class="settings-section">
+    <div class="settings-section-title">提醒</div>
+    <div class="settings-card">
+      <div class="setting-item no-click">
+        <span class="setting-icon" data-ip="remind"></span>
+        <div class="setting-info"><div class="setting-label">喝水提醒</div><div class="setting-desc" id="settingRemindDesc">已关闭</div></div>
+        <div class="setting-switch" id="remindSwitch" onclick="toggleReminder()"></div>
+      </div>
+      <div class="setting-item" onclick="showReminderIntervalDialog()">
+        <span class="setting-icon" data-ip="timer"></span>
+        <div class="setting-info"><div class="setting-label">提醒周期</div></div>
+        <span class="setting-value" id="settingIntervalDesc">每 30 分钟</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="showReminderWindowDialog()">
+        <span class="setting-icon" data-ip="alarm-clock"></span>
+        <div class="setting-info"><div class="setting-label">提醒时段</div></div>
+        <span class="setting-value" id="settingWindowDesc">08:00 - 22:00</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item no-click">
+        <span class="setting-icon" data-ip="pills"></span>
+        <div class="setting-info"><div class="setting-label">吃药提醒</div><div class="setting-desc" id="settingPillDesc">已关闭</div></div>
+        <div class="setting-switch" id="pillSwitch" onclick="togglePill()"></div>
+      </div>
     </div>
-    <div class="setting-item" onclick="showReminderIntervalDialog()">
-      <span class="setting-icon"><img src="icons/emoji/core-23F1-FE0F.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">提醒周期</div><div class="setting-desc" id="settingIntervalDesc">30 分钟</div></div>
-      <span class="setting-arrow">›</span>
+  </section>
+
+  <section class="settings-section">
+    <div class="settings-section-title">显示与交互</div>
+    <div class="settings-card">
+      <div class="setting-item no-click">
+        <span class="setting-icon" data-ip="dark-mode"></span>
+        <div class="setting-info"><div class="setting-label">深色模式</div><div class="setting-desc" id="settingDarkDesc">跟随系统</div></div>
+        <span class="setting-chip" id="darkAutoBtn" onclick="setDarkMode('auto')">auto</span>
+        <div class="setting-switch" id="darkSwitch" onclick="toggleDarkMode()"></div>
+      </div>
+      <div class="setting-item" onclick="showNavStyleDialog()">
+        <span class="setting-icon" data-ip="hamburger-button"></span>
+        <div class="setting-info"><div class="setting-label">导航栏样式</div></div>
+        <span class="setting-value" id="settingNavStyleDesc">线性图标</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item no-click">
+        <span class="setting-icon" data-ip="cup"></span>
+        <div class="setting-info"><div class="setting-label">重力水杯</div><div class="setting-desc" id="settingGravityDesc">水随手机倾斜晃动</div></div>
+        <div class="setting-switch" id="gravitySwitch" onclick="toggleGravityCup()"></div>
+      </div>
+      <div class="setting-item" onclick="showEffectsGuide()">
+        <span class="setting-icon" data-ip="magic-wand"></span>
+        <div class="setting-info"><div class="setting-label">特效说明</div></div>
+        <span class="setting-value">触发条件</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
     </div>
-    <div class="setting-item" onclick="showReminderWindowDialog()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F557.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">提醒时段</div><div class="setting-desc" id="settingWindowDesc">08:00 - 22:00</div></div>
-      <span class="setting-arrow">›</span>
+  </section>
+
+  <section class="settings-section">
+    <div class="settings-section-title">数据与设备</div>
+    <div class="settings-card">
+      <div class="setting-item" onclick="generatePairingCode()">
+        <span class="setting-icon" data-ip="iwatch"></span>
+        <div class="setting-info"><div class="setting-label">连接手表</div><div class="setting-desc">生成配对码，手表输入后同步数据</div></div>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item" id="syncSettingItem" onclick="forceSync()">
+        <span class="setting-icon" data-ip="sync"></span>
+        <div class="setting-info"><div class="setting-label" id="syncSettingLabel">立即同步</div><div class="setting-desc" id="syncSettingDesc">手动触发一次双向数据同步</div></div>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="disconnectWatch()">
+        <span class="setting-icon" style="color:var(--danger);" data-ip="link-break"></span>
+        <div class="setting-info"><div class="setting-label" style="color:var(--danger);">断开手表</div><div class="setting-desc" id="watchDisconnectDesc">停止与手表的数据互通</div></div>
+        <span class="setting-arrow" style="color:var(--danger);" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="disconnectLeaderboard()">
+        <span class="setting-icon" style="color:var(--danger);" data-ip="link-interrupt"></span>
+        <div class="setting-info"><div class="setting-label" style="color:var(--danger);">断开排行榜</div><div class="setting-desc">清除云端连接，恢复为本地模式</div></div>
+        <span class="setting-arrow" style="color:var(--danger);" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="exportData()">
+        <span class="setting-icon" data-ip="export"></span>
+        <div class="setting-info"><div class="setting-label">导出数据</div></div>
+        <span class="setting-value">JSON 备份</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="document.getElementById('importInput').click()">
+        <span class="setting-icon" data-ip="download"></span>
+        <div class="setting-info"><div class="setting-label">导入数据</div></div>
+        <span class="setting-value">JSON 恢复</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
     </div>
-    <div class="setting-item">
-      <span class="setting-icon"><img src="icons/emoji/core-1F48A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">吃药</div><div class="setting-desc" id="settingPillDesc">已关闭</div></div>
-      <div class="setting-switch" id="pillSwitch" onclick="togglePill()"></div>
-    </div>
-    <div class="setting-item">
-      <span class="setting-icon"><img src="icons/emoji/core-1F319.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">深色模式
-        <span id="darkAutoBtn" onclick="setDarkMode('auto')" style="display:inline-block;font-size:0.625rem;color:var(--primary);border:1px solid var(--primary);border-radius:6px;padding:0 6px;margin-left:6px;cursor:pointer;vertical-align:middle;line-height:1.6;">auto</span>
-      </div><div class="setting-desc" id="settingDarkDesc">跟随系统</div></div>
-      <div class="setting-switch" id="darkSwitch" onclick="toggleDarkMode()" style="flex-shrink:0;"></div>
-    </div>
-    <div class="setting-item" onclick="showAvatarDialog()">
-      <span class="setting-icon" id="settingAvatarPreview"><img src="icons/emoji/core-1F4CB.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">我的头像</div><div class="setting-desc" id="settingAvatarName">点击更换</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-    <div class="setting-item" onclick="showNicknameDialog()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F504.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">我的昵称</div><div class="setting-desc" id="settingNickname">未设置</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-  </div>
-  <div class="card">
-    <div class="setting-item" onclick="showNavStyleDialog()">
-      <span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.25rem;height:1.25rem;color:var(--text-secondary);"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span>
-      <div class="setting-info"><div class="setting-label">导航栏样式</div><div class="setting-desc" id="settingNavStyleDesc">线性图标</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-    <div class="setting-item">
-      <span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:1.25rem;height:1.25rem;color:var(--text-secondary);"><path d="M12 2a4 4 0 0 1 4 4c0 .9-.3 1.7-.8 2.4L12 12l-3.2-3.6A4 4 0 0 1 12 2Z"/><path d="M7.5 12.5a4.5 4.5 0 1 0 6.4 6.4"/><path d="M12 13v8"/></svg></span>
-      <div class="setting-info"><div class="setting-label">重力水杯</div><div class="setting-desc" id="settingGravityDesc">水随手机倾斜晃动</div></div>
-      <div class="setting-switch" id="gravitySwitch" onclick="toggleGravityCup()"></div>
-    </div>
-    <div class="setting-item" onclick="showEffectsGuide()">
-      <span class="setting-icon"><img src="icons/emoji/core-2728.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">特效说明</div><div class="setting-desc">查看所有动画效果的触发条件</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-    <div class="setting-item" onclick="checkForUpdate()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F504.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">检查更新</div><div class="setting-desc" id="settingUpdateDesc">手动检查网页版新版本</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-    <div class="setting-item" onclick="showAboutDialog()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F4CB.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">关于应用</div><div class="setting-desc" id="settingVersionDesc">喝杯水吧 v1.5.2</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-  </div>
-  <div class="card">
-    <div class="setting-item" onclick="showSupabaseDialog()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F310.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">在线排行榜</div><div class="setting-desc" id="settingSupabaseDesc">未配置</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-  </div>
-  <div class="card">
-    <div class="setting-item" onclick="generatePairingCode()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F517.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">连接手表</div><div class="setting-desc">生成配对码，手表输入后同步数据</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-    <div class="setting-item" id="syncSettingItem" onclick="forceSync()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F504.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label" id="syncSettingLabel">立即同步</div><div class="setting-desc" id="syncSettingDesc">手动触发一次双向数据同步</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-    <div class="setting-item" onclick="disconnectWatch()">
-      <span class="setting-icon"><img src="icons/emoji/core-231A.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label" style="color:var(--danger);">断开手表</div><div class="setting-desc" id="watchDisconnectDesc">停止与手表的数据互通</div></div>
-      <span class="setting-arrow" style="color:var(--danger);">›</span>
-    </div>
-    <div id="syncDebugWrap" style="display:none;margin:6px 0;">
+    <div id="syncDebugWrap" style="display:none;margin:8px 2px 0;">
       <div id="syncDebugSummary" style="font-size:0.75rem;color:var(--text-secondary);background:var(--border-light);border-radius:8px;padding:8px 10px;line-height:1.6;cursor:pointer;" onclick="toggleSyncDebug()"></div>
       <div id="syncDebugFull" style="display:none;font-size:0.6875rem;color:var(--text-secondary);background:var(--border-light);border-radius:0 0 8px 8px;padding:8px 10px;line-height:1.5;max-height:300px;overflow-y:auto;word-break:break-all;border-top:1px solid var(--border);"></div>
     </div>
-    <div class="setting-item" onclick="disconnectLeaderboard()" style="border-top:1px solid #f0f0f0;margin-top:4px;padding-top:12px;">
-      <span class="setting-icon"><img src="icons/emoji/core-1F310.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label" style="color:var(--danger);">断开排行榜</div><div class="setting-desc">清除云端连接，恢复为本地模式</div></div>
-      <span class="setting-arrow" style="color:var(--danger);">›</span>
-    </div>
-  </div>
-  <div class="card">
-    <div class="setting-item" onclick="exportData()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F4E4.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">导出数据</div><div class="setting-desc">备份喝水记录到 JSON 文件</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
-    <div class="setting-item" onclick="document.getElementById('importInput').click()">
-      <span class="setting-icon"><img src="icons/emoji/core-1F4E5.png" alt="" class="emoji" style="width:1.25rem;height:1.25rem;"></span>
-      <div class="setting-info"><div class="setting-label">导入数据</div><div class="setting-desc">从 JSON 文件恢复数据（将覆盖当前数据）</div></div>
-      <span class="setting-arrow">›</span>
-    </div>
     <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
-  </div>
-  <button style="width:100%;padding:12px;background:var(--danger);color:#fff;border:none;border-radius:12px;font-size:0.9375rem;font-weight:600;cursor:pointer;transition:transform var(--dur-press) var(--ease-out);" onclick="showResetDialog()">重置所有数据</button>
+  </section>
+
+  <section class="settings-section">
+    <div class="settings-section-title">关于</div>
+    <div class="settings-card">
+      <div class="setting-item" onclick="checkForUpdate()">
+        <span class="setting-icon" data-ip="update-rotation"></span>
+        <div class="setting-info"><div class="setting-label">检查更新</div></div>
+        <span class="setting-value" id="settingUpdateDesc">手动检查</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+      <div class="setting-item" onclick="showAboutDialog()">
+        <span class="setting-icon" data-ip="info"></span>
+        <div class="setting-info"><div class="setting-label">关于应用</div></div>
+        <span class="setting-value" id="settingVersionDesc">咕嘟 v2.7.0</span>
+        <span class="setting-arrow" data-ip="right"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="settings-section settings-section--danger">
+    <div class="settings-section-title">危险操作</div>
+    <div class="settings-card">
+      <div class="setting-item" onclick="showResetDialog()">
+        <span class="setting-icon" style="color:var(--danger);" data-ip="delete"></span>
+        <div class="setting-info"><div class="setting-label" style="color:var(--danger);">重置所有数据</div><div class="setting-desc">清空本机喝水记录与设置，不可恢复</div></div>
+        <span class="setting-arrow" style="color:var(--danger);" data-ip="right"></span>
+      </div>
+    </div>
+  </section>
 </div>
 
 <div class="page" id="page-leaderboard">
   <div class="lb-card">
-    <div class="lb-header"><h3 id="lbTitle" onclick="onLbTitleTap()" style="cursor:pointer;"><img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.1em;height:1.1em;"> 喝水排行榜</h3>
+    <div class="lb-header"><h3 id="lbTitle" onclick="onLbTitleTap()" style="cursor:pointer;"><span class="inline-icon" data-ip="trophy"></span> 喝水排行榜</h3>
       <span id="lbAdminBadge" style="display:none;font-size:0.625rem;color:var(--danger);font-weight:600;margin-right:4px;">管理员</span>
-      <span id="lbExitAdmin" style="display:none;cursor:pointer;font-size:1rem;color:var(--danger);font-weight:700;padding:0 4px;" onclick="exitAdminMode()" title="退出管理员模式">✕</span>
+      <span id="lbExitAdmin" style="display:none;cursor:pointer;font-size:1rem;color:var(--danger);font-weight:700;padding:0 4px;" onclick="exitAdminMode()" title="退出管理员模式" data-ip="close" data-ip-style="width:0.875rem;height:0.875rem;display:block;"></span>
       <div style="display:flex;align-items:center;">
         <div class="lb-tabs" id="lbTabs">
           <button class="active" onclick="switchLB('today')">今日</button>
           <button onclick="switchLB('week')">本周</button>
           <button onclick="switchLB('month')">本月</button>
         </div>
-        <button class="lb-refresh" id="lbRefreshBtn" onclick="manualRefreshLeaderboard()">⟳</button>
+        <button class="lb-refresh" id="lbRefreshBtn" onclick="manualRefreshLeaderboard()" data-ip="refresh"></button>
       </div>
     </div>
     <div class="lb-list" id="lbList"><div class="lb-empty">加载中...</div></div>
   </div>
   <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:8px 16px 4px;">
-    <span onclick="showLBHelp()" style="cursor:pointer;font-size:0.75rem;color:var(--primary);border:1px solid var(--primary);border-radius:12px;padding:4px 14px;"><img src="icons/emoji/core-1F4D6.png" alt="" class="emoji" style="width:1em;height:1em;"> 排行榜说明</span>
-    <span onclick="toggleLBDebug()" style="cursor:pointer;font-size:0.75rem;color:var(--text-tertiary);border:1px solid var(--border);border-radius:12px;padding:4px 14px;"><img src="icons/emoji/core-1F4CB.png" alt="" class="emoji" style="width:1em;height:1em;"> 网络日志</span>
+    <span onclick="showLBHelp()" style="cursor:pointer;font-size:0.75rem;color:var(--primary);border:1px solid var(--primary);border-radius:12px;padding:4px 14px;"><span class="inline-icon" data-ip="book-one"></span> 排行榜说明</span>
+    <span onclick="toggleLBDebug()" style="cursor:pointer;font-size:0.75rem;color:var(--text-tertiary);border:1px solid var(--border);border-radius:12px;padding:4px 14px;"><span class="inline-icon" data-ip="log"></span> 网络日志</span>
   </div>
-  <div onclick="showLBRules()" style="cursor:pointer;text-align:center;padding:8px 16px 16px;font-size:0.75rem;color:#aaa;">⭐ 喝水越多排名越高<br>连续达标天数相同时按总水量排序</div>
+  <div onclick="showLBRules()" style="cursor:pointer;text-align:center;padding:8px 16px 16px;font-size:0.75rem;color:#aaa;"><span class="inline-icon" style="color:#F5A623;" data-ip="star"></span> 喝水越多排名越高<br>连续达标天数相同时按总水量排序</div>
 </div>
 
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal" id="modalContent">
-    <button class="modal-close" onclick="hideModal()" aria-label="关闭弹窗">&#10005;</button>
+    <button class="modal-close" onclick="hideModal()" aria-label="关闭弹窗" data-ip="close" data-ip-style="width:1rem;height:1rem;"></button>
     <h3 id="modalTitle">标题</h3>
     <div id="modalBody"></div>
     <div class="modal-actions" id="modalActions"></div>
@@ -650,7 +728,7 @@
 <nav class="bottom-nav" id="bottomNav"><!-- 由 renderNav() 渲染 --></nav>
 
 <script>
-/* ── 固化 emoji 映射（保留 Windows Segoe UI Emoji 风格） ── */
+/* ── 心情表情 PNG 映射（仅心情选择器使用；其他图标统一走 IconPark） ── */
 var EMOJI_FILE = {
   /* 21 心情 */
   '\u{1F60A}':'mood-1F60A', '\u{1F604}':'mood-1F604', '\u{1F970}':'mood-1F970',
@@ -665,18 +743,6 @@ var EMOJI_FILE = {
   '\u{1F633}':'mood-1F633', '\u{1F62E}':'mood-1F62E', '\u{1F912}':'mood-1F912', '\u{1F915}':'mood-1F915',
   '\u{1F927}':'mood-1F927', '\u{1F637}':'mood-1F637', '\u{1FAE0}':'mood-1FAE0', '\u{1F636}':'mood-1F636',
   '\u{1F610}':'mood-1F610', '\u{1F924}':'mood-1F924',
-  /* 5 导航 */
-  '\u{1F3E0}':'nav-1F3E0', '\u{1F331}':'nav-1F331', '\u{1F3C6}':'nav-1F3C6',
-  '\u{1F4CA}':'nav-1F4CA', '\u{2699}\u{FE0F}':'nav-2699-FE0F',
-  /* 核心静态 */
-  '\u{1F4A7}':'core-1F4A7', '\u{1F48A}':'core-1F48A', '\u{1F445}':'core-1F445',
-  '\u{1F3AF}':'core-1F3AF', '\u{1F514}':'core-1F514', '\u{1F319}':'core-1F319',
-  '\u{2728}':'core-2728', '\u{23F1}\u{FE0F}':'core-23F1-FE0F', '\u{1F557}':'core-1F557',
-  '\u{1F504}':'core-1F504', '\u{1F4E4}':'core-1F4E4', '\u{1F4E5}':'core-1F4E5',
-  '\u{1F5D1}\u{FE0F}':'core-1F5D1-FE0F', '\u{231A}':'core-231A', '\u{1F517}':'core-1F517',
-  '\u{1F310}':'core-1F310', '\u{1F4D6}':'core-1F4D6', '\u{1F4CB}':'core-1F4CB',
-  '\u{1F947}':'core-1F947', '\u{1F948}':'core-1F948', '\u{1F949}':'core-1F949',
-  '\u{1F525}':'core-1F525'
 };
 /* 把单个 emoji 字符渲染为 <img>，找不到则原样返回字符（兜底） */
 function emojiImg(c, extraStyle) {
@@ -686,31 +752,106 @@ function emojiImg(c, extraStyle) {
   return '<img src="icons/emoji/' + file + '.png" alt="" class="emoji"' + style + '>';
 }
 
-var APP_VERSION = 'v2.5.1';
-var NAV_STYLE_KEY = 'drink_water_nav_style'; /* 'svg' 线性 / 'emoji' 经典 */
+/* ── IconPark 图标库（内联 SVG，来源 bytedance/IconPark） ── */
+var IP_ICONS = {
+  'home': { v: '0 0 48 48', d: '<path d="M9 18V42H39V18L24 6L9 18Z" fill="none"/><path d="M19 29V42H29V29H19Z" fill="none"/><path d="M9 42H39"/>' },
+  'target-one': { v: '0 0 48 48', d: '<path d="M23.8887 39.8887C32.7287 39.8887 39.8887 32.7287 39.8887 23.8887C39.8887 15.0487 32.7287 7.88867 23.8887 7.88867C15.0487 7.88867 7.88867 15.0487 7.88867 23.8887C7.88867 32.7287 15.0487 39.8887 23.8887 39.8887Z" fill="none" stroke-miterlimit="2"/><path d="M23.8887 31.8887C28.3087 31.8887 31.8887 28.3087 31.8887 23.8887C31.8887 19.4687 28.3087 15.8887 23.8887 15.8887C19.4687 15.8887 15.8887 19.4687 15.8887 23.8887C15.8887 28.3087 19.4687 31.8887 23.8887 31.8887Z" fill="none" stroke-miterlimit="2"/><path d="M23.8887 25.8887C24.9887 25.8887 25.8887 24.9887 25.8887 23.8887C25.8887 22.7887 24.9887 21.8887 23.8887 21.8887C22.7887 21.8887 21.8887 22.7887 21.8887 23.8887C21.8887 24.9887 22.7887 25.8887 23.8887 25.8887Z" fill="currentColor"/><path d="M23.8887 7.88867V3.88867" stroke-miterlimit="2"/><path d="M37.8887 43.8887L33.8887 36.8887" stroke-miterlimit="2"/><path d="M13.8887 36.8887L9.88867 43.8887" stroke-miterlimit="2"/>' },
+  'water': { v: '0 0 48 48', d: '<path d="M9 29C11.7614 29 14 26.7614 14 24C14 26.7614 16.2386 29 19 29C21.7614 29 24 26.7614 24 24C24 26.7614 26.2386 29 29 29C31.7614 29 34 26.7614 34 24C34 26.7614 36.2386 29 39 29C41.7614 29 44 26.7614 44 24C44 35.0457 35.0457 44 24 44C12.9543 44 4 35.0457 4 24C4 26.7614 6.23858 29 9 29Z" fill="none"/><path d="M28 13C28 15.2091 26.2091 17 24 17C21.7909 17 20 15.2091 20 13C20 10.7909 24 4 24 4C24 4 28 10.7909 28 13Z" fill="none"/>' },
+  'remind': { v: '0 0 48 48', d: '<path d="M24 4C16.268 4 10 10.268 10 18V38H38V18C38 10.268 31.732 4 24 4Z" fill="none"/><path d="M10 38V18C10 10.268 16.268 4 24 4C31.732 4 38 10.268 38 18V38M4 38H44"/><path d="M24 44C26.7614 44 29 41.7614 29 39V38H19V39C19 41.7614 21.2386 44 24 44Z" fill="none"/>' },
+  'timer': { v: '0 0 48 48', d: '<circle cx="24" cy="28" r="16" fill="none"/><path d="M28 4L20 4"/><path d="M24 4V12"/><path d="M35 16L38 13"/><path d="M24 28V22"/><path d="M24 28H18"/>' },
+  'alarm-clock': { v: '0 0 48 48', d: '<path d="M23.9998 44.3332C34.1251 44.3332 42.3332 36.1251 42.3332 25.9999C42.3332 15.8747 34.1251 7.66656 23.9998 7.66656C13.8746 7.66656 5.6665 15.8747 5.6665 25.9999C5.6665 36.1251 13.8746 44.3332 23.9998 44.3332Z" fill="none"/><path d="M23.7594 15.3536L23.7582 26.3624L31.5305 34.1347"/><path d="M4 9.00001L11 4.00001"/><path d="M44 9.00001L37 4.00001"/>' },
+  'pills': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M9.97315 22.0623L17.2506 15.9558L24.528 9.84929C28.9703 6.12177 35.5932 6.7012 39.3207 11.1435C43.0483 15.5858 42.4688 22.2087 38.0265 25.9362L30.7491 32.0427L23.4717 38.1492C19.0294 41.8767 12.4065 41.2973 8.67896 36.855C4.95144 32.4127 5.53087 25.7898 9.97315 22.0623Z" fill="none"/><path d="M19.6885 21.8613L25.4261 28.6992"/>' },
+  'delete': { v: '0 0 48 48', d: '<path d="M9 10V44H39V10H9Z" fill="none"/><path d="M20 20V33"/><path d="M28 20V33"/><path d="M4 10H44"/><path d="M16 10L19.289 4H28.7771L32 10H16Z" fill="none"/>' },
+  'dark-mode': { v: '0 0 48 48', d: '<path d="M24.0033 4L29.2737 9.27038H38.7296V18.7263L44 23.9967L38.7296 29.2737V38.7296H29.2737L24.0033 44L18.7264 38.7296H9.27036V29.2737L4 23.9967L9.27036 18.7263V9.27038H18.7264L24.0033 4Z" fill="none" stroke-miterlimit="10"/><path d="M27 17C27 25 22 26 17 26C17 30 23.5 34 29 30C34.5 26 31 17 27 17Z" fill="none" stroke-miterlimit="10"/>' },
+  'avatar': { v: '0 0 48 48', d: '<path d="M5.00372 42.2311C5.00372 42.6557 5.35807 42.9999 5.79521 42.9999L42.2023 43C42.6394 43 42.9938 42.6558 42.9938 42.2313V41.3131C43.012 41.0364 43.049 39.6555 42.1388 38.1289C41.5648 37.1663 40.7318 36.3347 39.6628 35.6573C38.3696 34.8378 36.7245 34.244 34.7347 33.8865C34.72 33.8846 33.2446 33.689 31.7331 33.303C29.101 32.6307 28.8709 32.0357 28.8694 32.0299C28.8539 31.9711 28.8315 31.9146 28.8028 31.8615C28.7813 31.7505 28.7281 31.3328 28.8298 30.2136C29.088 27.371 30.6128 25.691 31.838 24.3412C32.2244 23.9155 32.5893 23.5134 32.8704 23.1191C34.0827 21.4181 34.1952 19.4839 34.2003 19.364C34.2003 19.1211 34.1724 18.9214 34.1127 18.7363C33.9937 18.3659 33.7698 18.1351 33.6063 17.9666L33.6052 17.9654C33.564 17.923 33.5251 17.8828 33.4933 17.8459C33.4812 17.8318 33.449 17.7945 33.4783 17.603C33.5859 16.8981 33.6505 16.3079 33.6815 15.7456C33.7367 14.7438 33.7798 13.2456 33.5214 11.7875C33.4895 11.5385 33.4347 11.2755 33.3494 10.9622C33.0764 9.95814 32.6378 9.09971 32.0284 8.39124C31.9236 8.27722 29.3756 5.5928 21.9788 5.04201C20.956 4.96586 19.9449 5.00688 18.9496 5.05775C18.7097 5.06961 18.3812 5.08589 18.0738 5.16554C17.3101 5.36337 17.1063 5.84743 17.0528 6.11834C16.9641 6.56708 17.12 6.91615 17.2231 7.14718L17.2231 7.1472L17.2231 7.14723C17.2381 7.18072 17.2566 7.22213 17.2243 7.32997C17.0526 7.59588 16.7825 7.83561 16.5071 8.06273C16.4275 8.13038 14.5727 9.72968 14.4707 11.8189C14.1957 13.4078 14.2165 15.8834 14.5417 17.5944C14.5606 17.6889 14.5885 17.8288 14.5432 17.9233L14.5432 17.9233C14.1935 18.2367 13.7971 18.5919 13.7981 19.4024C13.8023 19.4839 13.9148 21.4181 15.1272 23.1191C15.408 23.5131 15.7726 23.9149 16.1587 24.3403L16.1596 24.3412L16.1596 24.3413C17.3848 25.6911 18.9095 27.371 19.1678 30.2135C19.2694 31.3327 19.2162 31.7505 19.1947 31.8614C19.166 31.9145 19.1436 31.971 19.1282 32.0298C19.1266 32.0356 18.8974 32.6287 16.2772 33.2996C14.7656 33.6867 13.2775 33.8845 13.2331 33.8909C11.2994 34.2173 9.66438 34.7963 8.37351 35.6115C7.30813 36.2844 6.47354 37.1175 5.89289 38.0877C4.96517 39.6379 4.99025 41.0497 5.00372 41.3074V42.2311Z" fill="none"/>' },
+  'edit': { v: '0 0 48 48', d: '<path d="M7 42H43"/><path d="M11 26.7199V34H18.3172L39 13.3081L31.6951 6L11 26.7199Z" fill="none"/>' },
+  'hamburger-button': { v: '0 0 48 48', d: '<path d="M7.94971 11.9497H39.9497"/><path d="M7.94971 23.9497H39.9497"/><path d="M7.94971 35.9497H39.9497"/>' },
+  'cup': { v: '0 0 49 48', d: '<path d="M8.77783 17.012C8.77783 16.4531 9.23094 16 9.78988 16H33.7658C34.3247 16 34.7778 16.4531 34.7778 17.012V31C34.7778 38.1797 28.9575 44 21.7778 44V44C14.5981 44 8.77783 38.1797 8.77783 31V17.012Z"/><rect x="8.77783" y="23" width="26" height="8" fill="none"/><path d="M21.7778 4V10"/><path d="M13.7778 6V8"/><path d="M29.7778 6V8"/><path d="M34.7778 34C38.6438 34 41.7778 30.866 41.7778 27C41.7778 23.134 38.6438 20 34.7778 20"/>' },
+  'magic-wand': { v: '0 0 48 48', d: '<path d="M7.57932 35.4207C5.32303 32.1826 4 28.2458 4 24C4 12.9543 12.9543 4 24 4C35.0457 4 44 12.9543 44 24C44 35.0457 35.0457 44 24 44C19.7542 44 15.8174 42.677 12.5793 40.4207M7.57932 35.4207C8.93657 37.3685 10.6315 39.0634 12.5793 40.4207M7.57932 35.4207L16 27M12.5793 40.4207L21 32M16 27L20 23L25 28L21 32M16 27L21 32"/><path d="M17 14H21M19 12V16"/><path d="M28 17H34M31 14V20"/><path d="M32 29H36M34 27V31"/>' },
+  'update-rotation': { v: '0 0 48 48', d: '<path d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z" fill="none"/><path d="M33.5424 27C32.2681 31.0571 28.4778 34 24.0002 34C19.5226 34 15.7323 31.0571 14.458 27V33"/><path d="M33.5424 15V21C32.2681 16.9429 28.4778 14 24.0002 14C19.5226 14 15.7323 16.9429 14.458 21"/>' },
+  'info': { v: '0 0 48 48', d: '<path d="M24 44C29.5228 44 34.5228 41.7614 38.1421 38.1421C41.7614 34.5228 44 29.5228 44 24C44 18.4772 41.7614 13.4772 38.1421 9.85786C34.5228 6.23858 29.5228 4 24 4C18.4772 4 13.4772 6.23858 9.85786 9.85786C6.23858 13.4772 4 18.4772 4 24C4 29.5228 6.23858 34.5228 9.85786 38.1421C13.4772 41.7614 18.4772 44 24 44Z" fill="none"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 11C25.3807 11 26.5 12.1193 26.5 13.5C26.5 14.8807 25.3807 16 24 16C22.6193 16 21.5 14.8807 21.5 13.5C21.5 12.1193 22.6193 11 24 11Z" fill="currentColor"/><path d="M24.5 34V20H23.5H22.5"/><path d="M21 34H28"/>' },
+  'earth': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"/><path d="M4 24H44"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 44C28.4183 44 32 35.0457 32 24C32 12.9543 28.4183 4 24 4C19.5817 4 16 12.9543 16 24C16 35.0457 19.5817 44 24 44Z"/><path d="M9.85791 10.1421C13.4772 13.7614 18.4772 16 24 16C29.5229 16 34.5229 13.7614 38.1422 10.1421"/><path d="M38.1422 37.8579C34.5229 34.2386 29.5229 32 24 32C18.4772 32 13.4772 34.2386 9.85791 37.8579"/>' },
+  'iwatch': { v: '0 0 48 48', d: '<path d="M36 12.0002H10V36.0002H36V12.0002Z" fill="none"/><path d="M27 24.0002C27 21.7911 25.2091 20.0002 23 20.0002C20.7909 20.0002 19 21.7911 19 24.0002C19 26.2094 20.7909 28.0002 23 28.0002C25.2091 28.0002 27 26.2094 27 24.0002Z" fill="none"/><path d="M15 12.0002C15 11.9273 15.0083 11.8545 15.0246 11.7833L16.6321 4.78331C16.7372 4.32578 17.1565 4.00024 17.6409 4.00024H28.3837C28.8681 4.00024 29.2874 4.32578 29.3925 4.78331L31 11.7833"/><path d="M15 36.0002C15 36.0732 15.0083 36.1459 15.0246 36.2172L16.6321 43.2172C16.7372 43.6747 17.1565 44.0002 17.6409 44.0002H28.3837C28.8681 44.0002 29.2874 43.6747 29.3925 43.2172L31 36.2172"/><path d="M39 16.0002V20.0002"/>' },
+  'sync': { v: '0 0 48 48', d: '<path d="M30 7.979L19 8.00006V18.0001H4V32H20.9995"/><path d="M20 42L31 41.9789V31.5789H44V18H30.3448"/>' },
+  'link-break': { v: '0 0 48 48', d: '<path d="M32 15H42C43.1046 15 44 15.8954 44 17V31C44 32.1046 43.1046 33 42 33H32"/><path d="M17 15H6C4.89543 15 4 15.8954 4 17V31C4 32.1046 4.89543 33 6 33H17"/><path d="M24 6V42"/><path d="M12 24H16"/><path d="M32 24H36"/>' },
+  'link-interrupt': { v: '0 0 48 48', d: '<path d="M27 14H42C43.1046 14 44 14.8954 44 16V30C44 31.1046 43.1046 32 42 32H38"/><path d="M11 14H6C4.89543 14 4 14.8954 4 16V30C4 31.1046 4.89543 32 6 32H21"/><path d="M14 6L34 40"/><path d="M32 23H36"/><path d="M12 23H16"/>' },
+  'export': { v: '0 0 48 48', d: '<path d="M42 27C42 33 38 43 24 43C10 43 6 33 6 27"/><path d="M24.0078 5.10059V33.0001"/><path d="M12 17L24 5L36 17"/>' },
+  'download': { v: '0 0 48 48', d: '<path d="M6 24.0083V42H42V24"/><path d="M33 23L24 32L15 23"/><path d="M23.9917 6V32"/>' },
+  'calendar': { v: '0 0 48 48', d: '<path d="M5 19H43V40C43 41.1046 42.1046 42 41 42H7C5.89543 42 5 41.1046 5 40V19Z" fill="none"/><path d="M5 9C5 7.89543 5.89543 7 7 7H41C42.1046 7 43 7.89543 43 9V19H5V9Z"/><path d="M16 4V12"/><path d="M32 4V12"/><path d="M28 34H34"/><path d="M14 34H20"/><path d="M28 26H34"/><path d="M14 26H20"/>' },
+  'trophy': { v: '0 0 48 48', d: '<path d="M24 30C30.6274 30 36 24.4694 36 17.6471V4H12V17.6471C12 24.4694 17.3726 30 24 30Z" fill="none"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 21V11H4C4 17.6667 8 21 12 21Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M36 21V11H44C44 17.6667 40 21 36 21Z"/><path d="M24 32V36"/><path d="M15 42L18.69 36H29.0425L33 42H15Z" fill="none"/>' },
+  'book-one': { v: '0 0 48 48', d: '<path d="M7 37C7 29.2967 7 11 7 11C7 7.68629 9.68629 5 13 5H35V31C35 31 18.2326 31 13 31C9.7 31 7 33.6842 7 37Z" fill="none"/><path d="M35 31C35 31 14.1537 31 13 31C9.68629 31 7 33.6863 7 37C7 40.3137 9.68629 43 13 43C15.2091 43 25.8758 43 41 43V7"/><path d="M14 37H34"/>' },
+  'log': { v: '0 0 48 48', d: '<rect x="13" y="10" width="28" height="34" fill="none"/><path d="M35 10V4H8C7.44772 4 7 4.44772 7 5V38H13"/><path d="M21 22H33"/><path d="M21 30H33"/>' },
+  'close': { v: '0 0 48 48', d: '<path d="M8 8L40 40"/><path d="M8 40L40 8"/>' },
+  'check': { v: '0 0 48 48', d: '<path d="M43 11L16.875 37L5 25.1818"/>' },
+  'arrow-left': { v: '0 0 48 48', d: '<path d="M5.79889 24H41.7989"/><path d="M17.7988 36L5.79883 24L17.7988 12"/>' },
+  'arrow-right': { v: '0 0 48 48', d: '<path d="M41.9999 24H5.99994"/><path d="M30 12L42 24L30 36"/>' },
+  'right': { v: '0 0 48 48', d: '<path d="M19 12L31 24L19 36"/>' },
+  'arrow-up': { v: '0 0 48 48', d: '<path d="M24 6V42"/><path d="M12 18L24 6L36 18"/>' },
+  'arrow-down': { v: '0 0 48 48', d: '<path d="M24 42V6"/><path d="M36 30L24 42L12 30"/>' },
+  'fire': { v: '0 0 48 48', d: '<path d="M24 44C32.2347 44 38.9998 37.4742 38.9998 29.0981C38.9998 27.0418 38.8953 24.8375 37.7555 21.4116C36.6157 17.9858 36.3861 17.5436 35.1809 15.4279C34.666 19.7454 31.911 21.5448 31.2111 22.0826C31.2111 21.5231 29.5445 15.3359 27.0176 11.6339C24.537 8 21.1634 5.61592 19.1853 4C19.1853 7.06977 18.3219 11.6339 17.0854 13.9594C15.8489 16.2849 15.6167 16.3696 14.0722 18.1002C12.5278 19.8308 11.8189 20.3653 10.5274 22.4651C9.23596 24.565 9 27.3618 9 29.4181C9 37.7942 15.7653 44 24 44Z" fill="none"/>' },
+  'success': { v: '0 0 48 48', d: '<path d="M24 4L29.2533 7.83204L35.7557 7.81966L37.7533 14.0077L43.0211 17.8197L41 24L43.0211 30.1803L37.7533 33.9923L35.7557 40.1803L29.2533 40.168L24 44L18.7467 40.168L12.2443 40.1803L10.2467 33.9923L4.97887 30.1803L7 24L4.97887 17.8197L10.2467 14.0077L12.2443 7.81966L18.7467 7.83204L24 4Z" fill="none"/><path d="M17 24L22 29L32 19"/>' },
+  'error': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M6 11L11 6L24 19L37 6L42 11L29 24L42 37L37 42L24 29L11 42L6 37L19 24L6 11Z" fill="none"/>' },
+  'setting-two': { v: '0 0 48 48', d: '<path d="M18.2838 43.1713C14.9327 42.1736 11.9498 40.3213 9.58787 37.867C10.469 36.8227 11 35.4734 11 34.0001C11 30.6864 8.31371 28.0001 5 28.0001C4.79955 28.0001 4.60139 28.01 4.40599 28.0292C4.13979 26.7277 4 25.3803 4 24.0001C4 21.9095 4.32077 19.8938 4.91579 17.9995C4.94381 17.9999 4.97188 18.0001 5 18.0001C8.31371 18.0001 11 15.3138 11 12.0001C11 11.0488 10.7786 10.1493 10.3846 9.35011C12.6975 7.1995 15.5205 5.59002 18.6521 4.72314C19.6444 6.66819 21.6667 8.00013 24 8.00013C26.3333 8.00013 28.3556 6.66819 29.3479 4.72314C32.4795 5.59002 35.3025 7.1995 37.6154 9.35011C37.2214 10.1493 37 11.0488 37 12.0001C37 15.3138 39.6863 18.0001 43 18.0001C43.0281 18.0001 43.0562 17.9999 43.0842 17.9995C43.6792 19.8938 44 21.9095 44 24.0001C44 25.3803 43.8602 26.7277 43.594 28.0292C43.3986 28.01 43.2005 28.0001 43 28.0001C39.6863 28.0001 37 30.6864 37 34.0001C37 35.4734 37.531 36.8227 38.4121 37.867C36.0502 40.3213 33.0673 42.1736 29.7162 43.1713C28.9428 40.752 26.676 39.0001 24 39.0001C21.324 39.0001 19.0572 40.752 18.2838 43.1713Z" fill="none"/><path d="M24 31C27.866 31 31 27.866 31 24C31 20.134 27.866 17 24 17C20.134 17 17 20.134 17 24C17 27.866 20.134 31 24 31Z" fill="none"/>' },
+  'chart-histogram-two': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M4 42H44H4Z" fill="none"/><path d="M4 42H44"/><rect x="8" y="28" width="6" height="14" fill="none"/><rect x="21" y="18" width="6" height="24" fill="none"/><rect x="34" y="6" width="6" height="36" fill="none"/>' },
+  'seedling': { v: '0 0 48 48', d: '<path d="M24 42V26"/><path d="M41.9417 10.0068C41.1662 23.0313 32.8114 27.2431 25.9958 27.9029C24.8963 28.0093 24 27.1041 24 25.9995V17.6276C24 17.3953 24.0408 17.1604 24.1245 16.9438C27.1175 9.19883 34.283 8.15499 40.0013 8.01953C41.1056 7.99337 42.0073 8.90411 41.9417 10.0068Z" fill="none"/><path d="M7.99844 6.07206C17.3266 6.75658 22.1952 12.1631 23.834 15.6298C23.9486 15.8722 24.0001 16.1382 24.0001 16.4063V23.9101C24.0001 25.0491 23.0393 25.9645 21.9059 25.8504C7.33707 24.3838 6.11103 14.7864 6.00913 7.9987C5.99255 6.89426 6.89684 5.99122 7.99844 6.07206Z" fill="none"/>' },
+  'sapling': { v: '0 0 48 48', d: '<path d="M26.9999 8.00001C22.3136 12.6863 23.0351 21.035 23.0351 21.035C23.0351 21.035 31.3136 21.6863 35.9999 17C40.6862 12.3137 40.0057 4.03509 40.0057 4.03509C40.0057 4.03509 31.6862 3.31372 26.9999 8.00001Z" fill="none"/><path d="M23.0351 21.035L30.9999 13.0702M23.0351 21.035C23.0351 21.035 22.3136 12.6863 26.9999 8.00001C31.6862 3.31372 40.0057 4.03509 40.0057 4.03509C40.0057 4.03509 40.6862 12.3137 35.9999 17C31.3136 21.6863 23.0351 21.035 23.0351 21.035Z"/><path d="M20.0001 21C23.8492 24.8434 22.9712 31.9711 22.9712 31.9711C22.9712 31.9711 15.8492 32.8434 12.0001 29C8.15094 25.1566 9.03226 18.0289 9.03226 18.0289C9.03226 18.0289 16.151 17.1566 20.0001 21Z" fill="none"/><path d="M22.9712 31.9711L16.0001 25M22.9712 31.9711C22.9712 31.9711 23.8492 24.8434 20.0001 21C16.151 17.1566 9.03226 18.0289 9.03226 18.0289C9.03226 18.0289 8.15094 25.1566 12.0001 29C15.8492 32.8434 22.9712 31.9711 22.9712 31.9711Z"/><path d="M23 4V44"/>' },
+  'leaves': { v: '0 0 48 48', d: '<path d="M31 43C31 43 18 44 11 36C4 28 4 4 4 4C4 4 28 3 36 9C44 15 42 32 42 32"/><path d="M44 44C44 44 32.8207 35.5515 26 28C19.1793 20.4485 16 13 16 13"/><path d="M26 28L27 15"/><path d="M26 28L16 27"/>' },
+  'bloom': { v: '0 0 48 48', d: '<path d="M6 32L18 42"/><path d="M42 32L30 42"/><path d="M24 32V44"/><path d="M17 11L24 4L31 11L38 10C38 10 39 14.2386 39 17C39 27 30.5 32 24 32C17.5 32 9 27 9 17C9 14.2386 10 10 10 10L17 11Z" fill="none"/>' },
+  'tree-one': { v: '0 0 48 48', d: '<ellipse cx="24" cy="20" rx="15" ry="16" fill="none"/><path d="M24 14L24 36"/><path d="M30 34.6689C28.1626 35.5253 26.1333 36.0003 24 36.0003C21.8667 36.0003 19.8374 35.5253 18 34.6689"/><path d="M24 36L24 44"/><path d="M24 22L30 16"/><path d="M24 29L18 23"/>' },
+  'blossom': { v: '0 0 48 48', d: '<path d="M23.2663 6.00775C31 6.45947 31.2208 14.3708 30.285 17.623C39.6432 14.6492 43.2305 18.8621 43.8544 21.3403C44.9773 27.2874 39.3312 29.0839 36.3678 29.2387C42.357 36.6725 39.4872 40.3894 37.3036 41.3186C30.5657 43.1771 26.6977 38.3761 25.6059 35.7433C22.6112 42.062 17.4954 42.4027 15.3119 41.7832C8.94827 39.9248 11.7245 33.2654 13.9081 30.1679C4.92427 28.6812 3.61412 24.2829 4.08203 22.2696C5.57934 14.8358 13.4402 16.0745 17.1835 17.623C15.6862 7.95912 20.6148 5.85288 23.2663 6.00775Z" fill="none"/><path d="M25 26L21 31"/><path d="M19 25L25 26"/><path d="M24 19L25 26"/><path d="M31 24L25 26"/><path d="M25 26L30 30"/>' },
+  'star': { v: '0 0 48 48', d: '<path d="M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z" fill="none"/>' },
+  'butterfly': { v: '0 0 48 48', d: '<path d="M5.0002 12.0003C8.66389 7.70613 19.0814 18.8191 24.0002 25C28.9191 18.8191 39.3366 7.70599 43.0002 12.0001C43.6787 12.6507 44.4427 14.877 42.0002 18C41.3217 18.9759 40.186 21.7059 41.0002 26C41.0002 27.1386 39.8852 28.9519 35.0002 27C37.3749 28.6266 41.8498 33.0962 39.0002 37C36.2864 40.4158 29.9649 44.4569 26.0002 35L24.0002 31L22.0002 35C18.0356 44.4569 11.7141 40.4158 9.00024 37C6.15071 33.0962 10.6255 28.6268 13.0001 27.0003C8.1152 28.9521 7.00011 27.1389 7.00011 26.0003C7.81438 21.7061 6.67867 18.9762 6.00012 18.0003C3.55766 14.8773 4.32174 12.6509 5.0002 12.0003Z" fill="none"/><path d="M24.0322 23C23.534 17.8642 28.9135 7 33 7"/><path d="M23.9678 23C24.466 17.8642 19.0865 7 15 7"/>' },
+  'crown': { v: '0 0 48 48', d: '<path d="M9 40L4 17L14 22L24 8L34 22L44 17L39 40H9Z" fill="none"/><path d="M24 33C26.2091 33 28 31.2091 28 29C28 26.7909 26.2091 25 24 25C21.7909 25 20 26.7909 20 29C20 31.2091 21.7909 33 24 33Z" fill="none"/>' },
+  'color-filter': { v: '0 0 48 48', d: '<path d="M24 40.9444C26.123 42.8446 28.9266 44 32 44C38.6274 44 44 38.6274 44 32C44 26.4085 40.1757 21.7102 35 20.3781"/><path d="M13 20.3781C7.82432 21.7102 4 26.4085 4 32C4 38.6274 9.37258 44 16 44C22.6274 44 28 38.6274 28 32C28 30.4506 27.7063 28.9697 27.1716 27.6101"/><path d="M24 28C30.6274 28 36 22.6274 36 16C36 9.37258 30.6274 4 24 4C17.3726 4 12 9.37258 12 16C12 22.6274 17.3726 28 24 28Z" fill="none"/>' },
+  'flag': { v: '0 0 48 48', d: '<path d="M8 44H12H16"/><path d="M12 44V4"/><path d="M40 6H12V22H40L36 14L40 6Z" fill="none"/>' },
+  'sport': { v: '0 0 48 48', d: '<path d="M36 15C38.7614 15 41 12.7614 41 10C41 7.23858 38.7614 5 36 5C33.2386 5 31 7.23858 31 10C31 12.7614 33.2386 15 36 15Z" fill="none"/><path d="M12 16.7691L20.0031 13.998L31 19.2466L20.0031 27.4442L31 34.6834L24.0083 43.998"/><path d="M35.3203 21.6434L38.002 23.1018L44.0003 17.4658"/><path d="M16.849 31.5454L13.8793 35.4572L4.00391 40.9964"/>' },
+  'refresh': { v: '0 0 48 48', d: '<path d="M42 8V24"/><path d="M6 24L6 40"/><path d="M42 24C42 14.0589 33.9411 6 24 6C18.9145 6 14.3216 8.10896 11.0481 11.5M6 24C6 33.9411 14.0589 42 24 42C28.8556 42 33.2622 40.0774 36.5 36.9519"/>' },
+  'add': { v: '0 0 48 48', d: '<rect x="6" y="6" width="36" height="36" rx="3" fill="none"/><path d="M24 16V32"/><path d="M16 24L32 24"/>' },
+  'like': { v: '0 0 48 48', d: '<path d="M15 8C8.92487 8 4 12.9249 4 19C4 30 17 40 24 42.3262C31 40 44 30 44 19C44 12.9249 39.0751 8 33 8C29.2797 8 25.9907 9.8469 24 12.6738C22.0093 9.8469 18.7203 8 15 8Z" fill="none"/>' },
+  'tool': { v: '0 0 48 48', d: '<path d="M44 16C44 22.6274 38.6274 28 32 28C29.9733 28 28.0639 27.4975 26.3896 26.6104L9 44L4 39L21.3896 21.6104C20.5025 19.9361 20 18.0267 20 16C20 9.37258 25.3726 4 32 4C34.0267 4 35.9361 4.50245 37.6104 5.38959L30 13L35 18L42.6104 10.3896C43.4975 12.0639 44 13.9733 44 16Z" fill="none"/>' },
+  'caution': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M24 5L2 43H46L24 5Z" fill="none"/><path d="M24 35V36"/><path d="M24 19.0005L24.0083 29"/>' },
+  'plug': { v: '0 0 48 48', d: '<path d="M6 14H42V24C38 32 32 36 24 36C16 36 10 32 6 24V14Z" fill="none"/><path d="M33 34L32 44H16L15 34"/><path d="M22 24H26"/><path d="M16 4L16 12"/><path d="M32 4V12"/>' },
+  'gold-medal': { v: '0 0 48 48', d: '<path d="M44 4H31L27 14.3001C31.4614 15.2057 35.2038 18.0914 37.2699 22L44 4Z" fill="none"/><path d="M17 4H4L10.7301 22C12.7962 18.0914 16.5386 15.2057 21 14.3001L17 4Z" fill="none"/><path d="M39 29C39 37.2843 32.2843 44 24 44C15.7157 44 9 37.2843 9 29C9 26.4718 9.62546 24.0897 10.7301 22C12.7962 18.0914 16.5386 15.2057 21 14.3001C21.9693 14.1033 22.9726 14 24 14C25.0274 14 26.0307 14.1033 27 14.3001C31.4614 15.2057 35.2038 18.0914 37.2699 22C38.3745 24.0897 39 26.4718 39 29Z" fill="none"/><path d="M24 35V22L21 23M24 35H28M24 35H20"/>' }
+};
+var IP_ICONS_TWO_TONE = {
+  'home': { v: '0 0 48 48', d: '<path d="M9 18V42H39V18L24 6L9 18Z" fill="var(--primary)"/><path d="M19 29V42H29V29H19Z" fill="var(--primary)"/><path d="M9 42H39"/>' },
+  'seedling': { v: '0 0 48 48', d: '<path d="M24 42V26"/><path d="M41.9417 10.0068C41.1662 23.0313 32.8114 27.2431 25.9958 27.9029C24.8963 28.0093 24 27.1041 24 25.9995V17.6276C24 17.3953 24.0408 17.1604 24.1245 16.9438C27.1175 9.19883 34.283 8.15499 40.0013 8.01953C41.1056 7.99337 42.0073 8.90411 41.9417 10.0068Z" fill="var(--primary)"/><path d="M7.99844 6.07206C17.3266 6.75658 22.1952 12.1631 23.834 15.6298C23.9486 15.8722 24.0001 16.1382 24.0001 16.4063V23.9101C24.0001 25.0491 23.0393 25.9645 21.9059 25.8504C7.33707 24.3838 6.11103 14.7864 6.00913 7.9987C5.99255 6.89426 6.89684 5.99122 7.99844 6.07206Z" fill="var(--primary)"/>' },
+  'trophy': { v: '0 0 48 48', d: '<path d="M24 30C30.6274 30 36 24.4694 36 17.6471V4H12V17.6471C12 24.4694 17.3726 30 24 30Z" fill="var(--primary)"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 21V11H4C4 17.6667 8 21 12 21Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M36 21V11H44C44 17.6667 40 21 36 21Z"/><path d="M24 32V36"/><path d="M15 42L18.69 36H29.0425L33 42H15Z" fill="var(--primary)"/>' },
+  'chart-histogram-two': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M4 42H44H4Z" fill="var(--primary)"/><path d="M4 42H44"/><rect x="8" y="28" width="6" height="14" fill="var(--primary)"/><rect x="21" y="18" width="6" height="24" fill="var(--primary)"/><rect x="34" y="6" width="6" height="36" fill="var(--primary)"/>' },
+  'setting-two': { v: '0 0 48 48', d: '<path d="M18.2838 43.1713C14.9327 42.1736 11.9498 40.3213 9.58787 37.867C10.469 36.8227 11 35.4734 11 34.0001C11 30.6864 8.31371 28.0001 5 28.0001C4.79955 28.0001 4.60139 28.01 4.40599 28.0292C4.13979 26.7277 4 25.3803 4 24.0001C4 21.9095 4.32077 19.8938 4.91579 17.9995C4.94381 17.9999 4.97188 18.0001 5 18.0001C8.31371 18.0001 11 15.3138 11 12.0001C11 11.0488 10.7786 10.1493 10.3846 9.35011C12.6975 7.1995 15.5205 5.59002 18.6521 4.72314C19.6444 6.66819 21.6667 8.00013 24 8.00013C26.3333 8.00013 28.3556 6.66819 29.3479 4.72314C32.4795 5.59002 35.3025 7.1995 37.6154 9.35011C37.2214 10.1493 37 11.0488 37 12.0001C37 15.3138 39.6863 18.0001 43 18.0001C43.0281 18.0001 43.0562 17.9999 43.0842 17.9995C43.6792 19.8938 44 21.9095 44 24.0001C44 25.3803 43.8602 26.7277 43.594 28.0292C43.3986 28.01 43.2005 28.0001 43 28.0001C39.6863 28.0001 37 30.6864 37 34.0001C37 35.4734 37.531 36.8227 38.4121 37.867C36.0502 40.3213 33.0673 42.1736 29.7162 43.1713C28.9428 40.752 26.676 39.0001 24 39.0001C21.324 39.0001 19.0572 40.752 18.2838 43.1713Z" fill="var(--primary)"/><path d="M24 31C27.866 31 31 27.866 31 24C31 20.134 27.866 17 24 17C20.134 17 17 20.134 17 24C17 27.866 20.134 31 24 31Z" fill="var(--primary)"/>' }
+};
 
-/* 底部导航双模板：svg=线性图标(默认)，emoji=经典固化PNG */
+/* IconPark 内联图标：tone='color' 使用双色版本 */
+function ip(name, style, tone) {
+  var set = tone === 'color' ? (IP_ICONS_TWO_TONE[name] || IP_ICONS[name]) : IP_ICONS[name];
+  if (!set) return '';
+  return '<svg class="ip-icon" viewBox="' + set.v + '" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + (style ? ' style="' + style + '"' : '') + '>' + set.d + '</svg>';
+}
+/* 静态 HTML 用 data-ip 占位，脚本启动时统一填充 */
+function hydrateIcons(scope) {
+  var nodes = (scope || document).querySelectorAll('[data-ip]');
+  for (var i = 0; i < nodes.length; i++) {
+    var el = nodes[i];
+    if (el.getAttribute('data-ip-done')) continue;
+    el.innerHTML = ip(el.getAttribute('data-ip'), el.getAttribute('data-ip-style') || '', el.getAttribute('data-ip-tone') || '');
+    el.setAttribute('data-ip-done', '1');
+  }
+}
+
+var APP_VERSION = 'v2.7.0';
+var NAV_STYLE_KEY = 'drink_water_nav_style'; /* 'svg' 线性 / 'color' 双色 */
+
+/* 底部导航模板：svg=IconPark 线性，color=IconPark 双色 */
 var NAV_TEMPLATES = {
-  svg: [
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg>',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-8"/><path d="M12 13c0-4.2 3.2-7.4 8-7.4 0 4.8-3.4 7.4-8 7.4Z"/><path d="M12 9.5C12 5.9 9.4 3.4 5 3.4c0 3.8 2.8 6.1 7 6.1Z"/></svg>',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 5H4v1.2a4 4 0 0 0 4 3.8"/><path d="M17 5h3v1.2a4 4 0 0 1-4 3.8"/><path d="M12 14v3.5"/><path d="M9 21h6"/></svg>',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V9"/><path d="M10 20V5"/><path d="M16 20v-8"/><path d="M3.5 20h17"/></svg>',
-    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>'
-  ],
-  emoji: [
-    '<img src="icons/emoji/nav-1F3E0.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">',
-    '<img src="icons/emoji/nav-1F331.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">',
-    '<img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">',
-    '<img src="icons/emoji/nav-1F4CA.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">',
-    '<img src="icons/emoji/nav-2699-FE0F.png" alt="" class="emoji" style="width:1.375rem;height:1.375rem;">'
-  ]
+  svg: [ip('home'), ip('seedling'), ip('trophy'), ip('chart-histogram-two'), ip('setting-two')],
+  color: [ip('home', '', 'color'), ip('seedling', '', 'color'), ip('trophy', '', 'color'), ip('chart-histogram-two', '', 'color'), ip('setting-two', '', 'color')]
 };
 var NAV_LABELS = ['首页', '花园', '排行', '历史', '设置'];
 
 function getNavStyle() {
   var s = localStorage.getItem(NAV_STYLE_KEY);
-  return (s === 'emoji' || s === 'svg') ? s : 'svg';
+  if (s === 'emoji') s = 'color'; /* 旧版本值兼容 */
+  return (s === 'color' || s === 'svg') ? s : 'svg';
 }
 function renderNav() {
   var style = getNavStyle();
@@ -726,18 +867,18 @@ function renderNav() {
 /* 设置页：导航栏样式选单 */
 function showNavStyleDialog() {
   var cur = getNavStyle();
-  showModal('<img src="icons/emoji/nav-1F3E0.png" alt="" class="emoji" style="width:1em;height:1em;vertical-align:-0.1em;"> 导航栏样式',
+  showModal(ip('home', 'width:1em;height:1em;vertical-align:-0.1em;margin-right:2px;') + ' 导航栏样式',
     '<div style="font-size:0.8125rem;line-height:1.8;color:var(--text-secondary);margin-bottom:10px;">选择底部导航栏的图标风格：</div>' +
     '<div style="display:grid;gap:8px;">' +
     '<div onclick="setNavStyle(\'svg\')" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;border:2px solid ' + (cur === 'svg' ? 'var(--primary)' : 'var(--border)') + ';background:' + (cur === 'svg' ? 'rgba(15,168,150,.06)' : 'var(--bg)') + ';">' +
-      '<span style="width:26px;height:26px;flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);width:100%;height:100%;"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg></span>' +
-      '<div style="flex:1;"><div style="font-size:0.8125rem;font-weight:600;color:var(--text);">线性图标</div><div style="font-size:0.6875rem;color:var(--text-tertiary);">简约描边风格（新版）</div></div>' +
-      (cur === 'svg' ? '<span style="color:var(--primary);font-weight:700;">✓</span>' : '') +
+      '<span style="width:26px;height:26px;flex-shrink:0;color:var(--primary);">' + ip('home', 'width:100%;height:100%;') + '</span>' +
+      '<div style="flex:1;"><div style="font-size:0.8125rem;font-weight:600;color:var(--text);">线性图标</div><div style="font-size:0.6875rem;color:var(--text-tertiary);">IconPark 简约描边风格</div></div>' +
+      (cur === 'svg' ? ip('check', 'width:1rem;height:1rem;color:var(--primary);') : '') +
     '</div>' +
-    '<div onclick="setNavStyle(\'emoji\')" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;border:2px solid ' + (cur === 'emoji' ? 'var(--primary)' : 'var(--border)') + ';background:' + (cur === 'emoji' ? 'rgba(15,168,150,.06)' : 'var(--bg)') + ';">' +
-      '<span style="width:26px;height:26px;flex-shrink:0;font-size:1.25rem;line-height:1;">💧</span>' +
-      '<div style="flex:1;"><div style="font-size:0.8125rem;font-weight:600;color:var(--text);">经典表情</div><div style="font-size:0.6875rem;color:var(--text-tertiary);">彩色 emoji 图标（旧版）</div></div>' +
-      (cur === 'emoji' ? '<span style="color:var(--primary);font-weight:700;">✓</span>' : '') +
+    '<div onclick="setNavStyle(\'color\')" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;border:2px solid ' + (cur === 'color' ? 'var(--primary)' : 'var(--border)') + ';background:' + (cur === 'color' ? 'rgba(15,168,150,.06)' : 'var(--bg)') + ';">' +
+      '<span style="width:26px;height:26px;flex-shrink:0;color:var(--primary);">' + ip('home', 'width:100%;height:100%;', 'color') + '</span>' +
+      '<div style="flex:1;"><div style="font-size:0.8125rem;font-weight:600;color:var(--text);">双色图标</div><div style="font-size:0.6875rem;color:var(--text-tertiary);">IconPark 双色填充风格</div></div>' +
+      (cur === 'color' ? ip('check', 'width:1rem;height:1rem;color:var(--primary);') : '') +
     '</div>' +
     '</div>',
     [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]);
@@ -1018,7 +1159,7 @@ function generatePairingCode() {
     if (!resp.ok) { console.warn('Pairing code upload failed:', resp.status); showToast('配对码生成失败'); return; }
     setWatchDisconnected(false);
     updateSettingsUI();
-    showModal('📱 连接手表',
+    showModal(ip('iwatch', 'width:1em;height:1em;vertical-align:-0.1em;margin-right:2px;') + ' 连接手表',
       '<div style="text-align:center;padding:16px 0;">' +
       '<div style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:10px;">在手表版输入以下配对码</div>' +
       '<div style="font-size:2.5rem;font-weight:700;letter-spacing:8px;color:var(--primary);">' + code + '</div>' +
@@ -1058,7 +1199,7 @@ function renderSyncDebug() {
     for (var i = 0; i < _syncLogs.length; i++) {
       fullHtml += '<div>' + _syncLogs[i] + '</div>';
     }
-    fullHtml += '<div style="color:var(--text-tertiary);margin-top:4px;cursor:pointer;text-align:center;" onclick="toggleSyncDebug()">▲ 收起</div>';
+    fullHtml += '<div style="color:var(--text-tertiary);margin-top:4px;cursor:pointer;text-align:center;" onclick="toggleSyncDebug()">' + ip('arrow-up', 'width:0.75rem;height:0.75rem;vertical-align:-0.05em;') + ' 收起</div>';
     full.innerHTML = fullHtml;
     full.scrollTop = full.scrollHeight;
     full.style.display = 'block';
@@ -1072,7 +1213,7 @@ function renderSyncDebug() {
       summaryHtml += '<div>' + _syncLogs[i] + '</div>';
     }
     if (_syncLogs.length > _syncLogMaxSummary) {
-      summaryHtml += '<div style="color:var(--primary);font-weight:600;margin-top:2px;">▼ 展开全部 (' + _syncLogs.length + ' 条)</div>';
+      summaryHtml += '<div style="color:var(--primary);font-weight:600;margin-top:2px;">' + ip('arrow-down', 'width:0.75rem;height:0.75rem;vertical-align:-0.05em;') + ' 展开全部 (' + _syncLogs.length + ' 条)</div>';
     }
     summary.innerHTML = summaryHtml;
   }
@@ -1213,12 +1354,12 @@ function getMonthStats(records) {
 }
 
 var PLANT_STAGES = [
-  { emoji: '\u{1F330}', name: '\u79cd\u5b50\u4f11\u7720\u4e2d', minDays: 0 },
-  { emoji: '\u{1F331}', name: '\u5ae9\u82bd\u7834\u571f', minDays: 1 },
-  { emoji: '\u{1F33F}', name: '\u5065\u58ee\u6210\u957f', minDays: 3 },
-  { emoji: '\u{1F33B}', name: '\u542b\u82de\u5f85\u653e', minDays: 7 },
-  { emoji: '\u{1F333}', name: '\u679d\u7e41\u53f6\u8302', minDays: 14 },
-  { emoji: '\u{1F338}', name: '\u82b1\u5f00\u6ee1\u6811', minDays: 30 }
+  { icon: 'seedling', name: '\u79cd\u5b50\u4f11\u7720\u4e2d', minDays: 0 },
+  { icon: 'sapling', name: '\u5ae9\u82bd\u7834\u571f', minDays: 1 },
+  { icon: 'leaves', name: '\u5065\u58ee\u6210\u957f', minDays: 3 },
+  { icon: 'bloom', name: '\u542b\u82de\u5f85\u653e', minDays: 7 },
+  { icon: 'tree-one', name: '\u679d\u7e41\u53f6\u8302', minDays: 14 },
+  { icon: 'blossom', name: '\u82b1\u5f00\u6ee1\u6811', minDays: 30 }
 ];
 
 function calcStreak(records, dailyGoal) {
@@ -1261,10 +1402,10 @@ function calcExcessStreak(records, dailyGoal) {
 
 function getExcessAccessories(excessStreak) {
   var list = [];
-  if (excessStreak >= 3)  { list.push({ emoji: '\u2B50', cls: 'accessory star' }); }
-  if (excessStreak >= 7)  { list.push({ emoji: '\u{1F98B}', cls: 'accessory butterfly' }); }
-  if (excessStreak >= 14) { list.push({ emoji: '\u{1F451}', cls: 'accessory crown' }); }
-  if (excessStreak >= 30) { list.push({ emoji: '\u{1F308}', cls: 'accessory rainbow' }); }
+  if (excessStreak >= 3)  { list.push({ icon: 'star', cls: 'accessory star' }); }
+  if (excessStreak >= 7)  { list.push({ icon: 'butterfly', cls: 'accessory butterfly' }); }
+  if (excessStreak >= 14) { list.push({ icon: 'crown', cls: 'accessory crown' }); }
+  if (excessStreak >= 30) { list.push({ icon: 'color-filter', cls: 'accessory rainbow' }); }
   return list;
 }
 
@@ -1273,10 +1414,10 @@ function renderGarden(records, settings) {
   var stage = getPlantStage(streak);
   var excessStreak = calcExcessStreak(records, settings.dailyGoal);
   var accessories = getExcessAccessories(excessStreak);
-  var plantHtml = stage.emoji;
+  var plantHtml = ip(stage.icon);
   if (accessories.length > 0) {
-    plantHtml = '<span class="plant-accessories">' + stage.emoji;
-    accessories.forEach(function(a) { plantHtml += '<span class="' + a.cls + '">' + a.emoji + '</span>'; });
+    plantHtml = '<span class="plant-accessories">' + ip(stage.icon);
+    accessories.forEach(function(a) { plantHtml += '<span class="' + a.cls + '">' + ip(a.icon) + '</span>'; });
     plantHtml += '</span>';
   }
   document.getElementById('plantEmoji').innerHTML = plantHtml;
@@ -1295,12 +1436,12 @@ function renderCupAndTrack(total, goal) {
   document.getElementById('trackFill').style.width = (pct * 100) + '%';
   var runner = document.getElementById('trackRunner');
   runner.style.left = (pct * 100) + '%';
-  runner.textContent = isMet ? '\u{1F3C1}' : '\u{1F3C3}';
+  runner.innerHTML = isMet ? ip('flag', 'width:1.25rem;height:1.25rem;display:block;') : ip('sport', 'width:1.25rem;height:1.25rem;display:block;');
   document.getElementById('todayAmount').textContent = total;
   document.getElementById('todayGoalText').textContent = '\u76ee\u6807\uff1a' + goal + ' ml';
   var remain = Math.max(goal - total, 0);
   var remainEl = document.getElementById('todayRemainText');
-  remainEl.textContent = isMet ? '\u{1F389} \u4eca\u65e5\u76ee\u6807\u5df2\u8fbe\u6210\uff01' : '\u8fd8\u5dee ' + remain + ' ml';
+  remainEl.innerHTML = isMet ? ip('success', 'color:var(--success);') + ' \u4eca\u65e5\u76ee\u6807\u5df2\u8fbe\u6210\uff01' : '\u8fd8\u5dee ' + remain + ' ml';
   remainEl.style.color = isMet ? '#2F9E6E' : '#5B6B78';
   document.getElementById('trackGoalLabel').textContent = goal + ' ml';
   if (isMet && !lastGoalMet) {
@@ -1373,7 +1514,7 @@ function formatRecordLine(r) {
   var ts = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
   var mood = r.mood || '';
   var isPill = r.type === 'pill' || (!r.type && r.amount === 0);
-  var icon = isPill ? emojiImg('\u{1F48A}', 'width:1.25rem;height:1.25rem;margin-right:10px;') : emojiImg('\u{1F4A7}', 'width:1.25rem;height:1.25rem;margin-right:10px;');
+  var icon = isPill ? ip('pills', 'width:1.25rem;height:1.25rem;margin-right:10px;') : ip('water', 'width:1.25rem;height:1.25rem;margin-right:10px;');
   var label = isPill ? '\u5403\u836f' : r.amount + ' ml';
   return '<div style="display:flex;align-items:center;flex:1;min-width:0;">' +
     '<span>' + icon + '</span>' +
@@ -1407,15 +1548,15 @@ function renderRecords(todayRecords) {
       ? '<span class="record-mood-set' + (isEditing ? ' editing' : '') + '" onclick="startEditMood(\'' + r.id + '\')" title="点击更换心情">' + emojiImg(r.mood, 'width:1.375rem;height:1.375rem;vertical-align:-0.15em;') + '</span>'
       : '';
     var addBtn = !r.mood
-      ? '<span class="record-mood-add" onclick="applyMoodToRecord(\'' + r.id + '\')" title="标注心情">➕</span>'
+      ? '<span class="record-mood-add" onclick="applyMoodToRecord(\'' + r.id + '\')" title="标注心情">' + ip('add', 'width:0.85rem;height:0.85rem;') + '</span>'
       : '';
     var isPill = r.type === 'pill' || (!r.type && r.amount === 0);
-    var icon = isPill ? emojiImg('\u{1F48A}', 'width:1.25rem;height:1.25rem;margin-right:10px;') : emojiImg('\u{1F4A7}', 'width:1.25rem;height:1.25rem;margin-right:10px;');
+    var icon = isPill ? ip('pills', 'width:1.25rem;height:1.25rem;margin-right:10px;') : ip('water', 'width:1.25rem;height:1.25rem;margin-right:10px;');
     var label = isPill ? '\u5403\u836f' : r.amount + ' ml';
     div.innerHTML = '<span>' + icon + '</span>' +
       '<div style="flex:1;min-width:0;"><span style="font-weight:600;">' + moodHtml + label + addBtn + '</span>' +
       '<div style="font-size:0.75rem;color:var(--text-tertiary);margin-top:2px;">' + dateStr + ' ' + timeStr + '</div></div>' +
-      '<button class="record-del" onclick="deleteRecord(\'' + r.id + '\')" style="flex-shrink:0;margin-left:8px;border:none;background:none;color:var(--danger);font-size:1.125rem;cursor:pointer;padding:4px;">\u2715</button>';
+      '<button class="record-del" onclick="deleteRecord(\'' + r.id + '\')" style="flex-shrink:0;margin-left:8px;border:none;background:none;color:var(--danger);font-size:1.125rem;cursor:pointer;padding:4px;">' + ip('close', 'width:1rem;height:1rem;display:block;') + '</button>';
     list.appendChild(div);
   });
   /* 展开/收起按钮 */
@@ -1424,7 +1565,7 @@ function renderRecords(todayRecords) {
     toggleBtn.style.cssText = 'text-align:center;padding:8px 0 2px;';
     var toggleLink = document.createElement('span');
     toggleLink.style.cssText = 'color:var(--primary);font-size:0.8125rem;cursor:pointer;';
-    toggleLink.textContent = isCollapsed ? '\u5c55\u5f00\u5168\u90e8 ' + reversed.length + ' \u6761 \u25BC' : '\u6536\u8d77 \u25B2';
+    toggleLink.innerHTML = isCollapsed ? '\u5c55\u5f00\u5168\u90e8 ' + reversed.length + ' \u6761 ' + ip('arrow-down', 'width:0.75rem;height:0.75rem;vertical-align:-0.05em;') : '\u6536\u8d77 ' + ip('arrow-up', 'width:0.75rem;height:0.75rem;vertical-align:-0.05em;');
     toggleLink.onclick = function() { _recordsExpanded = !_recordsExpanded; renderRecords(todayRecords); };
     toggleBtn.appendChild(toggleLink);
     list.appendChild(toggleBtn);
@@ -1664,15 +1805,15 @@ function selectGalleryMood(code) {
 
 /* 心情使用说明 */
 function showMoodHelp() {
-  showModal('<img src="icons/emoji/core-1F3AF.png" alt="" class="emoji" style="width:1em;height:1em;vertical-align:-0.1em;"> \u5fc3\u60c5\u4f7f\u7528\u8bf4\u660e',
+  showModal(ip('info', 'width:1em;height:1em;vertical-align:-0.1em;margin-right:2px;') + ' \u5fc3\u60c5\u4f7f\u7528\u8bf4\u660e',
     '<div style="font-size:0.8125rem;line-height:1.8;">' +
-    '<b>\u2764\ufe0f \u559d\u6c34\u65f6\u8bb0\u5f55\u5fc3\u60c5</b><br>' +
+    '<b>' + ip('like', 'width:1em;height:1em;vertical-align:-0.1em;color:var(--danger);') + ' \u559d\u6c34\u65f6\u8bb0\u5f55\u5fc3\u60c5</b><br>' +
     '\u2460 \u5148\u70b9\u4e00\u4e2a\u5fc3\u60c5\u8868\u60c5<br>' +
     '\u2461 \u518d\u70b9\u91cf\u6570\u6309\u94ae \u2192 \u5fc3\u60c5\u81ea\u52a8\u4f34\u968f\u8bb0\u5f55<br><br>' +
-    '<b>\u2795 \u7ed9\u5df2\u6709\u7684\u8bb0\u5f55\u8865\u5fc3\u60c5</b><br>' +
+    '<b>' + ip('add', 'width:1em;height:1em;vertical-align:-0.1em;') + ' \u7ed9\u5df2\u6709\u7684\u8bb0\u5f55\u8865\u5fc3\u60c5</b><br>' +
     '\u2460 \u5148\u70b9\u4e00\u4e2a\u5fc3\u60c5\u8868\u60c5<br>' +
-    '\u2461 \u518d\u70b9\u8bb0\u5f55\u4e0a\u7684 \u2795 \u56fe\u6807<br><br>' +
-    '<b><img src="icons/emoji/core-1F504.png" alt="" class="emoji" style="width:1em;height:1em;vertical-align:-0.1em;"> \u66f4\u6362\u5fc3\u60c5</b><br>' +
+    '\u2461 \u518d\u70b9\u8bb0\u5f55\u4e0a\u7684 ' + ip('add', 'width:1em;height:1em;vertical-align:-0.1em;') + ' \u56fe\u6807<br><br>' +
+    '<b>' + ip('refresh', 'width:1em;height:1em;vertical-align:-0.1em;') + ' \u66f4\u6362\u5fc3\u60c5</b><br>' +
     '\u2460 \u70b9\u4e00\u4e0b\u8bb0\u5f55\u4e0a\u7684\u65e7\u5fc3\u60c5\uff08\u53d8\u9ec4\u9ad8\u4eae\uff09<br>' +
     '\u2461 \u518d\u70b9\u4e00\u4e2a\u65b0\u7684\u5fc3\u60c5\u8868\u60c5 \u2192 \u81ea\u52a8\u66f4\u6362</div>',
     [{ text: '\u77e5\u9053\u4e86', cls: 'btn-confirm', action: hideModal }]
@@ -1764,6 +1905,38 @@ function showEffectsGuide() {
 /* 内嵌更新日志（App 的 file:// 环境 fetch 不到 CHANGELOG.md，必须内置）
  * v2.x = Android 套壳版；v1.x = Web 版历史（套壳前） */
 var APP_CHANGELOG = [
+  '## v2.7.0 — 设置页排版改版（2026-11-02）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **设置页按三步排版法重构** — 一项设置一行、名称在左控件在右；去掉多余外框；按账户 / 饮水目标 / 提醒 / 显示与交互 / 数据与设备 / 关于分组，组间留白大于组内',
+  '- **危险操作独立分组** — 「重置所有数据」从大红按钮改为独立「危险操作」组中的红色行',
+  '- **新增排版规范文档** — docs/settings-page-layout.md，含三步法、表单例外与自检清单',
+  '',
+  '---',
+  '',
+  '## v2.6.1 — 吃药图标改为胶囊（2026-11-02）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **吃药图标改用 pills 胶囊** — 原 pill 图标在 16–20px 下像菱形标签，换成更易辨认的胶囊轮廓',
+  '',
+  '---',
+  '',
+  '## v2.6.0 — 全站图标统一为 IconPark（2026-11-02）',
+  '',
+  '### 🎨 视觉',
+  '',
+  '- **全站图标接入 IconPark** — 设置页、底部导航、记录列表、排行榜、花园、日历与各类弹窗的图标全部替换为 IconPark 内联 SVG；原先的 emoji 图片和手写 SVG 图标已移除',
+  '- **导航栏双风格** — 「线性图标」与「双色图标」都来自 IconPark，旧版的经典表情风格自动迁移为双色图标',
+  '- **心情选择器保留原 emoji** — 35 个心情表情与用户头像保持原有彩色 emoji 风格',
+  '',
+  '### 🧹 清理',
+  '',
+  '- 删除 27 个不再使用的旧图标 PNG（原始约 192 KB，www.zip 578 KB → 443 KB），Service Worker 预缓存同步更新',
+  '',
+  '---',
+  '',
   '## v2.5.1 — 应用图标重绘：澎湃 OS 1 风格（2026-08-23）',
   '',
   '### 🎨 视觉',
@@ -2306,13 +2479,13 @@ function checkForUpdate() {
     if (remote === cur) {
       showModal('\u68c0\u67e5\u66f4\u65b0',
         '<div style="font-size:0.875rem;line-height:1.8;text-align:center;padding:6px 0;">' +
-        '<div style="font-size:2rem;margin-bottom:8px;">' + emojiImg('\u{1F389}') + '</div>' +
+        '<div style="font-size:2rem;margin-bottom:8px;">' + ip('success', 'color:var(--success);') + '</div>' +
         '\u5f53\u524d\u5df2\u662f\u6700\u65b0\u7248\u672c v' + cur + '</div>',
         [{ text: '\u77e5\u9053\u4e86', cls: 'btn-confirm', action: hideModal }]);
       return;
     }
     var body = '<div style="font-size:0.875rem;line-height:1.8;text-align:center;padding:6px 0;">' +
-      '<div style="font-size:2rem;margin-bottom:8px;">' + emojiImg('\u{1F4A7}') + '</div>' +
+      '<div style="font-size:2rem;margin-bottom:8px;">' + ip('water', 'color:var(--primary);') + '</div>' +
       '<b>\u53d1\u73b0\u65b0\u7248\u672c v' + remote + '</b><br>' +
       '<span style="color:var(--text-tertiary);font-size:0.75rem;">\u5f53\u524d v' + cur + '</span>' +
       '</div><div style="font-size:0.75rem;color:var(--text-secondary);line-height:1.7;background:var(--bg);border-radius:10px;padding:10px;margin-top:10px;">' +
@@ -2342,7 +2515,7 @@ function checkForUpdate() {
     if (desc) desc.textContent = '\u68c0\u67e5\u5931\u8d25';
     showModal('\u68c0\u67e5\u66f4\u65b0',
       '<div style="font-size:0.875rem;line-height:1.8;text-align:center;padding:6px 0;">' +
-      '<div style="font-size:2rem;margin-bottom:8px;">' + emojiImg('\u{1F622}') + '</div>' +
+      '<div style="font-size:2rem;margin-bottom:8px;">' + ip('error', 'color:var(--danger);') + '</div>' +
       '\u68c0\u67e5\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u540e\u91cd\u8bd5\u3002</div>',
       [{ text: '\u77e5\u9053\u4e86', cls: 'btn-confirm', action: hideModal }]);
   });
@@ -2352,7 +2525,7 @@ function showAboutDialog() {
   var uid = localStorage.getItem('drink_water_user_id') || '\u672a\u751f\u6210';
   showModal('\u5173\u4e8e\u5e94\u7528',
     '<div style="font-size:0.8125rem;line-height:1.8;text-align:center;">' +
-    '<div style="font-size:3rem;margin-bottom:10px;"><img src="icons/emoji/core-1F4A7.png" alt="" class="emoji" style="width:3rem;height:3rem;"></div>' +
+    '<div style="font-size:3rem;margin-bottom:10px;">' + ip('water', 'color:var(--primary);') + '</div>' +
     '<b>\u559d\u6c34\u8bb0\u5f55</b><br>' +
     '\u5e2e\u52a9\u60a8\u517b\u6210\u5065\u5eb7\u7684\u996e\u6c34\u4e60\u60ef' +
     '<br><br>' +
@@ -2416,15 +2589,15 @@ function showSupabaseDialog() {
   var cfg = loadSupabaseConfig();
   var isConnected = isSupabaseConfigured();
   var statusHtml = isConnected
-    ? '<div style="color:var(--success);margin-bottom:12px;font-weight:600;">✅ 已配置</div>'
-    : '<div style="color:var(--text-tertiary);margin-bottom:12px;">⚠️ 未配置 — 排行榜将使用本地模拟数据</div>';
+    ? '<div style="color:var(--success);margin-bottom:12px;font-weight:600;">' + ip('success', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 已配置</div>'
+    : '<div style="color:var(--text-tertiary);margin-bottom:12px;">' + ip('caution', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 未配置 — 排行榜将使用本地模拟数据</div>';
   var bodyHtml = statusHtml +
     '<div style="margin-bottom:8px;"><label style="font-size:0.8125rem;color:var(--text-secondary);">Supabase URL</label>' +
     '<input type="text" id="sbUrlInput" value="' + (cfg.url || '') + '" placeholder="https://xxxxx.supabase.co" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.8125rem;margin-top:4px;"></div>' +
     '<div style="margin-bottom:8px;"><label style="font-size:0.8125rem;color:var(--text-secondary);">Anon Key</label>' +
     '<input type="text" id="sbKeyInput" value="' + (cfg.key || '') + '" placeholder="eyJhbGciOiJIUzI1NiIs..." style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:0.8125rem;margin-top:4px;"></div>' +
     '<div style="margin-top:8px;font-size:0.75rem;color:var(--text-tertiary);line-height:1.5;">' +
-    '📖 在 <a href="https://supabase.com" target="_blank" style="color:var(--primary);">supabase.com</a> 免费注册，创建一个项目后，在 Settings → API 中找到 Project URL 和 anon/public key。</div>';
+    ip('book-one', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 在 <a href="https://supabase.com" target="_blank" style="color:var(--primary);">supabase.com</a> 免费注册，创建一个项目后，在 Settings → API 中找到 Project URL 和 anon/public key。</div>';
   showModal('在线排行榜设置', bodyHtml, [
     { text: '\u53d6\u6d88', cls: 'btn-cancel', action: hideModal },
     { text: '\u6d4b\u8bd5\u8fde\u63a5', cls: 'btn-confirm', action: function() { testSupabaseConnection(); } }
@@ -2518,7 +2691,7 @@ function renderHomeQuickStats() {
   /* 花园阶段 */
   var stage = getPlantStage(streak);
   el = document.getElementById('qsPlant');
-  if (el) el.textContent = stage.emoji;
+  if (el) el.innerHTML = ip(stage.icon);
 }
 
 function addWater(amount) {
@@ -2718,7 +2891,7 @@ function updateStats() {
 function updateSettingsUI() {
   var s = gState.settings;
   var navStyleDesc = document.getElementById('settingNavStyleDesc');
-  if (navStyleDesc) navStyleDesc.textContent = (getNavStyle() === 'emoji') ? '\u7ecf\u5178\u8868\u60c5' : '\u7ebf\u6027\u56fe\u6807';
+  if (navStyleDesc) navStyleDesc.textContent = (getNavStyle() === 'color') ? '\u53cc\u8272\u56fe\u6807' : '\u7ebf\u6027\u56fe\u6807';
   var gravitySwitch = document.getElementById('gravitySwitch');
   var gravityOn = localStorage.getItem('drink_water_gravity_cup') === 'on';
   if (gravitySwitch) gravitySwitch.className = 'setting-switch' + (gravityOn ? ' on' : '');
@@ -2747,7 +2920,7 @@ function updateSettingsUI() {
   document.getElementById('settingAvatarName').textContent = me.name;
   document.getElementById('settingNickname').textContent = localStorage.getItem('lb_nickname') || '\u672a\u8bbe\u7f6e';
   var sbDesc = document.getElementById('settingSupabaseDesc');
-  if (sbDesc) { sbDesc.textContent = isSupabaseConfigured() ? '\u2705 \u5df2\u8fde\u63a5' : '\u26a0\ufe0f \u672a\u914d\u7f6e'; }
+  if (sbDesc) { sbDesc.textContent = isSupabaseConfigured() ? '\u5df2\u8fde\u63a5' : '\u672a\u914d\u7f6e'; }
   /* 更新版本号 */
   var verDesc = document.getElementById('settingVersionDesc');
   if (verDesc) verDesc.textContent = '\u5495\u561f ' + APP_VERSION;
@@ -3150,7 +3323,7 @@ function lbDebug(msg) {
 }
 function toggleLBDebug() {
   var logs = _lbLogs.join('<br>') || '<div style="text-align:center;color:var(--text-tertiary);padding:12px;">暂无日志</div>';
-  showModal('📋 网络日志',
+  showModal(ip('log', 'width:1em;height:1em;vertical-align:-0.1em;margin-right:2px;') + ' 网络日志',
     '<div style="font-size:0.75rem;line-height:1.8;color:var(--text-secondary);word-break:break-all;">' + logs + '</div>',
     [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]
   );
@@ -3158,29 +3331,29 @@ function toggleLBDebug() {
 function showLBHelp() {
   showModal('排行榜说明',
     '<div style="font-size:0.8125rem;line-height:1.8;">' +
-    '<b>📊 多周期排行</b><br>' +
+    '<b>' + ip('chart-histogram-two', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 多周期排行</b><br>' +
     '今日 / 本周 / 本月三个标签，切换时自动按对应周期的水量排序。<br><br>' +
-    '<b>🏆 排名规则</b><br>' +
+    '<b>' + ip('trophy', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 排名规则</b><br>' +
     '按喝水量从高到低排序；连续达标天数相同时按总水量排序。<br><br>' +
-    '<b>🌐 在线模式</b><br>' +
+    '<b>' + ip('earth', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 在线模式</b><br>' +
     '在设置中配置 Supabase 后可多人实时排行。<br><br>' +
-    '<b>🔧 管理员模式</b><br>' +
+    '<b>' + ip('tool', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 管理员模式</b><br>' +
     '排行榜标题连点 5 次进入，可删除异常排名。<br><br>' +
-    '<b>⏱ 数据更新</b><br>' +
+    '<b>' + ip('timer', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 数据更新</b><br>' +
     '每次喝水后自动推送排行榜，无需手动操作。</div>',
     [{ text: '知道了', cls: 'btn-confirm', action: hideModal }]
   );
 }
 function showLBRules() {
-  showModal('🏆 排行榜规则',
+  showModal(ip('trophy', 'width:1em;height:1em;vertical-align:-0.1em;margin-right:2px;') + ' 排行榜规则',
     '<div style="font-size:0.8125rem;line-height:2;">' +
-    '⭐ 喝水越多排名越高，从高到低排序。<br>' +
-    '🔥 连续达标天数相同时，按总水量排序。<br><br>' +
-    '📊 支持今日 / 本周 / 本月三个周期视图。<br>' +
+    ip('star', 'width:1em;height:1em;vertical-align:-0.12em;color:#F5A623;') + ' 喝水越多排名越高，从高到低排序。<br>' +
+    ip('fire', 'width:1em;height:1em;vertical-align:-0.12em;color:#F5A623;') + ' 连续达标天数相同时，按总水量排序。<br><br>' +
+    ip('chart-histogram-two', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 支持今日 / 本周 / 本月三个周期视图。<br>' +
     '切标签时自动按对应周期的累计水量排序。<br><br>' +
-    '🌐 在设置中配置 Supabase 后，可与他人实时排行。<br><br>' +
-    '🔧 排行榜标题连点 5 次可进入管理员模式。<br><br>' +
-    '⏱ 每次喝水后自动推送排行榜数据，无需手动操作。</div>',
+    ip('earth', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 在设置中配置 Supabase 后，可与他人实时排行。<br><br>' +
+    ip('tool', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 排行榜标题连点 5 次可进入管理员模式。<br><br>' +
+    ip('timer', 'width:1em;height:1em;vertical-align:-0.12em;') + ' 每次喝水后自动推送排行榜数据，无需手动操作。</div>',
     [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]
   );
 }
@@ -3193,8 +3366,8 @@ function renderLeaderboard() {
   checkBanStatus().then(function(banned) {
     _isBanned = banned;
     if (_isBanned) {
-      document.getElementById('lbList').innerHTML = '<div class="lb-empty" style="padding:30px 0;"><div style="font-size:2rem;margin-bottom:8px;">🔌</div>\u5df2\u65ad\u5f00\u6392\u884c\u699c\u8fde\u63a5<br><span style="font-size:0.75rem;color:var(--text-tertiary);">\u8bf7\u5230\u8bbe\u7f6e\u4e2d\u70b9\u51fb\u201c\u6d4b\u8bd5\u8fde\u63a5\u201d\u91cd\u65b0\u8fde\u63a5</span></div>';
-      document.getElementById('settingSupabaseDesc').textContent = '\u26a0\ufe0f \u5df2\u65ad\u5f00';
+      document.getElementById('lbList').innerHTML = '<div class="lb-empty" style="padding:30px 0;"><div style="font-size:2rem;margin-bottom:8px;">' + ip('plug', 'color:var(--text-tertiary);') + '</div>\u5df2\u65ad\u5f00\u6392\u884c\u699c\u8fde\u63a5<br><span style="font-size:0.75rem;color:var(--text-tertiary);">\u8bf7\u5230\u8bbe\u7f6e\u4e2d\u70b9\u51fb\u201c\u6d4b\u8bd5\u8fde\u63a5\u201d\u91cd\u65b0\u8fde\u63a5</span></div>';
+      document.getElementById('settingSupabaseDesc').textContent = '\u5df2\u65ad\u5f00';
       if (lbInterval) { clearInterval(lbInterval); lbInterval = null; }
       return;
     }
@@ -3227,14 +3400,14 @@ function renderLeaderboardContent() {
     var html = '';
     allUsers.forEach(function(u, i) {
       var rank = i + 1;
-      var rankText = rank === 1 ? '\u{1F947}' : rank === 2 ? '\u{1F948}' : rank === 3 ? '\u{1F949}' : rank;
+      var rankText = rank <= 3 ? ip('gold-medal', 'width:1em;height:1em;') : rank;
       var meTag = u.isMe ? '<span class="lb-me-tag">\u4f60</span>' : '';
       /* 不再内嵌 today_records，改为存 user_id，点击时按需拉取 */
       var uid = u.isMe ? '' : (u.user_id || '');
-      var adminDel = _lbAdminMode && uid ? '<span class="lb-admin-del" data-deluid="' + uid + '" data-delnick="' + u.name.replace(/"/g, '&quot;') + '" onclick="event.stopPropagation();deleteUserRanking(this.getAttribute(\'data-deluid\'),this.getAttribute(\'data-delnick\'))" title="删除此用户排名">✕</span>' : '';
+      var adminDel = _lbAdminMode && uid ? '<span class="lb-admin-del" data-deluid="' + uid + '" data-delnick="' + u.name.replace(/"/g, '&quot;') + '" onclick="event.stopPropagation();deleteUserRanking(this.getAttribute(\'data-deluid\'),this.getAttribute(\'data-delnick\'))" title="删除此用户排名">' + ip('close', 'width:.75rem;height:.75rem;vertical-align:-.05em;') + '</span>' : '';
       var periodMl = getPeriodMl(u);
-      var pillBadge = u.pillToday ? ' <span title="已吃药">' + emojiImg('\u{1F48A}', 'width:0.85rem;height:0.85rem;vertical-align:-0.05em;') + '</span>' : '';
-      html += '<div class="lb-item ' + (u.isMe ? 'lb-me' : '') + '" data-userid="' + uid + '" data-myname="' + u.name + '" data-myoji="' + u.emoji + '" onclick="showUserRecords(this)" style="cursor:pointer;">' + meTag + '<div class="lb-rank ' + (rank <= 3 ? ['gold','silver','bronze'][rank-1] : '') + '">' + rankText + '</div><div class="lb-avatar">' + u.emoji + '</div><div class="lb-info"><div class="lb-name">' + u.name + (u.isMe ? ' (\u4f60)' : '') + '</div><div class="lb-streak">' + (u.streak > 0 ? emojiImg('\u{1F525}', 'width:.8em;height:.8em;vertical-align:-.05em;margin-right:1px;').repeat(Math.min(u.streak, 5)) : '') + u.streak + '\u5929\u8fde\u51fb' + pillBadge + '</div></div><div class="lb-amount">' + adminDel + ' ' + periodMl + ' <span class="lb-unit">ml</span></div></div>';
+      var pillBadge = u.pillToday ? ' <span title="已吃药">' + ip('pills', 'width:0.85rem;height:0.85rem;vertical-align:-0.05em;') + '</span>' : '';
+      html += '<div class="lb-item ' + (u.isMe ? 'lb-me' : '') + '" data-userid="' + uid + '" data-myname="' + u.name + '" data-myoji="' + u.emoji + '" onclick="showUserRecords(this)" style="cursor:pointer;">' + meTag + '<div class="lb-rank ' + (rank <= 3 ? ['gold','silver','bronze'][rank-1] : '') + '">' + rankText + '</div><div class="lb-avatar">' + u.emoji + '</div><div class="lb-info"><div class="lb-name">' + u.name + (u.isMe ? ' (\u4f60)' : '') + '</div><div class="lb-streak">' + (u.streak > 0 ? ip('fire', 'width:.8em;height:.8em;vertical-align:-.05em;margin-right:1px;color:#F5A623;').repeat(Math.min(u.streak, 5)) : '') + u.streak + '\u5929\u8fde\u51fb' + pillBadge + '</div></div><div class="lb-amount">' + adminDel + ' ' + periodMl + ' <span class="lb-unit">ml</span></div></div>';
     });
     document.getElementById('lbList').innerHTML = html || '<div class="lb-empty">\u8fd8\u6ca1\u6709\u6570\u636e\uff5e\u5feb\u53bb\u559d\u6c34\u5427\uff01</div>';
   }
@@ -3371,11 +3544,11 @@ function onLbTitleTap() {
   _lbTapCount++;
   var remaining = 5 - _lbTapCount;
   if (remaining > 0) {
-    document.getElementById('lbTitle').innerHTML = '<img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.1em;height:1.1em;"> \u559d\u6c34\u6392\u884c\u699c (' + remaining + ')';
+    document.getElementById('lbTitle').innerHTML = ip('trophy', 'width:1.1em;height:1.1em;vertical-align:-0.12em;') + ' \u559d\u6c34\u6392\u884c\u699c (' + remaining + ')';
     /* 0.6 秒后恢复标题 */
     clearTimeout(window._lbTitleTimer);
     window._lbTitleTimer = setTimeout(function() {
-      document.getElementById('lbTitle').innerHTML = '<img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.1em;height:1.1em;"> \u559d\u6c34\u6392\u884c\u699c';
+      document.getElementById('lbTitle').innerHTML = ip('trophy', 'width:1.1em;height:1.1em;vertical-align:-0.12em;') + ' \u559d\u6c34\u6392\u884c\u699c';
     }, 600);
   }
   if (_lbTapCount === 3) {
@@ -3383,7 +3556,7 @@ function onLbTitleTap() {
   } else if (_lbTapCount === 5) {
     _lbTapCount = 0;
     _lbAdminMode = true;
-    document.getElementById('lbTitle').innerHTML = '<img src="icons/emoji/nav-1F3C6.png" alt="" class="emoji" style="width:1.1em;height:1.1em;"> \u559d\u6c34\u6392\u884c\u699c';
+    document.getElementById('lbTitle').innerHTML = ip('trophy', 'width:1.1em;height:1.1em;vertical-align:-0.12em;') + ' \u559d\u6c34\u6392\u884c\u699c';
     toggleAdminUI();
     showToast('🔧 \u7ba1\u7406\u5458\u6a21\u5f0f\u5df2\u5f00\u542f');
   } else if (_lbTapCount > 5) {
@@ -3408,13 +3581,13 @@ function toggleAdminUI() {
 function deleteUserRanking(userId, userName) {
   if (!_lbAdminMode) return;
   /* 第一步确认 */
-  showModal('🔧 \u5220\u9664\u6392\u540d',
+  showModal(ip('tool', 'width:1em;height:1em;vertical-align:-0.1em;margin-right:2px;') + ' \u5220\u9664\u6392\u540d',
     '\u786e\u5b9a\u8981\u5220\u9664 <b>' + userName + '</b> \u7684\u6392\u884c\u699c\u6570\u636e\u5417\uff1f',
     [{ text: '\u53d6\u6d88', cls: 'btn-cancel', action: hideModal },
      { text: '\u5220\u9664', cls: 'btn-danger', action: function() {
       hideModal();
       /* 第二步确认 */
-      showModal('🔧 \u518d\u6b21\u786e\u8ba4',
+      showModal(ip('tool', 'width:1em;height:1em;vertical-align:-0.1em;margin-right:2px;') + ' \u518d\u6b21\u786e\u8ba4',
         '\u8bf7\u518d\u6b21\u786e\u8ba4\u5220\u9664 <b>' + userName + '</b> \u7684\u6392\u540d\uff1f\u6b64\u64cd\u4f5c\u4e0d\u4f1a\u5f71\u54cd\u5bf9\u65b9\u672c\u5730\u6570\u636e\u3002',
         [{ text: '\u53d6\u6d88', cls: 'btn-cancel', action: hideModal },
          { text: '\u786e\u8ba4\u5220\u9664', cls: 'btn-danger', action: function() {
@@ -3558,9 +3731,10 @@ function showDayRecords(dateKey) {
   var content = '<div style="max-height:50vh;overflow-y:auto;">' + (listHtml || '<div style="text-align:center;padding:12px;color:var(--text-secondary);font-size:0.8125rem;">这天没有喝水记录</div>') + '</div>';
   if (total > 0) content += formatRecordTotal(total);
   var parts = dateKey.split('-');
-  showModal('\uD83D\uDCC5 ' + parts[0] + '.' + parts[1] + '.' + parts[2], content, [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]);
+  showModal(ip('calendar', 'width:1em;height:1em;vertical-align:-0.1em;margin-right:2px;') + ' ' + parts[0] + '.' + parts[1] + '.' + parts[2], content, [{ text: '关闭', cls: 'btn-cancel', action: hideModal }]);
 }
 
+hydrateIcons();
 loadAll();
 renderNav();
 /* 网络恢复时自动推送离线期间的数据 */
@@ -3568,7 +3742,7 @@ window.addEventListener('online', function() {
   if (isSupabaseConfigured()) debouncedSync();
 });
 /* 注册 Service Worker（用于 PWA 安装） */
-var SW_DEPLOY = '20260823o';
+var SW_DEPLOY = '20261102c';
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js?v=' + SW_DEPLOY).catch(function() {});
 }
