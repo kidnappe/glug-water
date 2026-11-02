@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,'Segoe UI',Roboto,sans-serif;background:#0f1923;color:#e8edf3;user-select:none;}
 /* 手表全屏沉浸风格 — 黑暗底色 + 高对比度 */
-.page{display:none;position:absolute;inset:0;padding:8px 10px 56px;overflow-y:auto;scroll-behavior:smooth;background:#0f1923;}
+.page{display:none;position:absolute;top:29px;right:0;bottom:0;left:0;padding:8px 10px 56px;overflow-y:auto;scroll-behavior:smooth;background:#0f1923;}
 .page.active{display:flex;flex-direction:column;}
 /* 首页需 flex 子元素之间的间距，花园页直接居中 */
 #page-home.active{gap:6px;}
@@ -55,10 +55,16 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,'Sego
 .record-item .ramount{flex:1;font-weight:500;color:#e8edf3;}
 .record-item .rmood{font-size:0.75rem;}
 .record-item .rdel{border:none;background:none;color:#e74c3c;font-size:0.875rem;cursor:pointer;padding:4px 8px;min-width:28px;text-align:center;}
+.record-item .rdel .ip-icon{width:12px;height:12px;display:block;margin:0 auto;}
 .empty-records{text-align:center;font-size:0.5625rem;color:#3a4a5a;padding:8px;}
 
 /* ===== Garden 页 ===== */
 .plant-emoji{font-size:3.5rem;transition:transform .5s;}
+.plant-emoji .ip-icon{width:1em;height:1em;color:#4A90E2;}
+.garden-accessory .ip-icon{width:1em;height:1em;display:block;}
+.garden-accessory.star .ip-icon,.garden-accessory.crown .ip-icon{color:#F5A623;}
+.garden-accessory.butterfly .ip-icon{color:#4A90E2;}
+.garden-accessory.rainbow .ip-icon{color:#9B59B6;}
 .plant-name{font-size:0.75rem;color:#6a7a8a;}
 .streak-num{font-size:2rem;font-weight:700;color:#4A90E2;}
 .streak-label{font-size:0.625rem;color:#5a6a7a;}
@@ -83,14 +89,25 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,'Sego
 .stat-card .lbl{font-size:0.5rem;color:#5a6a7a;margin-top:1px;}
 
 /* ===== 设置页 ===== */
-.settings-list{flex:1;display:flex;flex-direction:column;gap:4px;overflow-y:auto;}
-.setting-item{display:flex;align-items:center;padding:8px 8px;background:rgba(255,255,255,.04);border-radius:8px;gap:8px;cursor:pointer;flex-shrink:0;}
-.setting-item:active{background:rgba(255,255,255,.08);}
-.setting-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0;}
+.settings-list{flex:1;display:flex;flex-direction:column;gap:0;overflow-y:auto;padding-bottom:2px;}
+.settings-section{display:flex;flex-direction:column;flex-shrink:0;margin-bottom:10px;}
+.settings-section:last-child{margin-bottom:0;}
+.settings-section-title{font-size:0.5625rem;font-weight:600;color:#5a6a7a;letter-spacing:.02em;margin:0 4px 3px;}
+.settings-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05);border-radius:10px;padding:0 8px;}
+.settings-section--danger .settings-card{border-color:rgba(231,76,60,.22);}
+.setting-item{display:flex;align-items:center;padding:8px 4px;background:none;border-bottom:1px solid rgba(255,255,255,.06);border-radius:0;cursor:pointer;flex-shrink:0;}
+.setting-item:last-child{border-bottom:none;}
+.setting-item:active{background:rgba(255,255,255,.04);}
+.setting-icon{font-size:1rem;width:18px;text-align:center;flex-shrink:0;line-height:1;margin-right:6px;}
+.setting-icon .ip-icon{width:16px;height:16px;display:block;margin:0 auto;color:#8a9aaa;}
 .setting-info{flex:1;min-width:0;}
-.setting-label{font-size:0.6875rem;color:#e8edf3;}
-.setting-desc{font-size:0.5625rem;color:#5a6a7a;}
-.setting-value{font-size:0.6875rem;color:#4A90E2;text-align:right;flex-shrink:0;}
+.setting-label{font-size:0.6875rem;color:#e8edf3;line-height:1.35;}
+.setting-desc{font-size:0.5625rem;color:#5a6a7a;line-height:1.4;margin-top:1px;}
+.setting-value{font-size:0.6875rem;color:#4A90E2;text-align:right;flex-shrink:1;min-width:0;max-width:52%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-left:4px;}
+.inline-icon{display:inline-flex;vertical-align:-0.15em;margin-right:2px;}
+.inline-icon .ip-icon{width:1em;height:1em;}
+.setting-arrow{color:#4A90E2;flex-shrink:0;display:flex;align-items:center;margin-left:4px;}
+.setting-arrow .ip-icon{width:10px;height:10px;display:block;}
 .setting-switch{position:relative;width:32px;height:18px;background:rgba(255,255,255,.15);border-radius:9px;cursor:pointer;transition:.3s;flex-shrink:0;}
 .setting-switch.on{background:#4A90E2;}
 .setting-switch::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:transform .3s;}
@@ -109,7 +126,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,'Sego
 /* ===== 底部导航 ===== */
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#0f1923;display:flex;border-top:1px solid rgba(255,255,255,.06);z-index:100;flex-shrink:0;}
 .bottom-nav button{flex:1;border:none;background:none;padding:6px 0 4px;font-size:0.5rem;color:#5a6a7a;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;transition:color .2s;}
-.bottom-nav button .icon{font-size:1.125rem;}
+.bottom-nav button .icon{font-size:1.125rem;height:18px;display:flex;align-items:center;}
+.bottom-nav button .icon .ip-icon{width:18px;height:18px;display:block;}
 .bottom-nav button.active{color:#4A90E2;}
 
 /* ===== Modal ===== */
@@ -174,7 +192,11 @@ body.light .record-header{color:#8a9aaa;}
 body.light .record-item{border-color:rgba(0,0,0,.06);}
 body.light .record-item .rtime{color:#8a9aaa;}
 body.light .record-item .ramount{color:#2c3e50;}
-body.light .setting-item{background:rgba(0,0,0,.04);}
+body.light .settings-card{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.06);}
+body.light .settings-section-title{color:#8a9aaa;}
+body.light .setting-item{background:none;border-bottom-color:rgba(0,0,0,.06);}
+body.light .setting-item:last-child{border-bottom:none;}
+body.light .setting-icon .ip-icon{color:#5a7a9a;}
 body.light .setting-label{color:#2c3e50;}
 body.light .setting-desc{color:#8a9aaa;}
 body.light .setting-value{color:#4A90E2;}
@@ -228,6 +250,7 @@ body.light .reminder-opt .ro-desc{color:#8a9aaa;}
 .lb-streak{font-size:0.5rem;color:#5a6a7a;}
 .lb-empty{text-align:center;padding:20px;font-size:0.625rem;color:#5a6a7a;}
 .lb-empty .icon{font-size:2rem;display:block;margin-bottom:8px;}
+.lb-empty .icon .ip-icon{width:32px;height:32px;display:block;margin:0 auto;}
 .lb-refresh{text-align:center;padding:4px;}
 .lb-refresh button{border:none;background:rgba(74,144,226,.2);color:#4A90E2;padding:4px 12px;border-radius:6px;font-size:0.5625rem;cursor:pointer;}
 .lb-refresh button:active{background:rgba(74,144,226,.4);}
@@ -237,7 +260,7 @@ body.light .reminder-opt .ro-desc{color:#8a9aaa;}
 <body>
 
 <div class="appbar">
-  <span id="appbarTitle">💧 咕嘟</span>
+  <span id="appbarTitle">咕嘟</span>
   <span class="sub" id="motivationMsg"></span>
 </div>
 
@@ -269,7 +292,7 @@ body.light .reminder-opt .ro-desc{color:#8a9aaa;}
 
   <!-- 今日记录 -->
   <div class="record-section">
-    <div class="record-header"><span>📋 今日记录</span><span id="recordCount">0</span></div>
+    <div class="record-header"><span><span class="inline-icon" data-ip="log"></span> 今日记录</span><span id="recordCount">0</span></div>
     <div class="record-list" id="recordList"><div class="empty-records">还没有喝水记录～</div></div>
   </div>
 </div>
@@ -277,7 +300,7 @@ body.light .reminder-opt .ro-desc{color:#8a9aaa;}
 <!-- ===== 花园 TAB ===== -->
 <div class="page" id="page-garden">
   <div class="garden-wrap">
-    <div class="plant-emoji" id="plantEmoji">🌰</div>
+    <div class="plant-emoji" id="plantEmoji" data-ip="seedling"></div>
     <div class="plant-name" id="plantName">种子休眠中</div>
     <div style="margin-top:8px;text-align:center;">
       <div class="streak-num"><span id="streakCount">0</span></div>
@@ -308,76 +331,110 @@ body.light .reminder-opt .ro-desc{color:#8a9aaa;}
 <!-- ===== 设置 TAB ===== -->
 <div class="page" id="page-settings">
   <div class="settings-list">
-    <div class="setting-item" onclick="showGoalDialog()">
-      <span class="setting-icon">🎯</span>
-      <div class="setting-info"><div class="setting-label">每日目标</div><div class="setting-desc">调整喝水量目标</div></div>
-      <span class="setting-value" id="settingGoal">2000</span>
-    </div>
-    <div class="setting-item" onclick="showCustomAmountDialog()">
-      <span class="setting-icon">💧</span>
-      <div class="setting-info"><div class="setting-label">自定义水量</div><div class="setting-desc">快捷按钮默认值</div></div>
-      <span class="setting-value" id="settingCustom">250</span>
-    </div>
-    <div class="setting-item">
-      <span class="setting-icon">🌙</span>
-      <div class="setting-info"><div class="setting-label">深色模式</div><div class="setting-desc" id="settingDarkDesc">已开启</div></div>
-      <div class="setting-switch on" id="darkSwitch" onclick="toggleDarkMode()"></div>
-    </div>
-    <div class="setting-item" onclick="showReminderDialog()">
-      <span class="setting-icon">🔔</span>
-      <div class="setting-info"><div class="setting-label">喝水提醒</div><div class="reminder-summary" id="settingReminderDesc">已关闭</div></div>
-      <span class="setting-value" id="settingReminderValue">›</span>
-    </div>
-    <div class="setting-item" onclick="showAvatarDialog()">
-      <span class="setting-icon" id="settingAvatarPreview">🐼</span>
-      <div class="setting-info"><div class="setting-label">头像</div><div class="setting-desc" id="settingAvatarName">点击更换</div></div>
-      <span class="setting-value">›</span>
-    </div>
-    <div class="setting-item" onclick="showNicknameDialog()">
-      <span class="setting-icon">✏️</span>
-      <div class="setting-info"><div class="setting-label">昵称</div><div class="setting-desc">排行榜显示</div></div>
-      <span class="setting-value" id="settingNickname">未设置</span>
-    </div>
-    <div class="setting-item" onclick="showSupabaseDialog()">
-      <span class="setting-icon">🌐</span>
-      <div class="setting-info"><div class="setting-label">在线排行榜</div><div class="setting-desc" id="settingSupabaseDesc">未配置</div></div>
-      <span class="setting-value">›</span>
-    </div>
-    <div class="setting-item" onclick="pairWithPhone()">
-      <span class="setting-icon">📱</span>
-      <div class="setting-info"><div class="setting-label">连接手机</div><div class="setting-desc" id="settingPairDesc">与手机端同步数据</div></div>
-      <span class="setting-value" id="settingPairStatus">›</span>
-    </div>
-    <div class="setting-item" onclick="doForceSync()">
-      <span class="setting-icon">🔄</span>
-      <div class="setting-info"><div class="setting-label">立即同步</div><div class="setting-desc">推送并拉取今日记录</div></div>
-      <span class="setting-value">›</span>
-    </div>
-    <div id="syncDebugWrap" style="display:none;margin:2px 4px;">
-      <div id="syncDebugSummary" style="font-family:monospace;font-size:0.55rem;color:#8a9aaa;background:rgba(0,0,0,.15);border-radius:6px;padding:6px 8px;line-height:1.7;cursor:pointer;" onclick="toggleSyncDebug()"></div>
-      <div id="syncDebugFull" style="display:none;font-family:monospace;font-size:0.5rem;color:#8a9aaa;background:rgba(0,0,0,.12);border-radius:6px;padding:6px 8px;line-height:1.7;max-height:200px;overflow-y:auto;word-break:break-all;"></div>
-    </div>
-    <div class="setting-item" onclick="disconnectCloud()" style="border:1px solid rgba(231,76,60,.2);">
-      <span class="setting-icon">🔌</span>
-      <div class="setting-info"><div class="setting-label" style="color:#e74c3c;">断开连接</div><div class="setting-desc">清除排行榜配置</div></div>
-      <span class="setting-value" style="color:#e74c3c;">›</span>
-    </div>
-    <div class="setting-item" onclick="exportData()">
-      <span class="setting-icon">📤</span>
-      <div class="setting-info"><div class="setting-label">导出数据</div><div class="setting-desc">备份到 JSON</div></div>
-      <span class="setting-value">›</span>
-    </div>
-    <div class="setting-item" onclick="document.getElementById('importInput').click()">
-      <span class="setting-icon">📥</span>
-      <div class="setting-info"><div class="setting-label">导入数据</div><div class="setting-desc">从 JSON 恢复</div></div>
-      <span class="setting-value">›</span>
-    </div>
-    <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
-    <div class="setting-item" onclick="showResetDialog()" style="border:1px solid rgba(231,76,60,.2);">
-      <span class="setting-icon">🗑️</span>
-      <div class="setting-info"><div class="setting-label" style="color:#e74c3c;">重置数据</div><div class="setting-desc">清空所有喝水记录</div></div>
-      <span class="setting-value">›</span>
-    </div>
+    <section class="settings-section">
+      <div class="settings-section-title">饮水与提醒</div>
+      <div class="settings-card">
+        <div class="setting-item" onclick="showGoalDialog()">
+          <span class="setting-icon" data-ip="target-one"></span>
+          <div class="setting-info"><div class="setting-label">每日目标</div></div>
+          <span class="setting-value" id="settingGoal">2000 ml</span>
+          <span class="setting-arrow" data-ip="right"></span>
+        </div>
+        <div class="setting-item" onclick="showCustomAmountDialog()">
+          <span class="setting-icon" data-ip="water"></span>
+          <div class="setting-info"><div class="setting-label">自定义水量</div><div class="setting-desc">快捷按钮默认值</div></div>
+          <span class="setting-value" id="settingCustom">250 ml</span>
+          <span class="setting-arrow" data-ip="right"></span>
+        </div>
+        <div class="setting-item" onclick="showReminderDialog()">
+          <span class="setting-icon" data-ip="remind"></span>
+          <div class="setting-info"><div class="setting-label">喝水提醒</div><div class="setting-desc" id="settingReminderDesc">已关闭</div></div>
+          <span class="setting-value" id="settingReminderValue" data-ip="right" data-ip-style="width:10px;height:10px;"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="settings-section">
+      <div class="settings-section-title">显示</div>
+      <div class="settings-card">
+        <div class="setting-item">
+          <span class="setting-icon" data-ip="dark-mode"></span>
+          <div class="setting-info"><div class="setting-label">深色模式</div><div class="setting-desc" id="settingDarkDesc">已开启</div></div>
+          <div class="setting-switch on" id="darkSwitch" onclick="toggleDarkMode()"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="settings-section">
+      <div class="settings-section-title">账户与社交</div>
+      <div class="settings-card">
+        <div class="setting-item" onclick="showAvatarDialog()">
+          <span class="setting-icon" id="settingAvatarPreview" data-ip="avatar"></span>
+          <div class="setting-info"><div class="setting-label">头像</div></div>
+          <span class="setting-value" id="settingAvatarName">点击更换</span>
+          <span class="setting-arrow" data-ip="right"></span>
+        </div>
+        <div class="setting-item" onclick="showNicknameDialog()">
+          <span class="setting-icon" data-ip="edit"></span>
+          <div class="setting-info"><div class="setting-label">昵称</div></div>
+          <span class="setting-value" id="settingNickname">未设置</span>
+          <span class="setting-arrow" data-ip="right"></span>
+        </div>
+        <div class="setting-item" onclick="showSupabaseDialog()">
+          <span class="setting-icon" data-ip="earth"></span>
+          <div class="setting-info"><div class="setting-label">在线排行榜</div></div>
+          <span class="setting-value" id="settingSupabaseDesc">未配置</span>
+          <span class="setting-arrow" data-ip="right"></span>
+        </div>
+        <div class="setting-item" onclick="pairWithPhone()">
+          <span class="setting-icon" data-ip="phone-two"></span>
+          <div class="setting-info"><div class="setting-label">连接手机</div><div class="setting-desc" id="settingPairDesc">与手机端同步数据</div></div>
+          <span class="setting-value" id="settingPairStatus" data-ip="right" data-ip-style="width:10px;height:10px;"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="settings-section">
+      <div class="settings-section-title">数据与设备</div>
+      <div class="settings-card">
+        <div class="setting-item" onclick="doForceSync()">
+          <span class="setting-icon" data-ip="sync"></span>
+          <div class="setting-info"><div class="setting-label">立即同步</div><div class="setting-desc">推送并拉取今日记录</div></div>
+          <span class="setting-arrow" data-ip="right"></span>
+        </div>
+        <div class="setting-item" onclick="disconnectCloud()">
+          <span class="setting-icon" style="color:#e74c3c;" data-ip="link-interrupt"></span>
+          <div class="setting-info"><div class="setting-label" style="color:#e74c3c;">断开连接</div><div class="setting-desc">清除排行榜配置</div></div>
+          <span class="setting-arrow" style="color:#e74c3c;" data-ip="right"></span>
+        </div>
+        <div class="setting-item" onclick="exportData()">
+          <span class="setting-icon" data-ip="export"></span>
+          <div class="setting-info"><div class="setting-label">导出数据</div><div class="setting-desc">备份到 JSON</div></div>
+          <span class="setting-arrow" data-ip="right"></span>
+        </div>
+        <div class="setting-item" onclick="document.getElementById('importInput').click()">
+          <span class="setting-icon" data-ip="download"></span>
+          <div class="setting-info"><div class="setting-label">导入数据</div><div class="setting-desc">从 JSON 恢复</div></div>
+          <span class="setting-arrow" data-ip="right"></span>
+        </div>
+      </div>
+      <div id="syncDebugWrap" style="display:none;margin:2px 4px;">
+        <div id="syncDebugSummary" style="font-family:monospace;font-size:0.55rem;color:#8a9aaa;background:rgba(0,0,0,.15);border-radius:6px;padding:6px 8px;line-height:1.7;cursor:pointer;" onclick="toggleSyncDebug()"></div>
+        <div id="syncDebugFull" style="display:none;font-family:monospace;font-size:0.5rem;color:#8a9aaa;background:rgba(0,0,0,.12);border-radius:6px;padding:6px 8px;line-height:1.7;max-height:200px;overflow-y:auto;word-break:break-all;"></div>
+      </div>
+      <input type="file" id="importInput" accept=".json" style="display:none" onchange="importData(event)">
+    </section>
+
+    <section class="settings-section settings-section--danger">
+      <div class="settings-section-title">危险操作</div>
+      <div class="settings-card">
+        <div class="setting-item" onclick="showResetDialog()">
+          <span class="setting-icon" style="color:#e74c3c;" data-ip="delete"></span>
+          <div class="setting-info"><div class="setting-label" style="color:#e74c3c;">重置数据</div><div class="setting-desc">清空所有喝水记录</div></div>
+          <span class="setting-arrow" style="color:#e74c3c;" data-ip="right"></span>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -385,11 +442,11 @@ body.light .reminder-opt .ro-desc{color:#8a9aaa;}
 <div class="page" id="page-leaderboard">
   <div class="lb-wrap">
     <div class="lb-list" id="lbList">
-      <div class="lb-empty"><span class="icon">🌐</span>加载中...</div>
+      <div class="lb-empty"><span class="icon" data-ip="earth"></span>加载中...</div>
     </div>
     <div class="lb-refresh">
-      <button onclick="loadLeaderboard()">🔄 刷新</button>
-      <button onclick="showDebugLogs()" style="margin-left:4px;">📋</button>
+      <button onclick="loadLeaderboard()"><span class="inline-icon" data-ip="refresh"></span> 刷新</button>
+      <button onclick="showDebugLogs()" style="margin-left:4px;"><span class="inline-icon" data-ip="log"></span></button>
     </div>
   </div>
 </div>
@@ -407,14 +464,73 @@ body.light .reminder-opt .ro-desc{color:#8a9aaa;}
 
 <!-- ===== 底部导航 ===== -->
 <nav class="bottom-nav">
-  <button class="active" onclick="switchTab(0)"><span class="icon">💧</span> 喝水</button>
-  <button onclick="switchTab(1)"><span class="icon">🌱</span> 花园</button>
-  <button onclick="switchTab(2)"><span class="icon">📊</span> 历史</button>
-  <button onclick="switchTab(3)"><span class="icon">🏆</span> 排行</button>
-  <button onclick="switchTab(4)"><span class="icon">⚙️</span> 设置</button>
+  <button class="active" onclick="switchTab(0)"><span class="icon" data-ip="home"></span> 喝水</button>
+  <button onclick="switchTab(1)"><span class="icon" data-ip="seedling"></span> 花园</button>
+  <button onclick="switchTab(2)"><span class="icon" data-ip="chart-histogram-two"></span> 历史</button>
+  <button onclick="switchTab(3)"><span class="icon" data-ip="trophy"></span> 排行</button>
+  <button onclick="switchTab(4)"><span class="icon" data-ip="setting-two"></span> 设置</button>
 </nav>
 
 <script>
+/* ── IconPark 图标子集（手表版） ── */
+var IP_ICONS = {
+  'home': { v: '0 0 48 48', d: '<path d="M9 18V42H39V18L24 6L9 18Z" fill="none"/><path d="M19 29V42H29V29H19Z" fill="none"/><path d="M9 42H39"/>' },
+  'seedling': { v: '0 0 48 48', d: '<path d="M24 42V26"/><path d="M41.9417 10.0068C41.1662 23.0313 32.8114 27.2431 25.9958 27.9029C24.8963 28.0093 24 27.1041 24 25.9995V17.6276C24 17.3953 24.0408 17.1604 24.1245 16.9438C27.1175 9.19883 34.283 8.15499 40.0013 8.01953C41.1056 7.99337 42.0073 8.90411 41.9417 10.0068Z" fill="none"/><path d="M7.99844 6.07206C17.3266 6.75658 22.1952 12.1631 23.834 15.6298C23.9486 15.8722 24.0001 16.1382 24.0001 16.4063V23.9101C24.0001 25.0491 23.0393 25.9645 21.9059 25.8504C7.33707 24.3838 6.11103 14.7864 6.00913 7.9987C5.99255 6.89426 6.89684 5.99122 7.99844 6.07206Z" fill="none"/>' },
+  'sapling': { v: '0 0 48 48', d: '<path d="M26.9999 8.00001C22.3136 12.6863 23.0351 21.035 23.0351 21.035C23.0351 21.035 31.3136 21.6863 35.9999 17C40.6862 12.3137 40.0057 4.03509 40.0057 4.03509C40.0057 4.03509 31.6862 3.31372 26.9999 8.00001Z" fill="none"/><path d="M23.0351 21.035L30.9999 13.0702M23.0351 21.035C23.0351 21.035 22.3136 12.6863 26.9999 8.00001C31.6862 3.31372 40.0057 4.03509 40.0057 4.03509C40.0057 4.03509 40.6862 12.3137 35.9999 17C31.3136 21.6863 23.0351 21.035 23.0351 21.035Z"/><path d="M20.0001 21C23.8492 24.8434 22.9712 31.9711 22.9712 31.9711C22.9712 31.9711 15.8492 32.8434 12.0001 29C8.15094 25.1566 9.03226 18.0289 9.03226 18.0289C9.03226 18.0289 16.151 17.1566 20.0001 21Z" fill="none"/><path d="M22.9712 31.9711L16.0001 25M22.9712 31.9711C22.9712 31.9711 23.8492 24.8434 20.0001 21C16.151 17.1566 9.03226 18.0289 9.03226 18.0289C9.03226 18.0289 8.15094 25.1566 12.0001 29C15.8492 32.8434 22.9712 31.9711 22.9712 31.9711Z"/><path d="M23 4V44"/>' },
+  'leaves': { v: '0 0 48 48', d: '<path d="M31 43C31 43 18 44 11 36C4 28 4 4 4 4C4 4 28 3 36 9C44 15 42 32 42 32"/><path d="M44 44C44 44 32.8207 35.5515 26 28C19.1793 20.4485 16 13 16 13"/><path d="M26 28L27 15"/><path d="M26 28L16 27"/>' },
+  'bloom': { v: '0 0 48 48', d: '<path d="M6 32L18 42"/><path d="M42 32L30 42"/><path d="M24 32V44"/><path d="M17 11L24 4L31 11L38 10C38 10 39 14.2386 39 17C39 27 30.5 32 24 32C17.5 32 9 27 9 17C9 14.2386 10 10 10 10L17 11Z" fill="none"/>' },
+  'tree-one': { v: '0 0 48 48', d: '<ellipse cx="24" cy="20" rx="15" ry="16" fill="none"/><path d="M24 14L24 36"/><path d="M30 34.6689C28.1626 35.5253 26.1333 36.0003 24 36.0003C21.8667 36.0003 19.8374 35.5253 18 34.6689"/><path d="M24 36L24 44"/><path d="M24 22L30 16"/><path d="M24 29L18 23"/>' },
+  'blossom': { v: '0 0 48 48', d: '<path d="M23.2663 6.00775C31 6.45947 31.2208 14.3708 30.285 17.623C39.6432 14.6492 43.2305 18.8621 43.8544 21.3403C44.9773 27.2874 39.3312 29.0839 36.3678 29.2387C42.357 36.6725 39.4872 40.3894 37.3036 41.3186C30.5657 43.1771 26.6977 38.3761 25.6059 35.7433C22.6112 42.062 17.4954 42.4027 15.3119 41.7832C8.94827 39.9248 11.7245 33.2654 13.9081 30.1679C4.92427 28.6812 3.61412 24.2829 4.08203 22.2696C5.57934 14.8358 13.4402 16.0745 17.1835 17.623C15.6862 7.95912 20.6148 5.85288 23.2663 6.00775Z" fill="none"/><path d="M25 26L21 31"/><path d="M19 25L25 26"/><path d="M24 19L25 26"/><path d="M31 24L25 26"/><path d="M25 26L30 30"/>' },
+  'trophy': { v: '0 0 48 48', d: '<path d="M24 30C30.6274 30 36 24.4694 36 17.6471V4H12V17.6471C12 24.4694 17.3726 30 24 30Z" fill="none"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 21V11H4C4 17.6667 8 21 12 21Z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M36 21V11H44C44 17.6667 40 21 36 21Z"/><path d="M24 32V36"/><path d="M15 42L18.69 36H29.0425L33 42H15Z" fill="none"/>' },
+  'chart-histogram-two': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M4 42H44H4Z" fill="none"/><path d="M4 42H44"/><rect x="8" y="28" width="6" height="14" fill="none"/><rect x="21" y="18" width="6" height="24" fill="none"/><rect x="34" y="6" width="6" height="36" fill="none"/>' },
+  'setting-two': { v: '0 0 48 48', d: '<path d="M18.2838 43.1713C14.9327 42.1736 11.9498 40.3213 9.58787 37.867C10.469 36.8227 11 35.4734 11 34.0001C11 30.6864 8.31371 28.0001 5 28.0001C4.79955 28.0001 4.60139 28.01 4.40599 28.0292C4.13979 26.7277 4 25.3803 4 24.0001C4 21.9095 4.32077 19.8938 4.91579 17.9995C4.94381 17.9999 4.97188 18.0001 5 18.0001C8.31371 18.0001 11 15.3138 11 12.0001C11 11.0488 10.7786 10.1493 10.3846 9.35011C12.6975 7.1995 15.5205 5.59002 18.6521 4.72314C19.6444 6.66819 21.6667 8.00013 24 8.00013C26.3333 8.00013 28.3556 6.66819 29.3479 4.72314C32.4795 5.59002 35.3025 7.1995 37.6154 9.35011C37.2214 10.1493 37 11.0488 37 12.0001C37 15.3138 39.6863 18.0001 43 18.0001C43.0281 18.0001 43.0562 17.9999 43.0842 17.9995C43.6792 19.8938 44 21.9095 44 24.0001C44 25.3803 43.8602 26.7277 43.594 28.0292C43.3986 28.01 43.2005 28.0001 43 28.0001C39.6863 28.0001 37 30.6864 37 34.0001C37 35.4734 37.531 36.8227 38.4121 37.867C36.0502 40.3213 33.0673 42.1736 29.7162 43.1713C28.9428 40.752 26.676 39.0001 24 39.0001C21.324 39.0001 19.0572 40.752 18.2838 43.1713Z" fill="none"/><path d="M24 31C27.866 31 31 27.866 31 24C31 20.134 27.866 17 24 17C20.134 17 17 20.134 17 24C17 27.866 20.134 31 24 31Z" fill="none"/>' },
+  'target-one': { v: '0 0 48 48', d: '<path d="M23.8887 39.8887C32.7287 39.8887 39.8887 32.7287 39.8887 23.8887C39.8887 15.0487 32.7287 7.88867 23.8887 7.88867C15.0487 7.88867 7.88867 15.0487 7.88867 23.8887C7.88867 32.7287 15.0487 39.8887 23.8887 39.8887Z" fill="none" stroke-miterlimit="2"/><path d="M23.8887 31.8887C28.3087 31.8887 31.8887 28.3087 31.8887 23.8887C31.8887 19.4687 28.3087 15.8887 23.8887 15.8887C19.4687 15.8887 15.8887 19.4687 15.8887 23.8887C15.8887 28.3087 19.4687 31.8887 23.8887 31.8887Z" fill="none" stroke-miterlimit="2"/><path d="M23.8887 25.8887C24.9887 25.8887 25.8887 24.9887 25.8887 23.8887C25.8887 22.7887 24.9887 21.8887 23.8887 21.8887C22.7887 21.8887 21.8887 22.7887 21.8887 23.8887C21.8887 24.9887 22.7887 25.8887 23.8887 25.8887Z" fill="currentColor"/><path d="M23.8887 7.88867V3.88867" stroke-miterlimit="2"/><path d="M37.8887 43.8887L33.8887 36.8887" stroke-miterlimit="2"/><path d="M13.8887 36.8887L9.88867 43.8887" stroke-miterlimit="2"/>' },
+  'water': { v: '0 0 48 48', d: '<path d="M9 29C11.7614 29 14 26.7614 14 24C14 26.7614 16.2386 29 19 29C21.7614 29 24 26.7614 24 24C24 26.7614 26.2386 29 29 29C31.7614 29 34 26.7614 34 24C34 26.7614 36.2386 29 39 29C41.7614 29 44 26.7614 44 24C44 35.0457 35.0457 44 24 44C12.9543 44 4 35.0457 4 24C4 26.7614 6.23858 29 9 29Z" fill="none"/><path d="M28 13C28 15.2091 26.2091 17 24 17C21.7909 17 20 15.2091 20 13C20 10.7909 24 4 24 4C24 4 28 10.7909 28 13Z" fill="none"/>' },
+  'dark-mode': { v: '0 0 48 48', d: '<path d="M24.0033 4L29.2737 9.27038H38.7296V18.7263L44 23.9967L38.7296 29.2737V38.7296H29.2737L24.0033 44L18.7264 38.7296H9.27036V29.2737L4 23.9967L9.27036 18.7263V9.27038H18.7264L24.0033 4Z" fill="none" stroke-miterlimit="10"/><path d="M27 17C27 25 22 26 17 26C17 30 23.5 34 29 30C34.5 26 31 17 27 17Z" fill="none" stroke-miterlimit="10"/>' },
+  'remind': { v: '0 0 48 48', d: '<path d="M24 4C16.268 4 10 10.268 10 18V38H38V18C38 10.268 31.732 4 24 4Z" fill="none"/><path d="M10 38V18C10 10.268 16.268 4 24 4C31.732 4 38 10.268 38 18V38M4 38H44"/><path d="M24 44C26.7614 44 29 41.7614 29 39V38H19V39C19 41.7614 21.2386 44 24 44Z" fill="none"/>' },
+  'avatar': { v: '0 0 48 48', d: '<path d="M5.00372 42.2311C5.00372 42.6557 5.35807 42.9999 5.79521 42.9999L42.2023 43C42.6394 43 42.9938 42.6558 42.9938 42.2313V41.3131C43.012 41.0364 43.049 39.6555 42.1388 38.1289C41.5648 37.1663 40.7318 36.3347 39.6628 35.6573C38.3696 34.8378 36.7245 34.244 34.7347 33.8865C34.72 33.8846 33.2446 33.689 31.7331 33.303C29.101 32.6307 28.8709 32.0357 28.8694 32.0299C28.8539 31.9711 28.8315 31.9146 28.8028 31.8615C28.7813 31.7505 28.7281 31.3328 28.8298 30.2136C29.088 27.371 30.6128 25.691 31.838 24.3412C32.2244 23.9155 32.5893 23.5134 32.8704 23.1191C34.0827 21.4181 34.1952 19.4839 34.2003 19.364C34.2003 19.1211 34.1724 18.9214 34.1127 18.7363C33.9937 18.3659 33.7698 18.1351 33.6063 17.9666L33.6052 17.9654C33.564 17.923 33.5251 17.8828 33.4933 17.8459C33.4812 17.8318 33.449 17.7945 33.4783 17.603C33.5859 16.8981 33.6505 16.3079 33.6815 15.7456C33.7367 14.7438 33.7798 13.2456 33.5214 11.7875C33.4895 11.5385 33.4347 11.2755 33.3494 10.9622C33.0764 9.95814 32.6378 9.09971 32.0284 8.39124C31.9236 8.27722 29.3756 5.5928 21.9788 5.04201C20.956 4.96586 19.9449 5.00688 18.9496 5.05775C18.7097 5.06961 18.3812 5.08589 18.0738 5.16554C17.3101 5.36337 17.1063 5.84743 17.0528 6.11834C16.9641 6.56708 17.12 6.91615 17.2231 7.14718L17.2231 7.1472L17.2231 7.14723C17.2381 7.18072 17.2566 7.22213 17.2243 7.32997C17.0526 7.59588 16.7825 7.83561 16.5071 8.06273C16.4275 8.13038 14.5727 9.72968 14.4707 11.8189C14.1957 13.4078 14.2165 15.8834 14.5417 17.5944C14.5606 17.6889 14.5885 17.8288 14.5432 17.9233L14.5432 17.9233C14.1935 18.2367 13.7971 18.5919 13.7981 19.4024C13.8023 19.4839 13.9148 21.4181 15.1272 23.1191C15.408 23.5131 15.7726 23.9149 16.1587 24.3403L16.1596 24.3412L16.1596 24.3413C17.3848 25.6911 18.9095 27.371 19.1678 30.2135C19.2694 31.3327 19.2162 31.7505 19.1947 31.8614C19.166 31.9145 19.1436 31.971 19.1282 32.0298C19.1266 32.0356 18.8974 32.6287 16.2772 33.2996C14.7656 33.6867 13.2775 33.8845 13.2331 33.8909C11.2994 34.2173 9.66438 34.7963 8.37351 35.6115C7.30813 36.2844 6.47354 37.1175 5.89289 38.0877C4.96517 39.6379 4.99025 41.0497 5.00372 41.3074V42.2311Z" fill="none"/>' },
+  'edit': { v: '0 0 48 48', d: '<path d="M7 42H43"/><path d="M11 26.7199V34H18.3172L39 13.3081L31.6951 6L11 26.7199Z" fill="none"/>' },
+  'earth': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44Z"/><path d="M4 24H44"/><path fill-rule="evenodd" clip-rule="evenodd" d="M24 44C28.4183 44 32 35.0457 32 24C32 12.9543 28.4183 4 24 4C19.5817 4 16 12.9543 16 24C16 35.0457 19.5817 44 24 44Z"/><path d="M9.85791 10.1421C13.4772 13.7614 18.4772 16 24 16C29.5229 16 34.5229 13.7614 38.1422 10.1421"/><path d="M38.1422 37.8579C34.5229 34.2386 29.5229 32 24 32C18.4772 32 13.4772 34.2386 9.85791 37.8579"/>' },
+  'phone-two': { v: '0 0 48 48', d: '<path d="M39 6H9C7.34315 6 6 7.34315 6 9V39C6 40.6569 7.34315 42 9 42H39C40.6569 42 42 40.6569 42 39V9C42 7.34315 40.6569 6 39 6Z" fill="none"/><path d="M19.4401 14C19.8845 14 20.2939 14.241 20.5096 14.6295L22.006 17.3249C22.2019 17.6778 22.2111 18.1047 22.0305 18.4658L21 21C21 21 21.2517 23.2517 23 25C24.7484 26.7483 27 27 27 27L29.5266 25.9625C29.8879 25.7818 30.315 25.7911 30.6681 25.9874L33.3711 27.4902C33.7593 27.7061 34 28.1153 34 28.5594V31.6625C34 33.2428 32.5321 34.3842 31.0348 33.8789C27.9595 32.8413 23.1858 30.8656 20.1601 27.8398C17.1345 24.8142 15.1587 20.0405 14.121 16.9652C13.6158 15.4679 14.7572 14 16.3375 14H19.4401Z" fill="none"/>' },
+  'sync': { v: '0 0 48 48', d: '<path d="M30 7.979L19 8.00006V18.0001H4V32H20.9995"/><path d="M20 42L31 41.9789V31.5789H44V18H30.3448"/>' },
+  'link-interrupt': { v: '0 0 48 48', d: '<path d="M27 14H42C43.1046 14 44 14.8954 44 16V30C44 31.1046 43.1046 32 42 32H38"/><path d="M11 14H6C4.89543 14 4 14.8954 4 16V30C4 31.1046 4.89543 32 6 32H21"/><path d="M14 6L34 40"/><path d="M32 23H36"/><path d="M12 23H16"/>' },
+  'export': { v: '0 0 48 48', d: '<path d="M42 27C42 33 38 43 24 43C10 43 6 33 6 27"/><path d="M24.0078 5.10059V33.0001"/><path d="M12 17L24 5L36 17"/>' },
+  'download': { v: '0 0 48 48', d: '<path d="M6 24.0083V42H42V24"/><path d="M33 23L24 32L15 23"/><path d="M23.9917 6V32"/>' },
+  'delete': { v: '0 0 48 48', d: '<path d="M9 10V44H39V10H9Z" fill="none"/><path d="M20 20V33"/><path d="M28 20V33"/><path d="M4 10H44"/><path d="M16 10L19.289 4H28.7771L32 10H16Z" fill="none"/>' },
+  'refresh': { v: '0 0 48 48', d: '<path d="M42 8V24"/><path d="M6 24L6 40"/><path d="M42 24C42 14.0589 33.9411 6 24 6C18.9145 6 14.3216 8.10896 11.0481 11.5M6 24C6 33.9411 14.0589 42 24 42C28.8556 42 33.2622 40.0774 36.5 36.9519"/>' },
+  'log': { v: '0 0 48 48', d: '<rect x="13" y="10" width="28" height="34" fill="none"/><path d="M35 10V4H8C7.44772 4 7 4.44772 7 5V38H13"/><path d="M21 22H33"/><path d="M21 30H33"/>' },
+  'fire': { v: '0 0 48 48', d: '<path d="M24 44C32.2347 44 38.9998 37.4742 38.9998 29.0981C38.9998 27.0418 38.8953 24.8375 37.7555 21.4116C36.6157 17.9858 36.3861 17.5436 35.1809 15.4279C34.666 19.7454 31.911 21.5448 31.2111 22.0826C31.2111 21.5231 29.5445 15.3359 27.0176 11.6339C24.537 8 21.1634 5.61592 19.1853 4C19.1853 7.06977 18.3219 11.6339 17.0854 13.9594C15.8489 16.2849 15.6167 16.3696 14.0722 18.1002C12.5278 19.8308 11.8189 20.3653 10.5274 22.4651C9.23596 24.565 9 27.3618 9 29.4181C9 37.7942 15.7653 44 24 44Z" fill="none"/>' },
+  'plug': { v: '0 0 48 48', d: '<path d="M6 14H42V24C38 32 32 36 24 36C16 36 10 32 6 24V14Z" fill="none"/><path d="M33 34L32 44H16L15 34"/><path d="M22 24H26"/><path d="M16 4L16 12"/><path d="M32 4V12"/>' },
+  'error': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M6 11L11 6L24 19L37 6L42 11L29 24L42 37L37 42L24 29L11 42L6 37L19 24L6 11Z" fill="none"/>' },
+  'caution': { v: '0 0 48 48', d: '<path fill-rule="evenodd" clip-rule="evenodd" d="M24 5L2 43H46L24 5Z" fill="none"/><path d="M24 35V36"/><path d="M24 19.0005L24.0083 29"/>' },
+  'check': { v: '0 0 48 48', d: '<path d="M43 11L16.875 37L5 25.1818"/>' },
+  'right': { v: '0 0 48 48', d: '<path d="M19 12L31 24L19 36"/>' },
+  'arrow-up': { v: '0 0 48 48', d: '<path d="M24 6V42"/><path d="M12 18L24 6L36 18"/>' },
+  'arrow-down': { v: '0 0 48 48', d: '<path d="M24 42V6"/><path d="M36 30L24 42L12 30"/>' },
+  'close': { v: '0 0 48 48', d: '<path d="M8 8L40 40"/><path d="M8 40L40 8"/>' },
+  'star': { v: '0 0 48 48', d: '<path d="M23.9986 5L17.8856 17.4776L4 19.4911L14.0589 29.3251L11.6544 43L23.9986 36.4192L36.3454 43L33.9586 29.3251L44 19.4911L30.1913 17.4776L23.9986 5Z" fill="none"/>' },
+  'butterfly': { v: '0 0 48 48', d: '<path d="M5.0002 12.0003C8.66389 7.70613 19.0814 18.8191 24.0002 25C28.9191 18.8191 39.3366 7.70599 43.0002 12.0001C43.6787 12.6507 44.4427 14.877 42.0002 18C41.3217 18.9759 40.186 21.7059 41.0002 26C41.0002 27.1386 39.8852 28.9519 35.0002 27C37.3749 28.6266 41.8498 33.0962 39.0002 37C36.2864 40.4158 29.9649 44.4569 26.0002 35L24.0002 31L22.0002 35C18.0356 44.4569 11.7141 40.4158 9.00024 37C6.15071 33.0962 10.6255 28.6268 13.0001 27.0003C8.1152 28.9521 7.00011 27.1389 7.00011 26.0003C7.81438 21.7061 6.67867 18.9762 6.00012 18.0003C3.55766 14.8773 4.32174 12.6509 5.0002 12.0003Z" fill="none"/><path d="M24.0322 23C23.534 17.8642 28.9135 7 33 7"/><path d="M23.9678 23C24.466 17.8642 19.0865 7 15 7"/>' },
+  'crown': { v: '0 0 48 48', d: '<path d="M9 40L4 17L14 22L24 8L34 22L44 17L39 40H9Z" fill="none"/><path d="M24 33C26.2091 33 28 31.2091 28 29C28 26.7909 26.2091 25 24 25C21.7909 25 20 26.7909 20 29C20 31.2091 21.7909 33 24 33Z" fill="none"/>' },
+  'color-filter': { v: '0 0 48 48', d: '<path d="M24 40.9444C26.123 42.8446 28.9266 44 32 44C38.6274 44 44 38.6274 44 32C44 26.4085 40.1757 21.7102 35 20.3781"/><path d="M13 20.3781C7.82432 21.7102 4 26.4085 4 32C4 38.6274 9.37258 44 16 44C22.6274 44 28 38.6274 28 32C28 30.4506 27.7063 28.9697 27.1716 27.6101"/><path d="M24 28C30.6274 28 36 22.6274 36 16C36 9.37258 30.6274 4 24 4C17.3726 4 12 9.37258 12 16C12 22.6274 17.3726 28 24 28Z" fill="none"/>' },
+  'sun-one': { v: '0 0 48 48', d: '<path d="M24 37C31.1797 37 37 31.1797 37 24C37 16.8203 31.1797 11 24 11C16.8203 11 11 16.8203 11 24C11 31.1797 16.8203 37 24 37Z" fill="none"/><path d="M24 6C25.3807 6 26.5 4.88071 26.5 3.5C26.5 2.11929 25.3807 1 24 1C22.6193 1 21.5 2.11929 21.5 3.5C21.5 4.88071 22.6193 6 24 6Z" fill="currentColor"/><path d="M38.5 12C39.8807 12 41 10.8807 41 9.5C41 8.11929 39.8807 7 38.5 7C37.1193 7 36 8.11929 36 9.5C36 10.8807 37.1193 12 38.5 12Z" fill="currentColor"/><path d="M44.5 26.5C45.8807 26.5 47 25.3807 47 24C47 22.6193 45.8807 21.5 44.5 21.5C43.1193 21.5 42 22.6193 42 24C42 25.3807 43.1193 26.5 44.5 26.5Z" fill="currentColor"/><path d="M38.5 41C39.8807 41 41 39.8807 41 38.5C41 37.1193 39.8807 36 38.5 36C37.1193 36 36 37.1193 36 38.5C36 39.8807 37.1193 41 38.5 41Z" fill="currentColor"/><path d="M24 47C25.3807 47 26.5 45.8807 26.5 44.5C26.5 43.1193 25.3807 42 24 42C22.6193 42 21.5 43.1193 21.5 44.5C21.5 45.8807 22.6193 47 24 47Z" fill="currentColor"/><path d="M9.5 41C10.8807 41 12 39.8807 12 38.5C12 37.1193 10.8807 36 9.5 36C8.11929 36 7 37.1193 7 38.5C7 39.8807 8.11929 41 9.5 41Z" fill="currentColor"/><path d="M3.5 26.5C4.88071 26.5 6 25.3807 6 24C6 22.6193 4.88071 21.5 3.5 21.5C2.11929 21.5 1 22.6193 1 24C1 25.3807 2.11929 26.5 3.5 26.5Z" fill="currentColor"/><path d="M9.5 12C10.8807 12 12 10.8807 12 9.5C12 8.11929 10.8807 7 9.5 7C8.11929 7 7 8.11929 7 9.5C7 10.8807 8.11929 12 9.5 12Z" fill="currentColor"/>' },
+  'moon': { v: '0 0 48 48', d: '<path d="M28.0527 4.41085C22.5828 5.83695 18.5455 10.8106 18.5455 16.7273C18.5455 23.7564 24.2436 29.4545 31.2727 29.4545C37.1894 29.4545 42.1631 25.4172 43.5891 19.9473C43.8585 21.256 44 22.6115 44 24C44 35.0457 35.0457 44 24 44C12.9543 44 4 35.0457 4 24C4 12.9543 12.9543 4 24 4C25.3885 4 26.744 4.14149 28.0527 4.41085Z" fill="none"/>' }
+};
+
+function ip(name, style) {
+  var set = IP_ICONS[name];
+  if (!set) return '';
+  return '<svg class="ip-icon" viewBox="' + set.v + '" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"' + (style ? ' style="' + style + '"' : '') + '>' + set.d + '</svg>';
+}
+function hydrateIcons(scope) {
+  var nodes = (scope || document).querySelectorAll('[data-ip]');
+  for (var i = 0; i < nodes.length; i++) {
+    var el = nodes[i];
+    if (el.getAttribute('data-ip-done')) continue;
+    el.innerHTML = ip(el.getAttribute('data-ip'), el.getAttribute('data-ip-style') || '');
+    el.setAttribute('data-ip-done', '1');
+  }
+}
+
 /* ===== 核心数据层 (与 Web 版完全兼容) ===== */
 var STORAGE_KEY = 'drink_water_data';
 var SETTINGS_KEY = 'drink_water_settings';
@@ -440,12 +556,12 @@ function getTodayTotal(records){return getTodayRecords(records).reduce(function(
 
 /* === 连续天数 & 植物 === */
 var PLANT_STAGES=[
-  {emoji:'\u{1F330}',name:'种子休眠中',minDays:0},
-  {emoji:'\u{1F331}',name:'嫩芽破土',minDays:1},
-  {emoji:'\u{1F33F}',name:'健壮成长',minDays:3},
-  {emoji:'\u{1F33B}',name:'含苞待放',minDays:7},
-  {emoji:'\u{1F333}',name:'枝繁叶茂',minDays:14},
-  {emoji:'\u{1F338}',name:'花开满树',minDays:30}
+  {icon:'seedling',name:'种子休眠中',minDays:0},
+  {icon:'sapling',name:'嫩芽破土',minDays:1},
+  {icon:'leaves',name:'健壮成长',minDays:3},
+  {icon:'bloom',name:'含苞待放',minDays:7},
+  {icon:'tree-one',name:'枝繁叶茂',minDays:14},
+  {icon:'blossom',name:'花开满树',minDays:30}
 ];
 
 function calcStreak(records,dailyGoal){
@@ -478,10 +594,10 @@ function getPlantStage(streak){
 
 function getExcessAccessories(excessStreak){
   var list=[];
-  if(excessStreak>=3)list.push({emoji:'\u2B50',cls:'accessory star'});
-  if(excessStreak>=7)list.push({emoji:'\u{1F98B}',cls:'accessory butterfly'});
-  if(excessStreak>=14)list.push({emoji:'\u{1F451}',cls:'accessory crown'});
-  if(excessStreak>=30)list.push({emoji:'\u{1F308}',cls:'accessory rainbow'});
+  if(excessStreak>=3)list.push({icon:'star',cls:'accessory star'});
+  if(excessStreak>=7)list.push({icon:'butterfly',cls:'accessory butterfly'});
+  if(excessStreak>=14)list.push({icon:'crown',cls:'accessory crown'});
+  if(excessStreak>=30)list.push({icon:'color-filter',cls:'accessory rainbow'});
   return list;
 }
 
@@ -535,7 +651,7 @@ function renderHome(){
       html+='<div class="record-item">'+
         '<span class="rtime">'+ts+'</span>'+
         '<span class="ramount">'+(r.mood||'')+' '+r.amount+' ml</span>'+
-        '<button class="rdel" onclick="deleteRecord(\''+r.id+'\')">✕</button></div>';
+        '<button class="rdel" onclick="deleteRecord(\''+r.id+'\')">'+ip('close','width:12px;height:12px;display:block;')+'</button></div>';
     }
     listEl.innerHTML=html;
   }
@@ -546,10 +662,10 @@ function renderGarden(){
   var stage=getPlantStage(streak);
   var excess=calcExcessStreak(gState.records,gState.settings.dailyGoal);
   var acc=getExcessAccessories(excess);
-  var html=stage.emoji;
+  var html=ip(stage.icon);
   if(acc.length>0){
-    html='<span class="garden-accessories">'+stage.emoji;
-    acc.forEach(function(a){html+='<span class="garden-accessory '+a.cls+'">'+a.emoji+'</span>';});
+    html='<span class="garden-accessories">'+ip(stage.icon);
+    acc.forEach(function(a){html+='<span class="garden-accessory '+a.cls+'">'+ip(a.icon)+'</span>';});
     html+='</span>';
   }
   document.getElementById('plantEmoji').innerHTML=html;
@@ -656,7 +772,7 @@ function updateSettingsUI(){
   document.getElementById('settingAvatarName').textContent=me.name;
   document.getElementById('settingNickname').textContent=localStorage.getItem('lb_nickname')||'未设置';
   var sbEl=document.getElementById('settingSupabaseDesc');
-  if(sbEl)sbEl.textContent=isSupabaseConfigured()?'✅ 已连接':'⚠️ 未配置';
+  if(sbEl)sbEl.textContent=isSupabaseConfigured()?'已连接':'未配置';
 
   /* 配对状态 */
   var pStatus=document.getElementById('settingPairStatus');
@@ -664,7 +780,7 @@ function updateSettingsUI(){
   if(pStatus){
     var paired=localStorage.getItem('lb_paired_with_phone')==='1';
     var configured=isSupabaseConfigured();
-    pStatus.textContent=configured?(paired?'✅':'›'):'⚠️';
+    pStatus.innerHTML=configured?(paired?ip('check','width:12px;height:12px;color:#4CAF50;'):ip('right','width:10px;height:10px;')):ip('caution','width:12px;height:12px;color:#e6a23c;');
     if(pDesc){
       var uid2=localStorage.getItem(ANON_USER_KEY)||'';
       var shortId=uid2.length>8?uid2.substring(0,8):uid2;
@@ -685,10 +801,10 @@ function updateSettingsUI(){
   if(rDesc){
     if(rc.enabled){
       rDesc.textContent='每 '+rc.intervalMin+' 分钟 · '+rc.startHour+':00-'+rc.endHour+':00';
-      if(rVal)rVal.textContent='🔔';
+      if(rVal)rVal.innerHTML=ip('remind','width:12px;height:12px;');
     }else{
       rDesc.textContent='已关闭';
-      if(rVal)rVal.textContent='›';
+      if(rVal)rVal.innerHTML=ip('right','width:10px;height:10px;');
     }
   }
 }
@@ -906,10 +1022,10 @@ function showTimerDialog(){
   var tc=loadTimerConfig();
   var body='<div style="margin-bottom:8px;font-size:0.6875rem;color:#5a6a7a;">设置深浅色自动切换的时间点</div>'+
     '<div class="reminder-time-row">'+
-      '<label>🌅 亮色从</label><select id="tSunrise">'+hoursOptions(tc.sunrise)+'</select>'+
+      '<label>'+ip('sun-one','width:11px;height:11px;vertical-align:-1px;')+' 亮色从</label><select id="tSunrise">'+hoursOptions(tc.sunrise)+'</select>'+
     '</div>'+
     '<div class="reminder-time-row">'+
-      '<label>🌙 深色从</label><select id="tSunset">'+hoursOptions(tc.sunset)+'</select>'+
+      '<label>'+ip('moon','width:11px;height:11px;vertical-align:-1px;')+' 深色从</label><select id="tSunset">'+hoursOptions(tc.sunset)+'</select>'+
     '</div>'+
     '<div class="hint">例如 6:00-18:00 为浅色，其余时间深色</div>';
   showModal('定时深浅切换',body,
@@ -1064,7 +1180,7 @@ function showDebugLogs(){
     }
   }
   html+='</div><div style="text-align:center;margin-top:8px;"><button onclick="hideModal()" style="background:#4A90E2;color:#fff;border:none;border-radius:8px;padding:8px 24px;font-size:0.75rem;cursor:pointer;">关闭</button></div>';
-  showModal('📋 请求日志',html);
+  showModal(ip('log','width:12px;height:12px;vertical-align:-1px;')+' 请求日志',html);
 }
 
 /* 同步调试面板（统一日志格式） */
@@ -1095,7 +1211,7 @@ function renderSyncDebug(){
     full.style.display='block';
     var h='';
     for(var i=0;i<_syncLogs.length;i++)h+='<div>'+_syncLogs[i]+'</div>';
-    h+='<div style="color:#5a6a7a;margin-top:2px;cursor:pointer;text-align:center;" onclick="toggleSyncDebug()">▲ 收起</div>';
+    h+='<div style="color:#5a6a7a;margin-top:2px;cursor:pointer;text-align:center;" onclick="toggleSyncDebug()">'+ip('arrow-up','width:9px;height:9px;vertical-align:-1px;')+' 收起</div>';
     full.innerHTML=h;
     full.scrollTop=full.scrollHeight;
   }else{
@@ -1104,7 +1220,7 @@ function renderSyncDebug(){
     var show=Math.min(_syncLogs.length,6);
     var s='';
     for(var i=0;i<show;i++)s+='<div>'+_syncLogs[i]+'</div>';
-    if(_syncLogs.length>6)s+='<div style="color:#4A90E2;margin-top:1px;">▼ 展开全部 ('+_syncLogs.length+' 条)</div>';
+    if(_syncLogs.length>6)s+='<div style="color:#4A90E2;margin-top:1px;">'+ip('arrow-down','width:9px;height:9px;vertical-align:-1px;')+' 展开全部 ('+_syncLogs.length+' 条)</div>';
     summary.innerHTML=s;
   }
 }
@@ -1389,21 +1505,21 @@ function loadLeaderboard(){
   var listEl=document.getElementById('lbList');
   if(!listEl)return;
   if(!isSupabaseConfigured()){
-    listEl.innerHTML='<div class="lb-empty"><span class="icon">⚠️</span>未配置在线排行榜<br><span style="font-size:0.5rem;color:#5a6a7a;">请到设置中配置 Supabase</span></div>';
+    listEl.innerHTML='<div class="lb-empty"><span class="icon">'+ip('caution','width:32px;height:32px;color:#e6a23c;')+'</span>未配置在线排行榜<br><span style="font-size:0.5rem;color:#5a6a7a;">请到设置中配置 Supabase</span></div>';
     return;
   }
-  listEl.innerHTML='<div class="lb-empty"><span class="icon">🌐</span>加载中...</div>';
+  listEl.innerHTML='<div class="lb-empty"><span class="icon">'+ip('earth','width:32px;height:32px;')+'</span>加载中...</div>';
   fetchLeaderboard(20).then(function(data){
     _lbCache=data;
     if(!data||data.length===0){
-      listEl.innerHTML='<div class="lb-empty"><span class="icon">📋</span>暂无排行数据<br><span style="font-size:0.5rem;color:#5a6a7a;">记录喝水数据后自动同步</span></div>';
+      listEl.innerHTML='<div class="lb-empty"><span class="icon">'+ip('log','width:32px;height:32px;')+'</span>暂无排行数据<br><span style="font-size:0.5rem;color:#5a6a7a;">记录喝水数据后自动同步</span></div>';
       return;
     }
     var meId=getAnonUserId();
     /* 过滤掉已删除的用户 */
     data=data.filter(function(d){return !d.nickname||(d.nickname.indexOf('已断开')===-1&&d.nickname.indexOf('已删除')===-1);});
     if(data.length===0){
-      listEl.innerHTML='<div class="lb-empty"><span class="icon">📋</span>暂无排行数据</div>';
+      listEl.innerHTML='<div class="lb-empty"><span class="icon">'+ip('log','width:32px;height:32px;')+'</span>暂无排行数据</div>';
       return;
     }
     var html='';
@@ -1423,13 +1539,13 @@ function loadLeaderboard(){
         '<div class="lb-rank '+rankCls+'">#'+rank+'</div>'+
         '<div class="lb-avatar">'+avatarEmoji+'</div>'+
         '<div class="lb-info"><div class="lb-name">'+nickname+'</div>'+
-        '<div class="lb-detail">🔥 '+streak+' 天连续</div></div>'+
+        '<div class="lb-detail">'+ip('fire','width:10px;height:10px;vertical-align:-1px;color:#F5A623;')+' '+streak+' 天连续</div></div>'+
         '<div class="lb-stats"><div class="lb-today">'+(d.today_ml||0)+' ml</div>'+
         '<div class="lb-streak">今日</div></div></div>';
     }
     listEl.innerHTML=html;
   }).catch(function(){
-    listEl.innerHTML='<div class="lb-empty"><span class="icon">❌</span>加载失败<br><span style="font-size:0.5rem;color:#5a6a7a;">请检查网络连接</span></div>';
+    listEl.innerHTML='<div class="lb-empty"><span class="icon">'+ip('error','width:32px;height:32px;color:#e74c3c;')+'</span>加载失败<br><span style="font-size:0.5rem;color:#5a6a7a;">请检查网络连接</span></div>';
   });
 }
 
@@ -1452,10 +1568,11 @@ function selectMood(el){
 /* === Tab 切换 === */
 function switchTab(idx){
   var pages=['page-home','page-garden','page-history','page-leaderboard','page-settings'];
-  var titles=['💧 咕嘟','🌱 花园','📊 历史','🏆 排行','⚙️ 设置'];
+  var titles=['咕嘟','花园','历史','排行','设置'];
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.getElementById(pages[idx]).classList.add('active');
   document.getElementById('appbarTitle').textContent=titles[idx];
+  var sub=document.getElementById('motivationMsg');if(sub)sub.style.display=idx===0?'':'none';
   document.querySelectorAll('.bottom-nav button').forEach(function(b,i){b.classList.toggle('active',i===idx);});
   if(idx===2)renderStats();
   if(idx===1)renderGarden();
@@ -1473,7 +1590,7 @@ function switchChart(isWeek){
 
 /* === Modal / Toast === */
 function showModal(title,body,actions){
-  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalTitle').innerHTML=title;
   document.getElementById('modalBody').innerHTML=body||'';
   var actionsEl=document.getElementById('modalActions');
   actionsEl.innerHTML='';
@@ -1509,6 +1626,7 @@ window.addEventListener('resize',function(){
 (function loadAll(){
   gState.settings=loadSettings();
   gState.records=loadRecords();
+  hydrateIcons();
   applyDarkMode(localStorage.getItem('dark_mode')||'auto');
   refreshUI();
   /* 尝试同步到 Supabase（如有配置） */
